@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mainPage.MainPage">
+
+    <LinearLayout
+        android:id="@+id/main_page_transactions_container_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/any_view_container"
+        android:gravity="center"
+        android:padding="@dimen/mediumDp"
+        app:layout_constraintBottom_toTopOf="@+id/main_page_transactions_container_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/main_page_transactions_profile_image"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:padding="@dimen/smallDp"
+            app:srcCompat="@drawable/ic_wallet" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/main_page_name_and_surname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/any_view_container"
+                android:gravity="center_vertical"
+                android:text="Waiting..."
+                android:textSize="@dimen/xSmallSp" />
+
+            <TextView
+                android:id="@+id/main_page_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Waiting..."
+                android:textSize="@dimen/xSmallSp" />
+
+            <TextView
+                android:id="@+id/main_page_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Waiting..."
+                android:textSize="@dimen/xSmallSp" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_page_transactions_menu"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/xSmallDp"
+            android:layout_marginEnd="@dimen/xSmallDp"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:tint="#FFFFFF"
+            app:backgroundTint="#1565C0"
+            app:fabCustomSize="75dp"
+            app:maxImageSize="50dp"
+            app:rippleColor="#1565C0"
+            app:srcCompat="@drawable/ic_menu" />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/main_page_transactions_container_2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_page_transactions_container_1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/xSmallDp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/main_page_transfer_money_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:clickable="true"
+                    android:tint="#FFFFFF"
+                    app:backgroundTint="#1565C0"
+                    app:fabCustomSize="50dp"
+                    app:maxImageSize="30dp"
+                    app:rippleColor="#1565C0"
+                    app:srcCompat="@drawable/ic_withdraw" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/xSmallDp"
+                    android:text="Transfer Money"
+                    android:textSize="@dimen/xSmallSp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/xSmallDp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/main_page_receive_money_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:clickable="true"
+                    android:tint="#FFFFFF"
+                    app:backgroundTint="#B42E7D32"
+                    app:fabCustomSize="50dp"
+                    app:maxImageSize="30dp"
+                    app:rippleColor="#B42E7D32"
+                    app:srcCompat="@drawable/ic_receivemoney" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/xSmallDp"
+                    android:text="Receive money"
+                    android:textSize="@dimen/xSmallSp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/xSmallDp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/main_page_give_money_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:clickable="true"
+                    android:tint="#FFFFFF"
+                    app:backgroundTint="#C4C62828"
+                    app:fabCustomSize="50dp"
+                    app:maxImageSize="30dp"
+                    app:rippleColor="#C3C62828"
+                    app:srcCompat="@drawable/ic_givemoney" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/xSmallDp"
+                    android:text="Send money"
+                    android:textSize="@dimen/xSmallSp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/xSmallDp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/main_page_add_money_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:clickable="true"
+                    android:tint="#FFFFFF"
+                    app:backgroundTint="#B42E7D32"
+                    app:fabCustomSize="50dp"
+                    app:maxImageSize="30dp"
+                    app:rippleColor="#B42E7D32"
+                    app:srcCompat="@drawable/ic_add" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/xSmallDp"
+                    android:text="Add money"
+                    android:textSize="@dimen/xSmallSp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/xSmallDp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/main_page_withdraw_money_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:clickable="true"
+                    android:tint="#FFFFFF"
+                    app:backgroundTint="#C4C62828"
+                    app:fabCustomSize="50dp"
+                    app:maxImageSize="30dp"
+                    app:rippleColor="#C3C62828"
+                    app:srcCompat="@drawable/ic_withdraw" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/xSmallDp"
+                    android:text="Withdraw Money"
+                    android:textSize="@dimen/xSmallSp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/main_page_filter_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/any_view_container"
+        android:orientation="horizontal"
+        android:padding="@dimen/smallDp"
+        app:layout_constraintBottom_toTopOf="@+id/main_page_transactions_logs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_page_transactions_container_2">
+
+        <TextView
+            android:id="@+id/main_page_transactions_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/smallDp"
+            android:layout_weight="5"
+            android:text="Last transactions Last transactions Last transactions Last transactions Last transactions" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_page_transactions_filter_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="true"
+            android:tint="#FFFFFF"
+            app:backgroundTint="#BE00838F"
+            app:fabCustomSize="36dp"
+            app:maxImageSize="15dp"
+            app:rippleColor="#BE00838F"
+            app:srcCompat="@drawable/ic_filter" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_page_transactions_logs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_page_filter_container"
+        app:reverseLayout="true"
+        app:stackFromEnd="true" />
+</androidx.constraintlayout.widget.ConstraintLayout>

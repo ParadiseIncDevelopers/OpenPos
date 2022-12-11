@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:theme="@style/Theme.InternetFreePaymentGateway">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/transaction_filters_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="@drawable/ic_times"
+        app:title="Filter transactions"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:titleTextColor="#6A1B9A" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/smallDp">
+
+                <Button
+                    android:id="@+id/transaction_filters_submit_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/xSmallDp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Filter"
+                    android:textAllCaps="false"
+                    android:textColor="#6A1B9A"
+                    app:icon="@drawable/ic_filter"
+                    app:iconSize="35dp"
+                    app:iconTint="#6A1B9A"
+                    app:rippleColor="#AB6A1B9A"
+                    app:strokeColor="#6A1B9A" />
+
+                <Button
+                    android:id="@+id/transaction_filters_reset_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/xSmallDp"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Reset"
+                    android:textAllCaps="false"
+                    android:textColor="#6A1B9A"
+                    app:icon="@drawable/ic_times"
+                    app:iconSize="35dp"
+                    app:iconTint="#6A1B9A"
+                    app:rippleColor="#AB6A1B9A"
+                    app:strokeColor="#6A1B9A" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:layout_marginBottom="@dimen/smallDp"
+                    android:background="#6A1B9A"
+                    android:padding="@dimen/smallDp"
+                    android:text="Choose the minimum amout of money from this section"
+                    android:textColor="#FFFFFF" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_minimum_amount_filters_1"
+                        style="@style/textColorHintEnabledDisabled1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/smallDp"
+                        android:layout_weight="1"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="none"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/transaction_minimum_amount_filters_text_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Minimum amount"
+                            android:inputType="number"
+                            android:maxLength="9"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_minimum_amount_filters_2"
+                        style="@style/textColorHintEnabledDisabled1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="none"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/transaction_minimum_amount_filters_text_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="00"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/largeDp"
+                    android:layout_marginRight="@dimen/largeDp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_maximum_amount_filters_1"
+                        style="@style/textColorHintEnabledDisabled1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/smallDp"
+                        android:layout_weight="1"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="none"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/transaction_maximum_amount_filters_text_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Maximum amount"
+                            android:inputType="number"
+                            android:maxLength="9"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_maximum_amount_filters_2"
+                        style="@style/textColorHintEnabledDisabled1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="none"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/transaction_maximum_amount_filters_text_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="00"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:layout_marginBottom="@dimen/smallDp"
+                    android:background="#6A1B9A"
+                    android:padding="@dimen/smallDp"
+                    android:text="Choose the start and the end date of the filter from this section"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/transaction_filters_start_date_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:layout_marginBottom="@dimen/smallDp"
+                    android:text="Start Date"
+                    android:textColor="#6A1B9A" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_start_date_filters_1"
+                        style="@style/textColorHintEnabledDisabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/xSmallDp"
+                        android:layout_weight="0.85"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/transaction_start_date_filters_text_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Day"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/smallDp"
+                            android:paddingBottom="@dimen/smallDp"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_start_date_filters_2"
+                        style="@style/textColorHintEnabledDisabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.85"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/transaction_start_date_filters_text_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Month"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/smallDp"
+                            android:paddingBottom="@dimen/smallDp"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_start_date_filters_3"
+                        style="@style/textColorHintEnabledDisabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/xSmallDp"
+                        android:layout_weight="0.75"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/transaction_start_date_filters_text_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Year"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/smallDp"
+                            android:paddingBottom="@dimen/smallDp"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/transaction_filters_end_date_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:layout_marginBottom="@dimen/smallDp"
+                    android:text="End Date"
+                    android:textColor="#6A1B9A" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_final_date_filters_1"
+                        style="@style/textColorHintEnabledDisabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/xSmallDp"
+                        android:layout_weight="0.85"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/transaction_final_date_filters_text_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Day"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/smallDp"
+                            android:paddingBottom="@dimen/smallDp"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_final_date_filters_2"
+                        style="@style/textColorHintEnabledDisabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.85"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/transaction_final_date_filters_text_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Month"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/smallDp"
+                            android:paddingBottom="@dimen/smallDp"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/transaction_final_date_filters_3"
+                        style="@style/textColorHintEnabledDisabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/xSmallDp"
+                        android:layout_weight="0.75"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="@color/black"
+                        app:errorEnabled="true"
+                        app:hintTextColor="#E64A19">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/transaction_final_date_filters_text_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Year"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/smallDp"
+                            android:paddingBottom="@dimen/smallDp"
+                            android:singleLine="true"
+                            android:textColor="#000000" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:layout_marginBottom="@dimen/smallDp"
+                    android:background="#6A1B9A"
+                    android:padding="@dimen/smallDp"
+                    android:text="Choose if you're searching receved amounts or sent amounts from this section"
+                    android:textColor="#FFFFFF" />
+
+                <CheckBox
+                    android:id="@+id/transaction_received_amounts_filters_checkbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:buttonTint="#B42E7D32"
+                    android:padding="@dimen/smallDp"
+                    android:text="Received amounts" />
+
+                <CheckBox
+                    android:id="@+id/transaction_sent_amounts_filters_checkbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/largeDp"
+                    android:layout_marginEnd="@dimen/largeDp"
+                    android:buttonTint="#C4C62828"
+                    android:padding="@dimen/smallDp"
+                    android:text="Sent amounts" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

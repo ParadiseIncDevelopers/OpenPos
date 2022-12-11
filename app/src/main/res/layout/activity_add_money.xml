@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wallet.AddMoney">
+
+    <ImageView
+        android:id="@+id/add_money_image_content"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:background="@drawable/any_view_container"
+        android:src="@drawable/ic_add"
+        android:tint="#6A1B9A"
+        app:layout_constraintBottom_toTopOf="@id/add_money_up_to_text"
+        app:layout_constraintEnd_toStartOf="@+id/add_money_header_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/add_money_header_text"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/any_view_container"
+        android:elevation="@dimen/xSmallDp"
+        android:gravity="center"
+        android:padding="@dimen/mediumDp"
+        android:text="Choose one of your accounts"
+        android:textColor="#6A1B9A"
+        android:textSize="@dimen/mediumSp"
+        app:layout_constraintBottom_toTopOf="@id/add_money_up_to_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/add_money_image_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/add_money_up_to_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/xSmallDp"
+        android:text="Put your money to OpenPos..."
+        app:layout_constraintBottom_toTopOf="@id/add_money_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_money_image_content" />
+
+    <LinearLayout
+        android:id="@+id/add_money_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/any_view_container"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:padding="@dimen/smallDp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_money_up_to_text">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_money_page_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/xSmallDp"
+            android:layout_weight="2"
+            app:boxBackgroundMode="outline"
+            app:hintTextColor="#E64A19"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="none"
+            app:endIconTint="@color/black"
+            app:errorEnabled="false"
+            app:hintEnabled="false">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_money_page_text_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="123456"
+                android:inputType="numberDecimal"
+                android:maxLength="6"
+                android:singleLine="true"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_money_page_decimal_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/xSmallDp"
+            android:layout_weight="3"
+            app:boxBackgroundMode="outline"
+            app:hintTextColor="#E64A19"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="none"
+            app:endIconTint="@color/black"
+            app:errorEnabled="false"
+            app:hintEnabled="false">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_money_page_decimal_text_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="12"
+                android:inputType="numberDecimal"
+                android:maxLength="2"
+                android:singleLine="true"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_money_page_submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/xSmallDp"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="true"
+            android:tint="@color/white"
+            app:backgroundTint="#C62828"
+            app:fabCustomSize="50dp"
+            app:rippleColor="#C4C62828"
+            app:srcCompat="@drawable/ic_add" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

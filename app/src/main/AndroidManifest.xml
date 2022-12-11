@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.free">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.LOCAL_MAC_ADDRESS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.InternetFreePaymentGateway.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name="com.menu.Integrations"></activity>
+        <activity android:name="com.menu.ChooseLoanAccount" />
+        <activity android:name="com.menu.CreateLoanAccount" />
+        <activity android:name="com.menu.profileSettingsPack.PasswordAndSecuritySettings" />
+        <activity android:name="com.wallet.CreateReceiveMoney" />
+        <activity android:name="com.wallet.TransferMoney" />
+        <activity android:name=".NetworkErrorActivity" />
+        <activity android:name=".ApprovalInProgress" />
+        <activity android:name=".UserApprovalRegister" />
+        <activity android:name="com.menu.Offers" />
+        <activity android:name="com.menu.AutomatedPayments" />
+        <activity android:name="com.menu.ChooseParticipationAccount" />
+        <activity android:name="com.menu.ChooseGoldAccount" />
+        <activity android:name="com.menu.ChooseAccount" />
+        <activity android:name="com.menu.CreateParticipationAccount" />
+        <activity android:name="com.menu.CreateGoldAccount" />
+        <activity android:name="com.menu.CreateAccount" />
+        <activity android:name="com.menu.ProfileSettings" />
+        <activity android:name="com.menu.MainMenu" />
+        <activity android:name="com.wallet.AddMoney" />
+        <activity android:name="com.wallet.WithdrawMoney" />
+        <activity android:name=".AnonymousLogin" />
+        <activity android:name=".Register" />
+        <activity android:name=".LoginTypes" />
+        <activity
+            android:name="com.utilities.classes.CapturerClass"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme" />
+        <activity android:name="com.wallet.ReceiveMoney" />
+        <activity android:name="com.wallet.SendMoney" />
+        <activity android:name=".mainPage.MainPage" />
+        <activity android:name=".Login" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
+    </application>
+
+</manifest>

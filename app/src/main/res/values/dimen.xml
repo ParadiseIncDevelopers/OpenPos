@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="xSmallSp">8sp</dimen>
+    <dimen name="smallSp">12sp</dimen>
+    <dimen name="mediumSp">24sp</dimen>
+    <dimen name="largeSp">32sp</dimen>
+    <dimen name="xLargeSp">48sp</dimen>
+    <dimen name="xSmallDp">8sp</dimen>
+    <dimen name="smallDp">12sp</dimen>
+    <dimen name="mediumDp">24sp</dimen>
+    <dimen name="largeDp">32sp</dimen>
+    <dimen name="xLargeDp">48sp</dimen>
+</resources>

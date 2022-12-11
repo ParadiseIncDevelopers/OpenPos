@@ -1,0 +1,151 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/account_chooser_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/mediumDp"
+    android:background="@drawable/wallet_logs_border"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="@dimen/smallDp">
+
+    <ImageView
+        android:id="@+id/account_chooser_currency_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="7.5dp"
+        android:src="@drawable/ic_withdraw" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="Key :"
+                android:textSize="@dimen/xSmallSp" />
+
+            <TextView
+                android:id="@+id/account_chooser_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="TextView"
+                android:textSize="@dimen/xSmallSp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="Email :"
+                android:textSize="@dimen/xSmallSp" />
+
+            <TextView
+                android:id="@+id/account_chooser_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="TextView"
+                android:textSize="@dimen/xSmallSp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="Currency :"
+                android:textSize="@dimen/xSmallSp" />
+
+            <TextView
+                android:id="@+id/account_chooser_currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="TextView"
+                android:textSize="@dimen/xSmallSp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="Payment key :"
+                android:textSize="@dimen/xSmallSp" />
+
+            <TextView
+                android:id="@+id/account_chooser_payment_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="TextView"
+                android:textSize="@dimen/xSmallSp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="In wallet :"
+                android:textSize="@dimen/xSmallSp" />
+
+            <TextView
+                android:id="@+id/account_chooser_in_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/wallet_logs_border_container"
+                android:padding="4dp"
+                android:text="TextView"
+                android:textSize="@dimen/xSmallSp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

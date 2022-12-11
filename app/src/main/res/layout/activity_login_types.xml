@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginTypes">
+
+    <LinearLayout
+        android:id="@+id/main_page_transactions_container_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/login_types_registered_user_button"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:backgroundTint="#FFFFFF"
+                android:clickable="true"
+                android:tint="#FFFFFF"
+                app:backgroundTint="#FF8F00"
+                app:fabCustomSize="125dp"
+                app:maxImageSize="75dp"
+                app:rippleColor="#FF8F00"
+                app:srcCompat="@drawable/ic_user" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/smallDp"
+                android:text="Registered User" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/login_types_anonymous_user_button"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:backgroundTint="#FFFFFF"
+                android:clickable="true"
+                android:tint="#FFFFFF"
+                app:backgroundTint="#283593"
+                app:fabCustomSize="125dp"
+                app:maxImageSize="75dp"
+                app:rippleColor="#283593"
+                app:srcCompat="@drawable/ic_anonymous" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/smallDp"
+                android:text="Anonymous User" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/login_image_content2"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_splash_screen" />
+</androidx.constraintlayout.widget.ConstraintLayout>

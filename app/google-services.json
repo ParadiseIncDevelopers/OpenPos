@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "653146505856",
+    "firebase_url": "https://openpos-3e0d3-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "openpos-3e0d3",
+    "storage_bucket": "openpos-3e0d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653146505856:android:3b02fc6693c3c446495c65",
+        "android_client_info": {
+          "package_name": "com.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653146505856-00s1608gud456htbn1id7sm3bjlddu6c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_k1n6Znzg6E7hf3kepZD9qmqlMK2-4wc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653146505856-00s1608gud456htbn1id7sm3bjlddu6c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

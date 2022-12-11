@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/mediumDp">
+
+    <TextView
+        android:id="@+id/dialog_wallet_logs_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/any_view_container"
+        android:text="Wallet transaction resume"
+        android:textSize="@dimen/mediumDp" />
+
+    <LinearLayout
+        android:id="@+id/dialog_wallet_webview_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
+
+    <Button
+        android:id="@+id/dialog_wallet_logs_send_email_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:text="Send to your email"
+        android:textAllCaps="false"
+        android:textColor="#0277BD"
+        app:rippleColor="#B00277BD"
+        app:strokeColor="#0277BD" />
+
+</LinearLayout>
