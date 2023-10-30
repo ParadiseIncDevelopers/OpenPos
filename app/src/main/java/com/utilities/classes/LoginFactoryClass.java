@@ -2,6 +2,7 @@ package com.utilities.classes;
 
 import android.net.Uri;
 import android.os.Build;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import com.wallet.Wallet;
 import com.wallet.WalletLogs;
@@ -16,6 +17,25 @@ import java.util.function.BiConsumer;
 
 public class LoginFactoryClass
 {
+    public static Uri userImageUri;
+    private final String email;
+    public static String LoginType = "";
+    public static Map<String, ArrayList<WalletLogs>> userWalletLogs = new HashMap<>();
+    public static Map<String, String> userCurrency = new HashMap<>();
+    public static Map<String, String> userMoneyCase = new HashMap<>();
+    public static String userNameAndSurname;
+    public static String userPhoneNumber;
+    public static ArrayList<Wallet> userWallets = new ArrayList<>();
+    public static String userEmail;
+    public static List<String> userAccountImageLinksList;
+    public static String walletTaken = "MainWallet";
+    public static EncryptorKeyContainer userEncryptorKeyContainer;
+
+    public LoginFactoryClass(String Email)
+    {
+        this.email = Email;
+    }
+
     public static class ProgramObjectsUtilityClass
     {
         public static JSONObject Users = new JSONObject();
@@ -44,7 +64,8 @@ public class LoginFactoryClass
             objectGetter.accept(array, object);
         }
 
-        public static JSONObject mapToJsonObject(Map<String, Object> objects)
+        @NonNull
+        public static JSONObject mapToJsonObject(@NonNull Map<String, Object> objects)
         {
             JSONObject obj = new JSONObject();
             for (int i = 0; i < objects.size(); i++)
@@ -62,7 +83,8 @@ public class LoginFactoryClass
             return obj;
         }
 
-        public static JSONArray mapToJsonArray(ArrayList<Object> objects)
+        @NonNull
+        public static JSONArray mapToJsonArray(@NonNull ArrayList<Object> objects)
         {
             JSONArray obj = new JSONArray();
             for (int i = 0; i < objects.size(); i++)
@@ -71,25 +93,6 @@ public class LoginFactoryClass
             }
             return obj;
         }
-    }
-
-    public static Uri userImageUri;
-    private final String email;
-    public static String LoginType = "";
-    public static Map<String, ArrayList<WalletLogs>> userWalletLogs = new HashMap<>();
-    public static Map<String, String> userCurrency = new HashMap<>();
-    public static Map<String, String> userMoneyCase = new HashMap<>();
-    public static String userNameAndSurname;
-    public static String userPhoneNumber;
-    public static ArrayList<Wallet> userWallets = new ArrayList<>();
-    public static String userEmail;
-    public static List<String> userAccountImageLinksList;
-    public static String walletTaken = "MainWallet";
-    public static int getUserWalletsSize = 0;
-
-    public LoginFactoryClass(String Email)
-    {
-        this.email = Email;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

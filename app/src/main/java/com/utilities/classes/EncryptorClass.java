@@ -9,12 +9,12 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
-
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
@@ -23,6 +23,7 @@ import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
@@ -46,8 +47,49 @@ public class EncryptorClass
     private static final String SECRET_KEY = "0A2B24A5A9B102C500FE532DBD3F5DC8";
     private static final String SALTVALUE = "F8C699DA740449802C4C0B4869A6F4C5";
 
+    @NonNull
+    public static String generateSaltKey(int length) {
+        if (length <= 0 || length > 32) {
+            throw new IllegalArgumentException("Invalid salt key length");
+        }
+
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] salt = new byte[length / 2];
+        secureRandom.nextBytes(salt);
+
+        return bytesToHex(salt);
+    }
+
+    @NonNull
+    public static String generateSecretKey(int length) {
+        if (length <= 0 || length > 32) {
+            throw new IllegalArgumentException("Invalid secret key length");
+        }
+
+        try {
+            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+            keyGen.init(length * 8); // Key length in bits
+            SecretKey secretKey = keyGen.generateKey();
+
+            byte[] encodedKey = secretKey.getEncoded();
+            return bytesToHex(encodedKey);
+        } catch (Exception e) {
+            throw new RuntimeException("Error generating secret key", e);
+        }
+    }
+
+    @NonNull
+    private static String bytesToHex(@NonNull byte[] bytes) {
+        StringBuilder hexString = new StringBuilder(2 * bytes.length);
+        for (byte b : bytes) {
+            hexString.append(String.format("%02X", b));
+        }
+        return hexString.toString();
+    }
+
+    @Nullable
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String Encrypt(String text)
+    public static String Encrypt(String text, String secretKey, String saltValue)
     {
         byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         IvParameterSpec ivspec = new IvParameterSpec(iv);
@@ -57,7 +99,7 @@ public class EncryptorClass
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        KeySpec spec = new PBEKeySpec(SECRET_KEY.toCharArray(), SALTVALUE.getBytes(), 65536, 256);
+        KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), saltValue.getBytes(), 65536, 256);
         SecretKey tmp = null;
         try {
             if (factory != null) {
@@ -66,9 +108,9 @@ public class EncryptorClass
         } catch (InvalidKeySpecException e) {
             e.printStackTrace();
         }
-        SecretKeySpec secretKey = null;
+        SecretKeySpec secretKeyspec = null;
         if (tmp != null) {
-            secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+            secretKeyspec = new SecretKeySpec(tmp.getEncoded(), "AES");
         }
         Cipher cipher = null;
         try {
@@ -78,7 +120,7 @@ public class EncryptorClass
         }
         try {
             if (cipher != null) {
-                cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
+                cipher.init(Cipher.ENCRYPT_MODE, secretKeyspec, ivspec);
             }
         } catch (InvalidAlgorithmParameterException | InvalidKeyException e) {
             e.printStackTrace();
@@ -98,6 +140,7 @@ public class EncryptorClass
         return null;
     }
 
+    @Nullable
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String Decrypt(String text)
     {
@@ -146,7 +189,6 @@ public class EncryptorClass
                         }
                     }
 
-                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result)
                     {
@@ -175,7 +217,6 @@ public class EncryptorClass
                         }
                     }
 
-                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result)
                     {
@@ -278,9 +319,10 @@ public class EncryptorClass
         }
     }
 
+    @NonNull
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static String setSecurePassword(String password) {
-
+    public static String setSecurePassword(@NonNull String password)
+    {
         try
         {
             MessageDigest md = MessageDigest.getInstance("SHA-512");

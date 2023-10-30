@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.free.mainPage.MainPage;
+import com.free.MainPage;
 import com.free.R;
 import com.utilities.classes.EncryptorClass;
 import com.wallet.Wallet;

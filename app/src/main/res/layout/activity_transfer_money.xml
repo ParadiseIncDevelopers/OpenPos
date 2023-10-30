@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_backgr"
     tools:context="com.wallet.TransferMoney">
 
     <ImageView
@@ -90,12 +91,12 @@
                         android:layout_margin="@dimen/xSmallDp"
                         android:layout_weight="2"
                         app:boxBackgroundMode="outline"
-                        app:hintTextColor="#E64A19"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:errorEnabled="false"
-                        app:hintEnabled="false">
+                        app:hintEnabled="false"
+                        app:hintTextColor="#E64A19">
 
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -117,12 +118,12 @@
                         android:layout_margin="@dimen/xSmallDp"
                         android:layout_weight="3"
                         app:boxBackgroundMode="outline"
-                        app:hintTextColor="#E64A19"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:errorEnabled="false"
-                        app:hintEnabled="false">
+                        app:hintEnabled="false"
+                        app:hintTextColor="#E64A19">
 
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -165,12 +166,12 @@
                         android:layout_margin="@dimen/xSmallDp"
                         android:hint="Your description"
                         app:boxBackgroundMode="outline"
-                        app:hintTextColor="#E64A19"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:errorEnabled="false"
-                        app:hintEnabled="true">
+                        app:hintEnabled="true"
+                        app:hintTextColor="#E64A19">
 
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -197,12 +198,12 @@
                         android:layout_margin="@dimen/xSmallDp"
                         android:hint="Your wallet key"
                         app:boxBackgroundMode="outline"
-                        app:hintTextColor="#E64A19"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:errorEnabled="false"
-                        app:hintEnabled="true">
+                        app:hintEnabled="true"
+                        app:hintTextColor="#E64A19">
 
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -229,12 +230,12 @@
                         android:layout_margin="@dimen/xSmallDp"
                         android:hint="Your payment key"
                         app:boxBackgroundMode="outline"
-                        app:hintTextColor="#E64A19"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:errorEnabled="false"
-                        app:hintEnabled="true">
+                        app:hintEnabled="true"
+                        app:hintTextColor="#E64A19">
 
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -262,12 +263,12 @@
                         android:layout_margin="@dimen/xSmallDp"
                         android:hint="Your description"
                         app:boxBackgroundMode="outline"
-                        app:hintTextColor="#E64A19"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:errorEnabled="false"
-                        app:hintEnabled="true">
+                        app:hintEnabled="true"
+                        app:hintTextColor="#E64A19">
 
 
                         <com.google.android.material.textfield.TextInputEditText

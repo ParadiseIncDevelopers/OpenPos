@@ -36,7 +36,6 @@ import static com.utilities.classes.LoginFactoryClass.walletTaken;
 public class Wallet
 {
     private String code;
-
     private String email;
     private String currency;
     private double moneyCase;
@@ -682,17 +681,11 @@ public class Wallet
             Map<String, Object> walletEncryption = new HashMap<>();
 
             WalletLogs zeroLog = new WalletLogs.Builder()
-                    .SetEmail(email)
-                    .SetCommission("NO_COMMISSION")
-                    .SetContentDescription("WALLET CREATED.")
                     .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
                     .SetRest("0.00")
                     .SetSpend("0.00")
                     .Build();
 
-            walletLogs.put("email", EncryptorClass.Encrypt(zeroLog.getEmail()));
-            walletLogs.put("commission", zeroLog.getCommission());
-            walletLogs.put("contentDescription", zeroLog.getContentDescription());
             walletLogs.put("date", zeroLog.getDate());
             walletLogs.put("spend", zeroLog.getSpend());
             walletLogs.put("rest", zeroLog.getRest());
@@ -710,8 +703,11 @@ public class Wallet
                         {
                             if(snapshot.hasChildren())
                             {
+                                String saltKey = EncryptorClass.generateSaltKey(16);
+                                String secretKey = EncryptorClass.generateSecretKey(16);
                                 for(DataSnapshot snap : snapshot.getChildren())
                                 {
+
                                     if(snap.child("EncryptionKeys").child("WalletKey").getValue().toString().equals(theWalletKey[0]))
                                     {
                                         theWalletKey[0] = walletKeyCreator.get();
@@ -723,8 +719,8 @@ public class Wallet
                                     }
                                 }
 
-                                walletEncryption.put("WalletKey", EncryptorClass.Encrypt(theWalletKey[0]));
-                                walletEncryption.put("PaymentKey", EncryptorClass.Encrypt(thePaymentKey[0]));
+                                walletEncryption.put("WalletKey", EncryptorClass.Encrypt(theWalletKey[0], secretKey, saltKey));
+                                walletEncryption.put("PaymentKey", EncryptorClass.Encrypt(thePaymentKey[0], secretKey, saltKey));
 
                                 wallet.put("MoneyCase", 0.0);
                                 wallet.put("Currency", Currency);

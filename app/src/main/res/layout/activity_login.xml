@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_backgr"
     tools:context=".Login">
 
     <ImageView
         android:id="@+id/login_image_content"
-        android:layout_width="512px"
-        android:layout_height="512px"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
         android:layout_marginTop="50dp"
+        android:src="@drawable/ic_cash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_splash_screen" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,7 +38,7 @@
                 android:elevation="@dimen/xSmallDp"
                 android:gravity="center"
                 android:text="Login to your OpenPos"
-                android:textColor="#6A1B9A"
+                android:textColor="@color/primaryColor"
                 android:textSize="@dimen/mediumSp" />
 
             <TextView
@@ -54,11 +56,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/largeDp"
                 android:layout_marginRight="@dimen/largeDp"
-                app:hintTextColor="#E64A19"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:hintTextColor="#E64A19">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -78,11 +80,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/largeDp"
                 android:layout_marginRight="@dimen/largeDp"
-                app:hintTextColor="#E64A19"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/black"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:hintTextColor="#E64A19">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -99,14 +101,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/largeDp"
-                android:layout_marginEnd="@dimen/largeDp"
-                android:orientation="vertical">
+                android:layout_marginEnd="@dimen/largeDp">
 
                 <CheckBox
                     android:id="@+id/login_page_remember_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Remember me" />
+
+                <TextView
+                    android:id="@+id/login_page_forgot_password_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Forgot Password?" />
             </LinearLayout>
 
             <Button

@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.free.mainPage.MainPage;
+import com.free.MainPage;
 import com.free.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.utilities.classes.EncryptorClass;
 import com.utilities.QrCodeEncoder;
+import com.utilities.interfaces.IAES256KeyMaker;
+
 import org.jetbrains.annotations.NotNull;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
 import static com.utilities.classes.LoginFactoryClass.userEmail;
@@ -29,7 +31,7 @@ public class SendMoney extends AppCompatActivity {
     private ImageView send_page_qr_code;
     private TextView send_money_credentials_id, send_money_wallet_case;
     private Bitmap bitmap;
-
+    private String encryptionKey;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -58,7 +60,7 @@ public class SendMoney extends AppCompatActivity {
                 FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                         .getReference(EncryptorClass.setSecurePassword(userEmail))
                         .child(walletTaken)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                        .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
                             {
@@ -71,10 +73,6 @@ public class SendMoney extends AppCompatActivity {
                             }
                         });
             });
-
-
-
-
             send_money_credentials_id.setText("Please send money from this qr code...");
         });
     }

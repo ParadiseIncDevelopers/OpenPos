@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainPage.MainPage">
+    android:background="@drawable/ic_backgr"
+    tools:context=".MainPage">
 
     <LinearLayout
         android:id="@+id/main_page_transactions_container_1"
@@ -71,7 +72,6 @@
             android:layout_marginEnd="@dimen/xSmallDp"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:tint="#FFFFFF"
             app:backgroundTint="#1565C0"
             app:fabCustomSize="75dp"
             app:maxImageSize="50dp"
@@ -93,6 +93,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@android:color/transparent"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -109,7 +110,6 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#FFFFFF"
                     android:clickable="true"
-                    android:tint="#FFFFFF"
                     app:backgroundTint="#1565C0"
                     app:fabCustomSize="50dp"
                     app:maxImageSize="30dp"
@@ -139,7 +139,6 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#FFFFFF"
                     android:clickable="true"
-                    android:tint="#FFFFFF"
                     app:backgroundTint="#B42E7D32"
                     app:fabCustomSize="50dp"
                     app:maxImageSize="30dp"
@@ -169,7 +168,6 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#FFFFFF"
                     android:clickable="true"
-                    android:tint="#FFFFFF"
                     app:backgroundTint="#C4C62828"
                     app:fabCustomSize="50dp"
                     app:maxImageSize="30dp"
@@ -199,7 +197,6 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#FFFFFF"
                     android:clickable="true"
-                    android:tint="#FFFFFF"
                     app:backgroundTint="#B42E7D32"
                     app:fabCustomSize="50dp"
                     app:maxImageSize="30dp"
@@ -277,7 +274,6 @@
             android:layout_gravity="center"
             android:backgroundTint="#FFFFFF"
             android:clickable="true"
-            android:tint="#FFFFFF"
             app:backgroundTint="#BE00838F"
             app:fabCustomSize="36dp"
             app:maxImageSize="15dp"
@@ -289,6 +285,7 @@
         android:id="@+id/main_page_transactions_logs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_page_filter_container"

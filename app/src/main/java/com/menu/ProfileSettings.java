@@ -13,7 +13,7 @@ import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import com.free.mainPage.MainPage;
+import com.free.MainPage;
 import com.free.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;

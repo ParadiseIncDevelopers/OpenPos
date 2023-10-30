@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,21 +18,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 import com.utilities.classes.EncryptorClass;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
 import static com.free.NetworkChangeReceiver.NetworkCallback;
 
 public class UserApprovalRegister extends AppCompatActivity
@@ -211,19 +203,19 @@ public class UserApprovalRegister extends AppCompatActivity
             {
                 FirebaseStorage storage = FirebaseStorage.getInstance("gs://openpos-3e0d3-approval/");
                 StorageReference reference = storage.getReference();
-
-                StorageReference ref1 = reference.child(getIntent().getExtras().get("Email").toString()).child("Approval").child("Front");
-                StorageReference ref2 = reference.child(getIntent().getExtras().get("Email").toString()).child("Approval").child("Back");
+                Object id = getIntent().getExtras().get("id");
+                StorageReference ref1 = reference.child(id.toString()).child("Approval").child("Front");
+                StorageReference ref2 = reference.child(id.toString()).child("Approval").child("Back");
 
                 try
                 {
 
                     if(frontUri != null || backUri != null)
                     {
-                        StorageTask<UploadTask.TaskSnapshot> frontUpload = ref1.putFile(frontUri).addOnSuccessListener(taskSnapshot -> Toast.makeText(this, "Front image is loaded.", Toast.LENGTH_SHORT).show())
+                        ref1.putFile(frontUri).addOnSuccessListener(taskSnapshot -> Toast.makeText(this, "Front image is loaded.", Toast.LENGTH_SHORT).show())
                                 .addOnProgressListener(snapshot -> Toast.makeText(this, "Front image is loading...", Toast.LENGTH_SHORT).show())
                                 .addOnFailureListener(e -> Toast.makeText(this, "Front image is not loaded.", Toast.LENGTH_SHORT).show());
-                        StorageTask<UploadTask.TaskSnapshot> backUpload = ref2.putFile(backUri).addOnSuccessListener(taskSnapshot -> Toast.makeText(this, "Back image is loaded.", Toast.LENGTH_SHORT).show())
+                        ref2.putFile(backUri).addOnSuccessListener(taskSnapshot -> Toast.makeText(this, "Back image is loaded.", Toast.LENGTH_SHORT).show())
                                 .addOnProgressListener(snapshot -> Toast.makeText(this, "Back image is loading...", Toast.LENGTH_SHORT).show())
                                 .addOnFailureListener(e -> Toast.makeText(this, "Back image is not loaded.", Toast.LENGTH_SHORT).show());
 
@@ -232,7 +224,7 @@ public class UserApprovalRegister extends AppCompatActivity
                         approved.put("isUserAccountBlocked", true);
                         approved.put("isUserActionsBlocked", true);
                         approved.put("isUserApprovalInProgress", true);
-                        AccountApproved.put(EncryptorClass.setSecurePassword(getIntent().getExtras().get("Email").toString()), approved);
+                        AccountApproved.put(id.toString(), approved);
 
                         FirebaseDatabase.getInstance("https://openpos-userstatus.europe-west1.firebasedatabase.app/")
                                 .getReference()

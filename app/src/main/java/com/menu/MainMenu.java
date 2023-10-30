@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
-import com.free.mainPage.MainPage;
+import com.free.MainPage;
 import com.free.R;
 import static com.utilities.classes.LoginFactoryClass.userEmail;
 

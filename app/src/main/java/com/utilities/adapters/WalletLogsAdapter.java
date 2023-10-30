@@ -113,7 +113,6 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
         @Override
         public boolean onLongClick(View view)
         {
-
             Dialog dialog = new Dialog(itemView.getContext());
             dialog.requestWindowFeature(FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.dialog_wallet_logs_printer_screen);

@@ -1,6 +1,7 @@
 package com.wallet;
 
 import android.os.Build;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,9 @@ public class WalletLogs
     private String rest;
     private String commission;
 
+    @NonNull
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static List<WalletLogs> parseToArrayList(List<Map<String, Object>> logs)
+    public static List<WalletLogs> parseToArrayList(@NonNull List<Map<String, Object>> logs)
     {
         List<WalletLogs> allLogs = new ArrayList<>();
 

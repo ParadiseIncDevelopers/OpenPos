@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_backgr"
     tools:context=".Register">
 
     <ImageView
         android:id="@+id/register_image_content"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_cash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_splash_screen" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,9 +35,9 @@
                 android:layout_height="match_parent"
                 android:elevation="@dimen/xSmallDp"
                 android:gravity="center"
-                android:padding="@dimen/largeDp"
+                android:padding="@dimen/mediumDp"
                 android:text="Register to OpenPos"
-                android:textColor="#6A1B9A"
+                android:textColor="@color/primaryColor"
                 android:textSize="@dimen/mediumSp" />
 
             <TextView
@@ -56,11 +58,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/largeDp"
                 android:layout_marginRight="@dimen/largeDp"
-                app:hintTextColor="#E64A19"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:hintTextColor="#E64A19">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -80,11 +82,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/largeDp"
                 android:layout_marginRight="@dimen/largeDp"
-                app:hintTextColor="#E64A19"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:hintTextColor="#E64A19">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -104,11 +106,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/largeDp"
                 android:layout_marginRight="@dimen/largeDp"
-                app:hintTextColor="#E64A19"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:hintTextColor="#E64A19">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -128,11 +130,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/largeDp"
                 android:layout_marginRight="@dimen/largeDp"
-                app:hintTextColor="#E64A19"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/black"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:hintTextColor="#E64A19">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -146,17 +148,41 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_page_code_text"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/largeDp"
+                android:layout_marginRight="@dimen/largeDp"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/black"
+                app:errorEnabled="true"
+                app:hintTextColor="#E64A19">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_page_code_text_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="6-digit code"
+                    android:inputType="numberPassword"
+                    android:singleLine="true"
+                    android:textColor="#000000" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_page_currency_autocomplete"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/largeDp"
                 android:layout_marginRight="@dimen/largeDp"
-                app:hintTextColor="#E64A19"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="dropdown_menu"
                 app:endIconTint="@color/black"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:hintTextColor="#E64A19">
 
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView

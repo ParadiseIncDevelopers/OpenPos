@@ -1,7 +1,6 @@
 package com.free;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.WindowManager;

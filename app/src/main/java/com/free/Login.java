@@ -18,8 +18,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import com.free.mainPage.MainPage;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,7 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.utilities.classes.EncryptorClass;
 import com.utilities.classes.LoginFactoryClass;
-import com.utilities.tokenizers.RegisteredLoginTokenizer;
+import com.utilities.tokenizers.LoginTokenizer;
 import com.utilities.classes.UtilityValues;
 import com.wallet.Wallet;
 import com.wallet.WalletLogs;
@@ -40,7 +38,6 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +51,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
 import static android.view.Window.FEATURE_NO_TITLE;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
 import static com.utilities.classes.LoginFactoryClass.ProgramObjectsUtilityClass.Users;
@@ -76,7 +72,7 @@ public class Login extends AppCompatActivity
     private TextInputEditText login_page_email_text_field, login_page_password_text_field;
     private CheckBox login_page_remember_box;
     private Button login_page_submit_button, login_page_register_account_page;
-    private TextView login_page_error_text;
+    private TextView login_page_error_text, login_page_forgot_password_text;
     private Dialog dialog;
 
     private final Supplier<String> getMacAddress = () -> {
@@ -120,8 +116,10 @@ public class Login extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        NetworkCallback(this, () -> {
+        NetworkCallback(this, () ->
+        {
             login_page_error_text = findViewById(R.id.login_page_error_text);
+            login_page_forgot_password_text = findViewById(R.id.login_page_forgot_password_text);
             login_page_email_text = findViewById(R.id.login_page_email_text);
             login_page_password_text = findViewById(R.id.login_page_password_text);
             login_page_email_text_field = findViewById(R.id.login_page_email_text_field);
@@ -145,7 +143,6 @@ public class Login extends AppCompatActivity
 
                 }
 
-                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void afterTextChanged(Editable s)
                 {
@@ -211,7 +208,7 @@ public class Login extends AppCompatActivity
                                 String emailConverter = macFilter.collect(Collectors.toList()).get(0).child("Email").getValue().toString();
                                 String Email = EncryptorClass.setSecurePassword(emailConverter);
 
-                                RegisteredLoginTokenizer tokenizer = new RegisteredLoginTokenizer(Email);
+                                LoginTokenizer tokenizer = new LoginTokenizer(Email);
                                 tokenizer.createLoginToken();
 
                                 FirebaseDatabase.getInstance("https://openpos-userstatus.europe-west1.firebasedatabase.app/")
@@ -233,9 +230,11 @@ public class Login extends AppCompatActivity
                                                     accountBlocked[0] = Boolean.parseBoolean(snapshot.child("isUserAccountBlocked").getValue().toString());
                                                 }
 
-                                                if (!snapshot.hasChild("isUserApprovalInProgress")) {
+                                                if (!snapshot.hasChild("isUserApprovalInProgress"))
+                                                {
                                                     userApproval[0] = true;
-                                                } else {
+                                                }
+                                                else {
                                                     userApproval[0] = Boolean.parseBoolean(snapshot.child("isUserApprovalInProgress").getValue().toString());
                                                 }
 
@@ -451,7 +450,7 @@ public class Login extends AppCompatActivity
                     rememberTheUser(Email, EmailNotEncrypted);
                 }
 
-                RegisteredLoginTokenizer tokenizer = new RegisteredLoginTokenizer(Email);
+                LoginTokenizer tokenizer = new LoginTokenizer(Email);
                 tokenizer.createLoginToken();
 
                 FirebaseDatabase.getInstance("https://openpos-userstatus.europe-west1.firebasedatabase.app/")
@@ -494,7 +493,7 @@ public class Login extends AppCompatActivity
                                         if(Stream.of(Users.getJSONObject(Email)).anyMatch(x ->
                                         {
                                             try {
-                                                return x.get("Password").toString().equals(Password);
+                                                return x.get("EncryptedObject").toString().equals(Password);
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -695,6 +694,10 @@ public class Login extends AppCompatActivity
                         });
             });
 
+            login_page_forgot_password_text.setOnClickListener(view -> {
+
+            });
+
             login_page_register_account_page.setOnClickListener(view ->
             {
                 Intent intent = new Intent(Login.this, Register.class);
@@ -707,7 +710,6 @@ public class Login extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dialog.dismiss();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

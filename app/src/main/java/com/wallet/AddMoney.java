@@ -8,7 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.free.mainPage.MainPage;
+import com.free.MainPage;
 import com.free.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;

@@ -1,4 +1,4 @@
-package com.free.mainPage;
+package com.free;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,9 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
-import com.free.AccountImages;
-import com.free.Login;
-import com.free.R;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,7 +47,6 @@ import com.utilities.adapters.AvatarChooserMenuAdapter;
 import com.utilities.classes.LoginFactoryClass;
 import com.utilities.adapters.WalletLogsAdapter;
 import com.utilities.classes.UtilityValues;
-import com.utilities.interfaces.IFilterListener;
 import com.wallet.AddMoney;
 import com.wallet.ReceiveMoney;
 import com.wallet.SendMoney;
@@ -64,7 +60,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -97,13 +92,13 @@ public class MainPage extends AppCompatActivity
     private MaterialAutoCompleteTextView transaction_start_date_filters_text_1, transaction_start_date_filters_text_2, transaction_start_date_filters_text_3,
             transaction_final_date_filters_text_1, transaction_final_date_filters_text_2, transaction_final_date_filters_text_3;
     private Toolbar transaction_filters_toolbar;
-    private Button transaction_filters_submit_button, transaction_filters_reset_button;
+    private Button transaction_filters_submit_button, transaction_filters_reset_button, transaction_filters_get_default_list;
     private CheckBox transaction_received_amounts_filters_checkbox, transaction_sent_amounts_filters_checkbox;
     @SuppressLint("StaticFieldLeak")
     public static ImageView main_page_transactions_profile_image;
 
-    private static boolean filter_minimum_1, filter_minimum_2, filter_maximum_1, filter_maximum_2,
-    filter_start_1, filter_start_2, filter_start_3, filter_final_1, filter_final_2, filter_final_3;
+    private static boolean filter_minimum_1 = true, filter_minimum_2 = true, filter_maximum_1 = true, filter_maximum_2 = true,
+    filter_start_1 = true, filter_start_2 = true, filter_start_3 = true, filter_final_1 = true, filter_final_2 = true, filter_final_3 = true;
 
     private static ArrayList<WalletLogs> allLogs;
 
@@ -253,9 +248,13 @@ public class MainPage extends AppCompatActivity
         transaction_received_amounts_filters_checkbox = transactionFilter.findViewById(R.id.transaction_received_amounts_filters_checkbox);
         transaction_sent_amounts_filters_checkbox = transactionFilter.findViewById(R.id.transaction_sent_amounts_filters_checkbox);
 
-        ArrayAdapter<Integer> days = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, UtilityValues.Days);
-        ArrayAdapter<Integer> months = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, UtilityValues.Months);
-        ArrayAdapter<Integer> years = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, UtilityValues.Years());
+        List<Integer> getYears = UtilityValues.Years();
+
+        int spinnerItem = R.layout.support_simple_spinner_dropdown_item;
+
+        ArrayAdapter<Integer> days = new ArrayAdapter<>(this, spinnerItem, UtilityValues.Days);
+        ArrayAdapter<Integer> months = new ArrayAdapter<>(this, spinnerItem, UtilityValues.Months);
+        ArrayAdapter<Integer> years = new ArrayAdapter<>(this, spinnerItem, getYears);
         Supplier<Boolean> isAllTrue = () -> filter_minimum_1 && filter_minimum_2 && filter_maximum_1 && filter_maximum_2
                 && filter_start_1 && filter_start_2 && filter_start_3 && filter_final_1 && filter_final_2 && filter_final_3;
 
@@ -464,7 +463,9 @@ public class MainPage extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                filter_start_1 = !s.toString().isEmpty() || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches();
+                filter_start_1 = (!s.toString().isEmpty()
+                        || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches())
+                        && UtilityValues.Days.contains(Integer.valueOf(s.toString()));
 
                 if(filter_start_1)
                 {
@@ -495,7 +496,9 @@ public class MainPage extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                filter_start_2 = !s.toString().isEmpty() || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches();
+                filter_start_2 = (!s.toString().isEmpty()
+                        || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches())
+                        && UtilityValues.Months.contains(Integer.valueOf(s.toString()));
 
                 if(filter_start_2)
                 {
@@ -526,7 +529,9 @@ public class MainPage extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                filter_start_3 = !s.toString().isEmpty() || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches();
+                filter_start_3 = (!s.toString().isEmpty()
+                        || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches())
+                        && getYears.contains(Integer.valueOf(s.toString()));
 
                 if(filter_start_3)
                 {
@@ -557,7 +562,9 @@ public class MainPage extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                filter_final_1 = !s.toString().isEmpty() || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches();
+                filter_final_1 = (!s.toString().isEmpty()
+                        || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches())
+                        && UtilityValues.Days.contains(Integer.valueOf(s.toString()));
 
                 if(filter_final_1)
                 {
@@ -588,7 +595,9 @@ public class MainPage extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                filter_final_2 = !s.toString().isEmpty() || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches();
+                filter_final_2 = (!s.toString().isEmpty()
+                        || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches())
+                        && UtilityValues.Months.contains(Integer.valueOf(s.toString()));
 
                 if(filter_final_2)
                 {
@@ -619,7 +628,9 @@ public class MainPage extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                filter_final_3 = !s.toString().isEmpty() || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches();
+                filter_final_3 = (!s.toString().isEmpty()
+                        || Pattern.compile("^(\\d){1,}$").matcher(s.toString()).matches())
+                        && getYears.contains(Integer.valueOf(s.toString()));
 
                 if(filter_final_3)
                 {
@@ -634,6 +645,16 @@ public class MainPage extends AppCompatActivity
                     transaction_filters_submit_button.setEnabled(false);
                 }
             }
+        });
+
+        transaction_filters_get_default_list.setOnClickListener(view ->
+        {
+            main_page_transactions_text.setText("Last transactions");
+            adapter = new WalletLogsAdapter(allLogs);
+            main_page_transactions_logs.setAdapter(adapter);
+            main_page_wallet.setText(String.format("%s %s", userMoneyCase.get(walletTaken), userCurrency.get(walletTaken)));
+
+            transactionFilter.dismiss();
         });
 
         transaction_filters_reset_button.setOnClickListener(view ->
@@ -793,7 +814,7 @@ public class MainPage extends AppCompatActivity
                     logs.add(theLog);
                 });
 
-                main_page_transactions_text.setText(String.format("Last transactions, % of results", logs.size()));
+                main_page_transactions_text.setText(String.format("Last transactions, %d of results", logs.size()));
                 adapter = new WalletLogsAdapter(logs);
                 main_page_transactions_logs.setAdapter(adapter);
                 main_page_wallet.setText(String.format("%s %s", userMoneyCase.get(walletTaken), userCurrency.get(walletTaken)));
