@@ -2,6 +2,9 @@ package com.user;
 
 import com.utilities.interfaces.IEncryptedObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class EncryptedName implements IEncryptedObject {
     private final String text;
     private final String salt;
@@ -30,6 +33,17 @@ public class EncryptedName implements IEncryptedObject {
     @Override
     public String get6code() {
         return code;
+    }
+
+    @Override
+    public JSONObject toJsonObject() throws JSONException
+    {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("text", this.text);
+        jsonObject.put("salt", this.salt);
+        jsonObject.put("secret", this.secret);
+
+        return jsonObject;
     }
 
     public static class Builder {

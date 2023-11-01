@@ -5,7 +5,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import com.wallet.Wallet;
-import com.wallet.WalletLogs;
+import com.wallet.Models.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +20,7 @@ public class LoginFactoryClass
     public static Uri userImageUri;
     private final String email;
     public static String LoginType = "";
-    public static Map<String, ArrayList<WalletLogs>> userWalletLogs = new HashMap<>();
+    public static Map<String, ArrayList<Log>> userWalletLogs = new HashMap<>();
     public static Map<String, String> userCurrency = new HashMap<>();
     public static Map<String, String> userMoneyCase = new HashMap<>();
     public static String userNameAndSurname;

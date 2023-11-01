@@ -6,10 +6,8 @@ import android.graphics.Point;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import com.google.zxing.WriterException;
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
-import static android.content.Context.WINDOW_SERVICE;
+
+import androidx.annotation.NonNull;
 
 public class QrCodeEncoder
 {
@@ -72,7 +70,7 @@ public class QrCodeEncoder
         }
     }
 
-    public void SetQrCode(ImageView imageView, WindowManager manager)
+    public void SetQrCode(@NonNull ImageView imageView, @NonNull WindowManager manager)
     {
         Display display = manager.getDefaultDisplay();
         Point point = new Point();
@@ -82,7 +80,7 @@ public class QrCodeEncoder
         int dimen = Math.min(width, height);
         dimen = dimen * 3 / 4;
 
-        QRGEncoder qrgEncoder = new QRGEncoder(getEncoderString(), null, QRGContents.Type.TEXT, dimen);
+        /*QRGEncoder qrgEncoder = new QRGEncoder(getEncoderString(), null, QRGContents.Type.TEXT, dimen);
         try
         {
             setTheBitmap(qrgEncoder.encodeAsBitmap());
@@ -91,7 +89,7 @@ public class QrCodeEncoder
         catch (WriterException e)
         {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private QrCodeEncoder()

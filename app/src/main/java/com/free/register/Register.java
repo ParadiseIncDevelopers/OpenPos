@@ -1,4 +1,4 @@
-package com.free;
+package com.free.register;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,16 +15,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.free.login.Login;
+import com.free.R;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.utilities.classes.UtilityValues;
 import com.user.UserRegistrar;
-import java.util.function.Consumer;
+
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
+
+import org.json.JSONException;
 
 public class Register extends AppCompatActivity {
 
@@ -63,14 +68,15 @@ public class Register extends AppCompatActivity {
             register_page_login_account_page = findViewById(R.id.register_page_login_account_page);
             register_page_submit_button = findViewById(R.id.register_page_submit_button);
 
-            int greenColor = Color.parseColor("#558B2F");
+            ColorStateList greenColor = ColorStateList.valueOf(Color.parseColor("#558B2F"));
 
             Supplier<Boolean> allIsTrue = () ->
-                    register_page_email_text.getBoxStrokeColor() == greenColor &&
-                            register_page_name_and_surname_text.getBoxStrokeColor() == greenColor &&
-                            register_page_phone_number_text.getBoxStrokeColor() == greenColor &&
-                            register_page_password_text.getBoxStrokeColor() == greenColor &&
-                            register_page_currency_autocomplete.getBoxStrokeColor() == greenColor;
+                    register_page_email_text.getHintTextColor() == greenColor &&
+                            register_page_name_and_surname_text.getHintTextColor() == greenColor &&
+                            register_page_phone_number_text.getHintTextColor() == greenColor &&
+                            register_page_password_text.getHintTextColor() == greenColor &&
+                            register_page_code_text.getHintTextColor() == greenColor &&
+                            register_page_currency_autocomplete.getHintTextColor() == greenColor;
 
             ArrayAdapter<String> currency = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, UtilityValues.Currencies);
             register_page_currency_autocomplete_field.setAdapter(currency);
@@ -259,6 +265,7 @@ public class Register extends AppCompatActivity {
                 String Code = register_page_code_text_field.getText().toString();
 
                 UserRegistrar user = new UserRegistrar.Builder()
+                        .createSaltAndSecret(32)
                         .createId()
                         .setEmail(Email)
                         .setNameSurname(NameAndSurname)
@@ -268,46 +275,41 @@ public class Register extends AppCompatActivity {
                         .setCode(Code)
                         .Build();
 
-                Consumer<UserRegistrar> createUserAct = (setUser) ->
+                try
                 {
-                    Intent intent = new Intent(Register.this, UserApprovalRegister.class);
-                    intent.putExtra("id", user.getId());
-                    intent.putExtra("Email", Email);
-                    intent.putExtra("NameSurname", NameAndSurname);
-                    intent.putExtra("PhoneNumber", PhoneNumber);
-                    intent.putExtra("Password", Password);
-                    intent.putExtra("FirstAccountCurrency", Currency);
-                    intent.putExtra("Code", Code);
-                    setUser.createUser();
-                    startActivity(intent);
-                    finish();
-                };
-
-                FirebaseFunctions.getInstance("https://us-central1-openpos-3e0d3.cloudfunctions.net/")
-                        .getHttpsCallable("checkUserApproval")
-                        .call(user)
-                        .addOnSuccessListener(task -> {
-                            String result = (String) task.getData();
-                            assert result != null;
-                            if (result.equals("Your account is in the approval process. Please try again later."))
-                            {
-                                Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                if(result.equals("User data added to the database. User is not in the approval process."))
+                    FirebaseFunctions.getInstance("https://us-central1-openpos-3e0d3.cloudfunctions.net/")
+                            .getHttpsCallable("createUser")
+                            .call(user.toJsonObject())
+                            .addOnSuccessListener(task -> {
+                                String result = (String) task.getData();
+                                assert result != null;
+                                if (result.equals("Your account is in the approval process. Please try again later."))
                                 {
-                                    createUserAct.accept(user);
-                                }
-                                else {
                                     Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
                                 }
+                                else {
+                                    if(result.equals("User data added to the database. User is not in the approval process."))
+                                    {
+                                        Intent intent = new Intent(Register.this, Login.class);
+                                        user.createUser();
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else {
+                                        Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
+                                    }
 
-                            }
-                        })
-                        .addOnFailureListener(e ->
-                        {
-                            Toast.makeText(Register.this, "Function call failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
+                                }
+                            })
+                            .addOnFailureListener(e ->
+                            {
+                                Toast.makeText(Register.this, "Function call failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                }
+                catch (JSONException e)
+                {
+                    throw new RuntimeException(e);
+                }
             });
         });
     }

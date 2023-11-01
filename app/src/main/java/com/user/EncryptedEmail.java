@@ -5,13 +5,13 @@ import com.utilities.interfaces.IEncryptedObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class EncryptedPhoneNumber implements IEncryptedObject {
+public class EncryptedEmail implements IEncryptedObject {
     private final String text;
     private final String salt;
     private final String secret;
     private final String code;
 
-    private EncryptedPhoneNumber(String text, String salt, String secret, String code) {
+    private EncryptedEmail(String text, String salt, String secret, String code) {
         this.text = text;
         this.salt = salt;
         this.secret = secret;
@@ -71,8 +71,8 @@ public class EncryptedPhoneNumber implements IEncryptedObject {
             return this;
         }
 
-        public EncryptedPhoneNumber build() {
-            return new EncryptedPhoneNumber(text, salt, secret, code);
+        public EncryptedEmail build() {
+            return new EncryptedEmail(text, salt, secret, code);
         }
     }
 }

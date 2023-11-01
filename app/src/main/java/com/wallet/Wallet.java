@@ -2,7 +2,6 @@ package com.wallet;
 
 import android.content.Context;
 import android.os.Build;
-import android.os.Handler;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -11,8 +10,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.money.Money;
+import com.user.UserRegistrar;
 import com.utilities.classes.EncryptorClass;
+import com.wallet.Models.Log;
+import com.wallet.Models.WalletContainer;
+import com.wallet.Models.WalletEncryption;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,12 +40,14 @@ import static com.utilities.classes.LoginFactoryClass.walletTaken;
 
 public class Wallet
 {
-    private String code;
+    private String actionCode;
     private String email;
     private String currency;
     private double moneyCase;
     private String walletKey;
     private String paymentKey;
+
+    private WalletContainer container;
 
     public static Supplier<String> walletKeyCreator = () ->
     {
@@ -91,10 +98,9 @@ public class Wallet
 
     }
 
-    public Wallet(String Code, String Email)
+    public Wallet(String actionCode)
     {
-        this.code = Code;
-        this.email = Email;
+        this.actionCode = actionCode;
     }
 
 
@@ -219,8 +225,8 @@ public class Wallet
 
                                             elements.replace("MoneyCase", new DecimalFormat("#.##").format(changeCurrentMoney));
 
-                                            List<WalletLogs> getLogs = (List<WalletLogs>) elements.get("Logs");
-                                            WalletLogs log = new WalletLogs.Builder()
+                                            List<Log> getLogs = (List<Log>) elements.get("Logs");
+                                            Log log = new Log.Builder()
                                                     .SetEmail(destinationEmail)
                                                     .SetContentDescription(descriptionText.apply(description))
                                                     .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
@@ -254,8 +260,8 @@ public class Wallet
 
                             elements.replace("MoneyCase", new DecimalFormat("#.##").format(newMoney.getMoneyCase()));
 
-                            List<WalletLogs> getLogs = (List<WalletLogs>) elements.get("Logs");
-                            WalletLogs log = new WalletLogs.Builder()
+                            List<Log> getLogs = (List<Log>) elements.get("Logs");
+                            Log log = new Log.Builder()
                                     .SetEmail(email)
                                     .SetContentDescription(descriptionText.apply(description))
                                     .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
@@ -326,8 +332,8 @@ public class Wallet
 
                                         elements.replace("MoneyCase", new DecimalFormat("#.##").format(changeCurrentMoney));
 
-                                        List<WalletLogs> getLogs = (List<WalletLogs>) elements.get("Logs");
-                                        WalletLogs log = new WalletLogs.Builder()
+                                        List<Log> getLogs = (List<Log>) elements.get("Logs");
+                                        Log log = new Log.Builder()
                                                 .SetEmail(destinationEmail)
                                                 .SetContentDescription(descriptionText.apply(description))
                                                 .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
@@ -361,8 +367,8 @@ public class Wallet
 
                         elements.replace("MoneyCase", new DecimalFormat("#.##").format(newMoney.getMoneyCase()));
 
-                        List<WalletLogs> getLogs = (List<WalletLogs>) elements.get("Logs");
-                        WalletLogs log = new WalletLogs.Builder()
+                        List<Log> getLogs = (List<Log>) elements.get("Logs");
+                        Log log = new Log.Builder()
                                 .SetEmail(email)
                                 .SetContentDescription(descriptionText.apply(description))
                                 .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
@@ -417,10 +423,10 @@ public class Wallet
                             elements.replace("MoneyCase", new DecimalFormat("#.##").format(theMoney.getMoneyCase()));
                             userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(theMoney.getMoneyCase()));
 
-                            List<WalletLogs> getLogs = WalletLogs.parseToArrayList((List<Map<String, Object>>) elements.get("Logs"));
+                            List<Log> getLogs = Log.parseToArrayList((List<Map<String, Object>>) elements.get("Logs"));
                             userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(changeCurrentMoney));
 
-                            WalletLogs log = new WalletLogs.Builder()
+                            Log log = new Log.Builder()
                                     .SetEmail(email)
                                     .SetContentDescription("ADDED MONEY")
                                     .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
@@ -438,7 +444,7 @@ public class Wallet
                                     .child(EncryptorClass.setSecurePassword(email))
                                     .child(walletTaken).setValue(elements);
 
-                            userWalletLogs.replace(walletTaken, (ArrayList<WalletLogs>) getLogs);
+                            userWalletLogs.replace(walletTaken, (ArrayList<Log>) getLogs);
                         }
                         else{
                             Toast.makeText(context, "You must add more than 5$ or the amount equivalent from your currency.", Toast.LENGTH_SHORT).show();
@@ -544,9 +550,9 @@ public class Wallet
                             elements.replace("MoneyCase", new DecimalFormat("#.##").format(changeCurrentMoney));
                             userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(changeCurrentMoney));
 
-                            List<WalletLogs> getLogs = WalletLogs.parseToArrayList((List<Map<String, Object>>) elements.get("Logs"));
+                            List<Log> getLogs = Log.parseToArrayList((List<Map<String, Object>>) elements.get("Logs"));
 
-                            WalletLogs log = new WalletLogs.Builder()
+                            Log log = new Log.Builder()
                                     .SetEmail(email)
                                     .SetContentDescription("WITHDRAW MONEY")
                                     .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
@@ -564,7 +570,7 @@ public class Wallet
                                     .child(EncryptorClass.setSecurePassword(email))
                                     .child(walletTaken).setValue(elements);
 
-                            userWalletLogs.replace(walletTaken, (ArrayList<WalletLogs>) getLogs);
+                            userWalletLogs.replace(walletTaken, (ArrayList<Log>) getLogs);
 
                             getCommission(newMoney.getMoneyCase(), newMoney.getCurrency());
                         }
@@ -583,7 +589,7 @@ public class Wallet
     {
         final String[] returnString = {""};
 
-        if(this.code.equals("CREATE_NORMAL_WALLET"))
+        /*if(this.code.equals("CREATE_NORMAL_WALLET"))
         {
             FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                     .getReference()
@@ -597,7 +603,7 @@ public class Wallet
                             Map<String, Map<String, String>> logs = new HashMap<>();
                             Map<String, Object> walletEncryption = new HashMap<>();
 
-                            WalletLogs zeroLog = new WalletLogs.Builder()
+                            Log zeroLog = new Log.Builder()
                                     .SetEmail(email)
                                     .SetCommission("NO_COMMISSION")
                                     .SetContentDescription("WALLET CREATED.")
@@ -665,31 +671,26 @@ public class Wallet
 
                         }
                     });
-        }
+        }*/
 
         return returnString[0];
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void createWallet(String Currency)
+    public void createWallet(@NonNull UserRegistrar user)
     {
-        if(this.code.equals("CREATE_WALLET"))
+        if(this.actionCode.equals("CREATE_WALLET"))
         {
-            Map<String, Object> wallet = new HashMap<>();
-            Map<String, String> walletLogs = new HashMap<>();
-            Map<String, Map<String, String>> logs = new HashMap<>();
-            Map<String, Object> walletEncryption = new HashMap<>();
-
-            WalletLogs zeroLog = new WalletLogs.Builder()
+            List<Log> logs = new ArrayList<>();
+            Log zeroLog = new Log.Builder()
                     .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
                     .SetRest("0.00")
                     .SetSpend("0.00")
                     .Build();
+            logs.add(zeroLog);
 
-            walletLogs.put("date", zeroLog.getDate());
-            walletLogs.put("spend", zeroLog.getSpend());
-            walletLogs.put("rest", zeroLog.getRest());
-            logs.put("0", walletLogs);
+            String saltKey = EncryptorClass.generateSaltKey(32);
+            String secretKey = EncryptorClass.generateSecretKey(32);
 
             final String[] thePaymentKey = {paymentKeyCreator.get()};
             final String[] theWalletKey = {walletKeyCreator.get()};
@@ -701,10 +702,9 @@ public class Wallet
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
                         {
+
                             if(snapshot.hasChildren())
                             {
-                                String saltKey = EncryptorClass.generateSaltKey(16);
-                                String secretKey = EncryptorClass.generateSecretKey(16);
                                 for(DataSnapshot snap : snapshot.getChildren())
                                 {
 
@@ -719,36 +719,44 @@ public class Wallet
                                     }
                                 }
 
-                                walletEncryption.put("WalletKey", EncryptorClass.Encrypt(theWalletKey[0], secretKey, saltKey));
-                                walletEncryption.put("PaymentKey", EncryptorClass.Encrypt(thePaymentKey[0], secretKey, saltKey));
+                                WalletEncryption walletEncryption = new WalletEncryption.Builder()
+                                        .setWalletKey(EncryptorClass.Encrypt(theWalletKey[0], secretKey, saltKey))
+                                        .setPaymentKey(EncryptorClass.Encrypt(thePaymentKey[0], secretKey, saltKey))
+                                        .build();
 
-                                wallet.put("MoneyCase", 0.0);
-                                wallet.put("Currency", Currency);
-                                wallet.put("Logs", logs);
-                                wallet.put("EncryptionKeys", walletEncryption);
-
-                                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                        .getReference()
-                                        .child(EncryptorClass.setSecurePassword(email))
-                                        .child("MainWallet")
-                                        .setValue(wallet);
+                                container = new WalletContainer.Builder()
+                                        .setEncryption(walletEncryption)
+                                        .setLogs(logs)
+                                        .setCurrency(user.getCurrency())
+                                        .setMoneyCase(0.0)
+                                        .build();
                             }
-                            else{
-                                walletEncryption.put("WalletKey", EncryptorClass.Encrypt(theWalletKey[0]));
-                                walletEncryption.put("PaymentKey", EncryptorClass.Encrypt(thePaymentKey[0]));
+                            else {
+                                WalletEncryption walletEncryption = new WalletEncryption.Builder()
+                                        .setWalletKey(EncryptorClass.Encrypt(theWalletKey[0], secretKey, saltKey))
+                                        .setPaymentKey(EncryptorClass.Encrypt(thePaymentKey[0], secretKey, saltKey))
+                                        .build();
 
-                                wallet.put("MoneyCase", 0.0);
-                                wallet.put("Currency", Currency);
-                                wallet.put("Logs", logs);
-                                wallet.put("EncryptionKeys", walletEncryption);
+                                container = new WalletContainer.Builder()
+                                        .setEncryption(walletEncryption)
+                                        .setLogs(logs)
+                                        .setCurrency(user.getCurrency())
+                                        .setMoneyCase(0.0)
+                                        .build();
+                                walletTaken = walletKey;
+                            }
 
+                            try
+                            {
                                 FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                                         .getReference()
-                                        .child(EncryptorClass.setSecurePassword(email))
-                                        .child("MainWallet")
-                                        .setValue(wallet);
-
-                                walletTaken = "MainWallet";
+                                        .child(user.getId())
+                                        .child(walletKey)
+                                        .setValue(container.toJsonObject());
+                            }
+                            catch (JSONException e)
+                            {
+                                throw new RuntimeException(e);
                             }
                         }
 

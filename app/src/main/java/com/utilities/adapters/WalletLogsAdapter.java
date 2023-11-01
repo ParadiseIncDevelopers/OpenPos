@@ -2,7 +2,6 @@ package com.utilities.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,18 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.free.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.utilities.classes.EncryptorClass;
-import com.wallet.WalletLogs;
+import com.wallet.Models.Log;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
-import javax.activation.URLDataSource;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -52,9 +46,9 @@ import static com.utilities.classes.LoginFactoryClass.walletTaken;
 
 public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.WalletLogsHolder>
 {
-    private final ArrayList<WalletLogs> logs;
+    private final ArrayList<Log> logs;
 
-    public WalletLogsAdapter(ArrayList<WalletLogs> logs)
+    public WalletLogsAdapter(ArrayList<Log> logs)
     {
         this.logs = logs;
     }
@@ -72,7 +66,7 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
     @Override
     public void onBindViewHolder(@NonNull @NotNull WalletLogsAdapter.WalletLogsHolder holder, int position)
     {
-        WalletLogs thePositionElement = logs.get(position);
+        Log thePositionElement = logs.get(position);
 
         holder.wallet_logs_email.setText(String.format("%s", thePositionElement.getEmail()));
         holder.wallet_logs_spend.setText(String.format("%s", thePositionElement.getSpend()));

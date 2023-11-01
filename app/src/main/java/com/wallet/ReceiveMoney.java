@@ -1,31 +1,19 @@
 package com.wallet;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.free.MainPage;
 import com.free.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.utilities.classes.CapturerClass;
 import com.utilities.classes.EncryptorClass;
-
-import org.jetbrains.annotations.NotNull;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
 import static com.utilities.classes.LoginFactoryClass.userEmail;
 
@@ -70,11 +58,11 @@ public class ReceiveMoney extends AppCompatActivity {
 
                             description = receive_money_page_description_text_field.getText().toString();
 
-                            IntentIntegrator intent = new IntentIntegrator(this);
+                            /*IntentIntegrator intent = new IntentIntegrator(this);
                             intent.setBeepEnabled(true);
                             intent.setOrientationLocked(true);
                             intent.setCaptureActivity(CapturerClass.class);
-                            intent.initiateScan();
+                            intent.initiateScan();*/
                         }
                         catch (NumberFormatException e)
                         {
@@ -86,6 +74,7 @@ public class ReceiveMoney extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(ReceiveMoney.this, MainPage.class);
         intent.putExtra("Email", userEmail);
         startActivity(intent);
@@ -97,7 +86,7 @@ public class ReceiveMoney extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        /*IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
         NetworkCallback(this, () -> {
             if(result.getContents() != null)
@@ -146,6 +135,6 @@ public class ReceiveMoney extends AppCompatActivity {
                 receive_money_page_error_text.setVisibility(View.VISIBLE);
                 receive_money_page_error_text.setText("Please try again.");
             }
-        });
+        });*/
     }
 }

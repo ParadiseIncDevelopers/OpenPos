@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.free.login.Login;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,7 +52,7 @@ import com.wallet.AddMoney;
 import com.wallet.ReceiveMoney;
 import com.wallet.SendMoney;
 import com.wallet.TransferMoney;
-import com.wallet.WalletLogs;
+import com.wallet.Models.Log;
 import com.wallet.WithdrawMoney;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -76,6 +77,8 @@ import static com.utilities.classes.LoginFactoryClass.walletTaken;
 
 public class MainPage extends AppCompatActivity
 {
+    //TODO : Ziraatbank'ın UI ına benzer bir UI yapılacak tıpkı bireysel hesaplardaki gibi
+
     private TextView main_page_wallet, main_page_name_and_surname, main_page_email, main_page_transactions_text;
     private FloatingActionButton main_page_give_money_button, main_page_receive_money_button,
             main_page_withdraw_money_button, main_page_add_money_button, main_page_transactions_menu,
@@ -100,7 +103,7 @@ public class MainPage extends AppCompatActivity
     private static boolean filter_minimum_1 = true, filter_minimum_2 = true, filter_maximum_1 = true, filter_maximum_2 = true,
     filter_start_1 = true, filter_start_2 = true, filter_start_3 = true, filter_final_1 = true, filter_final_2 = true, filter_final_3 = true;
 
-    private static ArrayList<WalletLogs> allLogs;
+    private static ArrayList<Log> allLogs;
 
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -161,7 +164,7 @@ public class MainPage extends AppCompatActivity
 
             runOnUiThread(() -> {
                 allLogs = userWalletLogs.get(walletTaken);
-                ArrayList<WalletLogs> logs = allLogs;
+                ArrayList<Log> logs = allLogs;
                 adapter = new WalletLogsAdapter(logs);
                 LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
                 manager.setReverseLayout(true);
@@ -708,7 +711,7 @@ public class MainPage extends AppCompatActivity
                         "minimum amount cannot have more value than maximum amount.", Toast.LENGTH_SHORT).show();
             }
             else {
-                ArrayList<WalletLogs> logs = new ArrayList<>();
+                ArrayList<Log> logs = new ArrayList<>();
 
                 String[] headerArray = new String[] { "Content Description", "Rest", "Commission", "Date", "Email", "Spend" };
                 String[][] subArray = allLogs.stream().map(u ->
@@ -730,12 +733,12 @@ public class MainPage extends AppCompatActivity
                     allArrays[i] = subArray[i];
                 }
 
-                List<WalletLogs> getReceivedAmountsList = new ArrayList<>();
-                List<WalletLogs> getSentAmountsList = new ArrayList<>();
+                List<Log> getReceivedAmountsList = new ArrayList<>();
+                List<Log> getSentAmountsList = new ArrayList<>();
 
                 for(int i = 1; i < allArrays.length; i++)
                 {
-                    WalletLogs.Builder log = new WalletLogs.Builder();
+                    Log.Builder log = new Log.Builder();
 
                     if(i - 1 != 0)
                     {
@@ -779,11 +782,11 @@ public class MainPage extends AppCompatActivity
 
                 getReceivedAmountsList.addAll(getSentAmountsList);
 
-                Stream<WalletLogs> getMinAndMaxAmountStream = getReceivedAmountsList.stream().filter(x ->
+                Stream<Log> getMinAndMaxAmountStream = getReceivedAmountsList.stream().filter(x ->
                         Double.parseDouble(x.getRest().replace(",", ".")) >= minAmount &&
                                 Double.parseDouble(x.getRest().replace(",", ".")) <= maxAmount
                 );
-                Stream<WalletLogs> getStartAndFinalDateStream = getMinAndMaxAmountStream.filter(x -> {
+                Stream<Log> getStartAndFinalDateStream = getMinAndMaxAmountStream.filter(x -> {
                    LocalDateTime getDate = LocalDateTime.parse(x.getDate(), DateTimeFormatter.ISO_DATE_TIME);
 
                    LocalDateTime getStartDateConverted = LocalDateTime.of(
@@ -803,7 +806,7 @@ public class MainPage extends AppCompatActivity
                         .collect(Collectors.toList())
                         .forEach(x ->
                 {
-                    WalletLogs theLog = new WalletLogs.Builder()
+                    Log theLog = new Log.Builder()
                             .SetSpend(x.getSpend())
                             .SetRest(x.getRest())
                             .SetEmail(x.getEmail())

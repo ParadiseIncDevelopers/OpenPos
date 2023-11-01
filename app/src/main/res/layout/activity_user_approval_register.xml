@@ -5,35 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context=".UserApprovalRegister">
-
-    <ImageView
-        android:id="@+id/user_approval_image_content"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_cash" />
+    tools:context=".register.UserApprovalRegister">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_approval_image_content">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/mediumDp">
+            android:padding="@dimen/smallDp">
 
             <TextView
                 android:id="@+id/user_approval_register_header_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/largeDp"
+                android:layout_margin="@dimen/smallDp"
                 android:elevation="@dimen/xSmallDp"
                 android:gravity="center"
                 android:text="Register for approval"
@@ -45,70 +37,91 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/smallDp"
-                android:text="In order to open an account according to the laws of the Republic of Turkey, you must upload the front and back of your ID card to your account. (After approval this data will be erased automatically)." />
+                android:text="In order to open an account, you must write your phone number. Then, write the 8-digit code below : " />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/user_approval_register_ids_container"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:gravity="top"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/user_approval_image_id_front"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:src="@drawable/ic_id_card"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/user_approval_image_id_back"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/user_approval_image_id_front_text" />
-
-                <ImageView
-                    android:id="@+id/user_approval_image_id_back"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:src="@drawable/ic_id_card"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/user_approval_image_id_front"
-                    app:layout_constraintTop_toBottomOf="@id/user_approval_image_id_back_text" />
-
-                <TextView
-                    android:id="@+id/user_approval_image_id_front_text"
-                    android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/user_approval_phone_text"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/smallDp"
-                    android:text="Front of Id card"
-                    app:layout_constraintBottom_toTopOf="@+id/user_approval_image_id_front"
-                    app:layout_constraintEnd_toStartOf="@id/user_approval_image_id_back_text"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:boxStrokeWidthFocused="2dp"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/black"
+                    app:errorEnabled="true"
+                    app:hintTextColor="#E64A19">
 
-                <TextView
-                    android:id="@+id/user_approval_image_id_back_text"
-                    android:layout_width="0dp"
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/user_approval_phone_text_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone number"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        android:textColor="#000000" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/user_approval_phone_submit_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/smallDp"
-                    android:text="Back of Id card"
-                    app:layout_constraintBottom_toTopOf="@id/user_approval_image_id_back"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/user_approval_image_id_front_text"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:text="Send code"
+                    android:textAllCaps="false"
+                    android:textColor="#0277BD"
+                    app:rippleColor="#B00277BD"
+                    app:strokeColor="#0277BD"
+                    app:strokeWidth="1dp" />
 
-            <Button
-                android:id="@+id/user_approval_submit_button"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/user_approval_8digit_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Create account"
-                android:textAllCaps="false"
-                android:textColor="#0277BD"
-                app:rippleColor="#B00277BD"
-                app:strokeColor="#0277BD"
-                app:strokeWidth="1dp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/user_approval_8digit_text"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/black"
+                    app:errorEnabled="true"
+                    app:hintTextColor="#E64A19">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/user_approval_8digit_text_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="8-digit code"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        android:textColor="#000000" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/user_approval_submit_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Create account"
+                    android:textAllCaps="false"
+                    android:textColor="#0277BD"
+                    app:rippleColor="#B00277BD"
+                    app:strokeColor="#0277BD"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

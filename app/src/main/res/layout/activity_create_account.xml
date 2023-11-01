@@ -4,61 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_backgr"
     tools:context="com.menu.CreateAccount">
 
-    <ImageView
-        android:id="@+id/create_account_image_content"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:padding="@dimen/smallDp"
-        android:src="@drawable/ic_receivemoney"
-        android:tint="#6A1B9A"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/create_account_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_white"
+        app:title="Create Account" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/create_account_text_subtitle"
         style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:elevation="@dimen/xSmallDp"
-        android:gravity="center"
-        android:padding="@dimen/largeDp"
-        android:text="Create a bank account in OpenPos"
-        android:textColor="#6A1B9A"
-        android:textSize="@dimen/mediumSp"
-        app:layout_constraintBottom_toBottomOf="@+id/create_account_image_content"
+        android:padding="@dimen/smallDp"
+        android:text="In order to create an account, in OpenPos, You need to choose the type of currency."
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/create_account_image_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_account_toolbar" />
 
     <LinearLayout
         android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/any_view_container"
         android:orientation="vertical"
         android:padding="@dimen/smallDp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_account_image_content">
+        app:layout_constraintTop_toBottomOf="@+id/create_account_text_subtitle">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/profile_settings_name_and_surname_input"
+            android:id="@+id/create_account_text_account_type"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/largeDp"
             android:layout_marginRight="@dimen/largeDp"
-            app:hintTextColor="#E64A19"
             app:boxStrokeWidthFocused="2dp"
             app:endIconMode="dropdown_menu"
-            app:endIconTint="@color/black"
-            app:errorEnabled="true">
+            app:endIconTint="@color/white"
+            app:errorEnabled="true"
+            app:hintTextColor="#E64A19">
 
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/create_account_currency_autocomplete_field"
+                android:id="@+id/create_account_text_account_type_auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Account currency"
@@ -66,11 +68,11 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
-                android:textColor="#000000" />
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/create_account_submit"
+            android:id="@+id/create_account_submit_button"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,9 +80,9 @@
             android:layout_marginRight="@dimen/largeDp"
             android:text="Create account"
             android:textAllCaps="false"
-            android:textColor="#0277BD"
-            app:rippleColor="#B00277BD"
-            app:strokeColor="#0277BD"
+            android:textColor="@color/white"
+            app:rippleColor="#94FBFBFB"
+            app:strokeColor="#FFF"
             app:strokeWidth="1dp" />
 
     </LinearLayout>
