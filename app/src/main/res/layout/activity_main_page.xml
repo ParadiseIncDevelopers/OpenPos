@@ -5,290 +5,193 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context=".MainPage">
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    tools:context=".MainPage" >
 
-    <LinearLayout
-        android:id="@+id/main_page_transactions_container_1"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_page_ConstraintLayout1_Exit"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/any_view_container"
-        android:gravity="center"
-        android:padding="@dimen/mediumDp"
-        app:layout_constraintBottom_toTopOf="@+id/main_page_transactions_container_2"
+        app:layout_constraintBottom_toTopOf="@+id/main_page_ConstraintLayout2_Account"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/main_page_transactions_profile_image"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:padding="@dimen/smallDp"
-            app:srcCompat="@drawable/ic_wallet" />
-
-        <LinearLayout
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_page_FAB1_Close"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="5"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/main_page_name_and_surname"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/any_view_container"
-                android:gravity="center_vertical"
-                android:text="Waiting..."
-                android:textSize="@dimen/xSmallSp" />
-
-            <TextView
-                android:id="@+id/main_page_email"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Waiting..."
-                android:textSize="@dimen/xSmallSp" />
-
-            <TextView
-                android:id="@+id/main_page_wallet"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Waiting..."
-                android:textSize="@dimen/xSmallSp" />
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_page_transactions_menu"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/xSmallDp"
-            android:layout_marginEnd="@dimen/xSmallDp"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            app:backgroundTint="#1565C0"
-            app:fabCustomSize="75dp"
-            app:maxImageSize="50dp"
-            app:rippleColor="#1565C0"
-            app:srcCompat="@drawable/ic_menu" />
+            android:id="@+id/main_page_FAB2_Menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
-
-    <HorizontalScrollView
-        android:id="@+id/main_page_transactions_container_2"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_page_ConstraintLayout2_Account"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/main_page_LinearLayout_AllTxts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_page_transactions_container_1">
+        app:layout_constraintTop_toBottomOf="@+id/main_page_ConstraintLayout1_Exit">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/main_page_ImageView1_Acoount"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:src="@tools:sample/avatars"
+            app:layout_constraintBottom_toTopOf="@+id/main_page_FAB4_ArrowUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_page_FAB3_ArrowDown" />
 
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/xSmallDp">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_page_FAB3_ArrowDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@android:drawable/ic_input_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_page_ImageView1_Acoount" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/main_page_transfer_money_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#FFFFFF"
-                    android:clickable="true"
-                    app:backgroundTint="#1565C0"
-                    app:fabCustomSize="50dp"
-                    app:maxImageSize="30dp"
-                    app:rippleColor="#1565C0"
-                    app:srcCompat="@drawable/ic_withdraw" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/xSmallDp"
-                    android:text="Transfer Money"
-                    android:textSize="@dimen/xSmallSp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/xSmallDp">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/main_page_receive_money_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#FFFFFF"
-                    android:clickable="true"
-                    app:backgroundTint="#B42E7D32"
-                    app:fabCustomSize="50dp"
-                    app:maxImageSize="30dp"
-                    app:rippleColor="#B42E7D32"
-                    app:srcCompat="@drawable/ic_receivemoney" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/xSmallDp"
-                    android:text="Receive money"
-                    android:textSize="@dimen/xSmallSp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/xSmallDp">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/main_page_give_money_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#FFFFFF"
-                    android:clickable="true"
-                    app:backgroundTint="#C4C62828"
-                    app:fabCustomSize="50dp"
-                    app:maxImageSize="30dp"
-                    app:rippleColor="#C3C62828"
-                    app:srcCompat="@drawable/ic_givemoney" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/xSmallDp"
-                    android:text="Send money"
-                    android:textSize="@dimen/xSmallSp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/xSmallDp">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/main_page_add_money_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#FFFFFF"
-                    android:clickable="true"
-                    app:backgroundTint="#B42E7D32"
-                    app:fabCustomSize="50dp"
-                    app:maxImageSize="30dp"
-                    app:rippleColor="#B42E7D32"
-                    app:srcCompat="@drawable/ic_add" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/xSmallDp"
-                    android:text="Add money"
-                    android:textSize="@dimen/xSmallSp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/xSmallDp">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/main_page_withdraw_money_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#FFFFFF"
-                    android:clickable="true"
-                    android:tint="#FFFFFF"
-                    app:backgroundTint="#C4C62828"
-                    app:fabCustomSize="50dp"
-                    app:maxImageSize="30dp"
-                    app:rippleColor="#C3C62828"
-                    app:srcCompat="@drawable/ic_withdraw" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/xSmallDp"
-                    android:text="Withdraw Money"
-                    android:textSize="@dimen/xSmallSp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_page_FAB4_ArrowUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@android:drawable/ic_input_add"
+            app:layout_constraintBottom_toTopOf="@+id/main_page_ImageView1_Acoount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/main_page_filter_container"
-        android:layout_width="match_parent"
+        android:id="@+id/main_page_LinearLayout_AllTxts"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/any_view_container"
-        android:orientation="horizontal"
-        android:padding="@dimen/smallDp"
-        app:layout_constraintBottom_toTopOf="@+id/main_page_transactions_logs"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/login_page_register_account_page3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_transactions_container_2">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/main_page_transactions_text"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/smallDp"
-            android:layout_weight="5"
-            android:text="Last transactions Last transactions Last transactions Last transactions Last transactions" />
+            android:orientation="horizontal">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_page_transactions_filter_button"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:backgroundTint="#FFFFFF"
-            android:clickable="true"
-            app:backgroundTint="#BE00838F"
-            app:fabCustomSize="36dp"
-            app:maxImageSize="15dp"
-            app:rippleColor="#BE00838F"
-            app:srcCompat="@drawable/ic_filter" />
+            <TextView
+                android:id="@+id/main_page_TextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="@dimen/xSmallDp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/main_page_TextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/xSmallDp"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/main_page_TextView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="@dimen/xSmallDp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/main_page_TextView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/xSmallDp"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/main_page_TextView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="@dimen/xSmallDp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/main_page_TextView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/xSmallDp"
+                android:text="TextView" />
+        </LinearLayout>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_page_transactions_logs"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
+    <Button
+        android:id="@+id/login_page_register_account_page3"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:text="Register account"
+        android:textAllCaps="false"
+        android:textColor="#0277BD"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/login_page_register_account_page2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_filter_container"
-        app:reverseLayout="true"
-        app:stackFromEnd="true" />
+        app:rippleColor="#B00277BD"
+        app:strokeColor="#0277BD"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/login_page_register_account_page2"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:text="Register account"
+        android:textAllCaps="false"
+        android:textColor="#0277BD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_page_register_account_page3"
+        app:rippleColor="#B00277BD"
+        app:strokeColor="#0277BD"
+        app:strokeWidth="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
