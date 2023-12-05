@@ -73,7 +73,7 @@
             app:hintTextColor="#E64A19"
             app:boxStrokeWidthFocused="2dp"
             app:endIconMode="none"
-            app:endIconTint="@color/black"
+            app:endIconTint="@color/colorOnPrimary"
             app:errorEnabled="false"
             app:hintEnabled="false">
 
@@ -100,7 +100,7 @@
             app:hintTextColor="#E64A19"
             app:boxStrokeWidthFocused="2dp"
             app:endIconMode="none"
-            app:endIconTint="@color/black"
+            app:endIconTint="@color/colorOnPrimary"
             app:errorEnabled="false"
             app:hintEnabled="false">
 
@@ -124,7 +124,7 @@
             android:layout_margin="@dimen/xSmallDp"
             android:backgroundTint="#FFFFFF"
             android:clickable="true"
-            android:tint="@color/white"
+            android:tint="@color/colorOnSecondary"
             app:backgroundTint="#C62828"
             app:fabCustomSize="50dp"
             app:rippleColor="#C4C62828"
@@ -164,7 +164,7 @@
             app:hintTextColor="#E64A19"
             app:boxStrokeWidthFocused="2dp"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/black"
+            app:endIconTint="@color/colorOnPrimary"
             app:errorEnabled="false"
             app:hintEnabled="false">
 

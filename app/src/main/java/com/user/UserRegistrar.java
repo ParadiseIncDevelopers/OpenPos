@@ -11,53 +11,35 @@ import com.google.firebase.database.ValueEventListener;
 import com.utilities.classes.EncryptorClass;
 import com.wallet.Wallet;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
-public class UserRegistrar
-{
+public class UserRegistrar {
+    //Kullanıcı Id
     private String id;
-    private String email;
+    //Kullanıcı email i
+    private EncryptedEmail email;
+    //6 haneli kod
     private EncryptedPassword code;
+    //Adı soyadı
     private EncryptedName nameSurname;
+    //Telefon numarası
     private EncryptedPhoneNumber phoneNumber;
+    //ilk giriş parolası
     private EncryptedPassword password;
+    //Para birimi
     private String currency;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void createUser()
     {
-        Map<String, Object> data = new HashMap<>();
-        data.put("Email", this.email);
-        data.put("UserCode", this.code);
-        data.put("EncryptedObject", this.password);
-        data.put("PhoneNumber", this.phoneNumber);
-        data.put("NameSurname", this.nameSurname);
-
-        FirebaseDatabase.getInstance()
-                .getReference("Users")
-                .addListenerForSingleValueEvent(new ValueEventListener()
-                {
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
-                    {
-                        FirebaseDatabase.getInstance()
-                                .getReference()
-                                .child("Users")
-                                .child(id)
-                                .setValue(data);
-
-                        Wallet wallet = new Wallet("CREATE_WALLET", email);
-                        wallet.createWallet(currency);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                    }
-                });
+        Wallet wallet = new Wallet("CREATE_WALLET");
+        wallet.createWallet(UserRegistrar.this);
     }
 
     public String getId()
@@ -65,10 +47,49 @@ public class UserRegistrar
         return id;
     }
 
+    public EncryptedEmail getEmail() {
+        return email;
+    }
+
+    public EncryptedPassword getCode() {
+        return code;
+    }
+
+    public EncryptedName getNameSurname() {
+        return nameSurname;
+    }
+
+    public EncryptedPhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public EncryptedPassword getPassword() {
+        return password;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    //Verileri json object e çeviren helper method.
+    public JSONObject toJsonObject() throws JSONException
+    {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("email", email.toJsonObject());
+        jsonObject.put("code", code.toJsonObject());
+        jsonObject.put("nameSurname", nameSurname.toJsonObject());
+        jsonObject.put("phoneNumber", phoneNumber.toJsonObject());
+        jsonObject.put("password", password.toJsonObject());
+        jsonObject.put("currency", currency);
+
+        return jsonObject;
+    }
+
     public static class Builder
     {
         private String id;
-        private String email;
+        private EncryptedEmail email;
         private EncryptedName nameSurname;
         private EncryptedPhoneNumber phoneNumber;
         private EncryptedPassword password;
@@ -76,24 +97,38 @@ public class UserRegistrar
         private EncryptedPassword code;
 
         private String generatedCode;
+        private List<String> keys;
+
+        public Builder createSaltAndSecret(int length)
+        {
+            this.keys = new ArrayList<>();
+            keys.add(EncryptorClass.generateSecretKey(length));
+            keys.add(EncryptorClass.generateSaltKey(length));
+            return this;
+        }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
-        public Builder setEmail(String Email)
+        public Builder setEmail(String email)
         {
-            this.email = Email;
+            String passwordSecretKey = this.keys.get(0);
+            String passwordSaltKey = this.keys.get(1);
+
+            this.email = new EncryptedEmail.Builder()
+                    .setSalt(passwordSaltKey)
+                    .setText(EncryptorClass.Encrypt(email, passwordSecretKey, passwordSaltKey))
+                    .setSecret(passwordSecretKey).build();
             return this;
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         public Builder setNameSurname(String nameSurname)
         {
-            String text = EncryptorClass.setSecurePassword(nameSurname);
-            String passwordSecretKey = EncryptorClass.generateSecretKey(24);
-            String passwordSaltKey = EncryptorClass.generateSaltKey(24);
+            String passwordSecretKey = this.keys.get(0);
+            String passwordSaltKey = this.keys.get(1);
 
             this.nameSurname = new EncryptedName.Builder()
                     .setSalt(passwordSaltKey)
-                    .setCode(EncryptorClass.Encrypt(text, passwordSecretKey, passwordSaltKey))
+                    .setText(EncryptorClass.Encrypt(nameSurname, passwordSecretKey, passwordSaltKey))
                     .setSecret(passwordSecretKey).build();
             return this;
         }
@@ -101,13 +136,12 @@ public class UserRegistrar
         @RequiresApi(api = Build.VERSION_CODES.O)
         public Builder setPhoneNumber(String phoneNumber)
         {
-            String text = EncryptorClass.setSecurePassword(phoneNumber);
-            String passwordSecretKey = EncryptorClass.generateSecretKey(20);
-            String passwordSaltKey = EncryptorClass.generateSaltKey(20);
+            String passwordSecretKey = this.keys.get(0);
+            String passwordSaltKey = this.keys.get(1);
 
             this.phoneNumber = new EncryptedPhoneNumber.Builder()
                     .setSalt(passwordSaltKey)
-                    .setCode(EncryptorClass.Encrypt(text, passwordSecretKey, passwordSaltKey))
+                    .setText(EncryptorClass.Encrypt(phoneNumber, passwordSecretKey, passwordSaltKey))
                     .setSecret(passwordSecretKey).build();
             return this;
         }
@@ -116,8 +150,8 @@ public class UserRegistrar
         public Builder setPassword(String Password)
         {
             String passwordHash = EncryptorClass.setSecurePassword(Password);
-            String passwordSecretKey = EncryptorClass.generateSecretKey(32);
-            String passwordSaltKey = EncryptorClass.generateSaltKey(32);
+            String passwordSecretKey = this.keys.get(0);
+            String passwordSaltKey = this.keys.get(1);
 
             this.password = new EncryptedPassword.Builder()
                     .setSalt(passwordSaltKey)
@@ -131,8 +165,8 @@ public class UserRegistrar
         public Builder setCode(@NotNull String code)
         {
             String text = EncryptorClass.setSecurePassword(code);
-            String passwordSecretKey = EncryptorClass.generateSecretKey(32);
-            String passwordSaltKey = EncryptorClass.generateSaltKey(32);
+            String passwordSecretKey = this.keys.get(0);
+            String passwordSaltKey = this.keys.get(1);
 
             this.code = new EncryptedPassword.Builder()
                     .setSalt(passwordSaltKey)

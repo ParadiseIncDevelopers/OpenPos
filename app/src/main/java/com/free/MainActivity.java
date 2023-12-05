@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+
+import com.free.login.Login;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,7 +34,11 @@ public class MainActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        NetworkCallback(this, () -> new Handler().postDelayed(() ->
+        Intent intent = new Intent(MainActivity.this, Login.class);
+        startActivity(intent);
+        finish();
+
+        /*NetworkCallback(this, () -> new Handler().postDelayed(() ->
         {
             FirebaseDatabase.getInstance()
                     .getReference("Users")
@@ -88,9 +94,7 @@ public class MainActivity extends AppCompatActivity
                         }
                     });
 
-            Intent intent = new Intent(MainActivity.this, Login.class);
-            startActivity(intent);
-            finish();
-        }, 5000));
+
+        }, 5000));*/
     }
 }

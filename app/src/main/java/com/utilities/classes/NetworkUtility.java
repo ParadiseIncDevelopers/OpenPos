@@ -3,6 +3,7 @@ package com.utilities.classes;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import androidx.annotation.NonNull;
 
 public class NetworkUtility
 {
@@ -13,7 +14,7 @@ public class NetworkUtility
     public static final int NETWORK_STATUS_WIFI = 1;
     public static final int NETWORK_STATUS_MOBILE = 2;
 
-    public static int getConnectivityStatus(Context context)
+    public static int getConnectivityStatus(@NonNull Context context)
     {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

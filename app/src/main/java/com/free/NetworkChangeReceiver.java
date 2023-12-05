@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 public class NetworkChangeReceiver
 {
-    public static void NetworkCallback(Activity activity, Runnable run)
+    public static void NetworkCallback(@NonNull Activity activity, Runnable run)
     {
 
         ConnectivityManager.NetworkCallback callback = new ConnectivityManager.NetworkCallback()

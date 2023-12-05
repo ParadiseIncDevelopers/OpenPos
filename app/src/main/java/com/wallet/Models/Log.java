@@ -1,4 +1,4 @@
-package com.wallet;
+package com.wallet.Models;
 
 import android.os.Build;
 import androidx.annotation.NonNull;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class WalletLogs
+public class Log
 {
     private String email;
     private String contentDescription;
@@ -18,12 +18,12 @@ public class WalletLogs
 
     @NonNull
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static List<WalletLogs> parseToArrayList(@NonNull List<Map<String, Object>> logs)
+    public static List<Log> parseToArrayList(@NonNull List<Map<String, Object>> logs)
     {
-        List<WalletLogs> allLogs = new ArrayList<>();
+        List<Log> allLogs = new ArrayList<>();
 
         logs.forEach(x -> {
-            WalletLogs theLog = new WalletLogs.Builder()
+            Log theLog = new Log.Builder()
                     .SetCommission(x.get("commission").toString())
                     .SetContentDescription(x.get("contentDescription").toString())
                     .SetDate(x.get("date").toString())
@@ -106,9 +106,9 @@ public class WalletLogs
             return this;
         }
 
-        public WalletLogs Build()
+        public Log Build()
         {
-            WalletLogs logs = new WalletLogs();
+            Log logs = new Log();
             logs.contentDescription = this.contentDescription;
             logs.date = this.date;
             logs.email = this.email;
@@ -119,7 +119,7 @@ public class WalletLogs
         }
     }
 
-    private WalletLogs()
+    private Log()
     {
 
     }

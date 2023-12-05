@@ -1,370 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_backgr"
     android:orientation="vertical"
     tools:context="com.menu.MainMenu">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/main_menu_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@android:color/transparent"
         android:elevation="8dp"
         android:theme="@style/Theme.InternetFreePaymentGateway"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/toolbar_activity_main_menu"
-        app:navigationIcon="@drawable/ic_back"
+        app:navigationIcon="@drawable/ic_back_white"
         app:title="Main Menu"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:titleTextColor="#6A1B9A" />
+        app:titleTextColor="#FFFFFF" />
 
-    <ScrollView
+    <Button
+        android:id="@+id/main_menu_button_1"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Profile"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:icon="@drawable/ic_user"
+        app:iconSize="35dp"
+        app:iconTint="#FAFAFA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_menu_toolbar"
+        app:rippleColor="#AB6A1B9A"
+        app:strokeColor="#6A1B9A" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+    <Button
+        android:id="@+id/main_menu_button_2"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="List all accounts"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        app:icon="@drawable/ic_wallet"
+        app:iconSize="35dp"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_menu_button_1"
+        app:rippleColor="#AB6A1B9A"
+        app:strokeColor="#6A1B9A" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
+    <Button
+        android:id="@+id/main_menu_button_3"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Make transfer"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        app:icon="@drawable/ic_givemoney"
+        app:iconSize="35dp"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_menu_button_2"
+        app:rippleColor="#AB6A1B9A"
+        app:strokeColor="#6A1B9A" />
 
-                <Button
-                    android:id="@+id/main_menu_button_1"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Profile"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_user"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
+    <Button
+        android:id="@+id/main_menu_button_4"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Invoices"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        app:icon="@drawable/ic_receivemoney"
+        app:iconSize="35dp"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_menu_button_3"
+        app:rippleColor="#AB6A1B9A"
+        app:strokeColor="#6A1B9A" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:background="#6A1B9A"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Create"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_2"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Create account"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_receivemoney"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_3"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Create gold account"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_gold"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_4"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Create participation account"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_people"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_5"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Create loan account"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_loan"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:background="#6A1B9A"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Choose"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_6"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Choose account"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_receivemoney"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_7"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Choose gold account"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_gold"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_8"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Choose participation account"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_people"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_9"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Choose loan account"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_loan"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:background="#6A1B9A"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Others"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_10"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Automated payments"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_givemoney"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_11"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Offers"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_star"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/smallDp">
-
-                <Button
-                    android:id="@+id/main_menu_button_12"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="Integrations"
-                    android:textAllCaps="false"
-                    android:textColor="#6A1B9A"
-                    app:icon="@drawable/ic_integration"
-                    app:iconSize="35dp"
-                    app:iconTint="#6A1B9A"
-                    app:rippleColor="#AB6A1B9A"
-                    app:strokeColor="#6A1B9A" />
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

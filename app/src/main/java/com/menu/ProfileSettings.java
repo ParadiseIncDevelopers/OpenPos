@@ -171,13 +171,13 @@ public class ProfileSettings extends AppCompatActivity
         profile_settings_update_submit.setOnClickListener(view ->
         {
             profileIsChecked.accept(profile_settings_remember_user_check_box.isChecked());
-            String nameAndSurnameEncrypted = EncryptorClass.Encrypt(profile_settings_name_and_surname_text_field.getText().toString());
-            String phoneNumberEncrypted = EncryptorClass.Encrypt(profile_settings_phone_number_text_field.getText().toString());
-            FirebaseDatabase.getInstance().getReference("Users").child(EncryptorClass.setSecurePassword(userEmail)).child("NameAndSurname").setValue(nameAndSurnameEncrypted);
-            FirebaseDatabase.getInstance().getReference("Users").child(EncryptorClass.setSecurePassword(userEmail)).child("PhoneNumber").setValue(phoneNumberEncrypted);
+            //String nameAndSurnameEncrypted = EncryptorClass.Encrypt(profile_settings_name_and_surname_text_field.getText().toString());
+            //String phoneNumberEncrypted = EncryptorClass.Encrypt(profile_settings_phone_number_text_field.getText().toString());
+            //FirebaseDatabase.getInstance().getReference("Users").child(EncryptorClass.setSecurePassword(userEmail)).child("NameAndSurname").setValue(nameAndSurnameEncrypted);
+            //FirebaseDatabase.getInstance().getReference("Users").child(EncryptorClass.setSecurePassword(userEmail)).child("PhoneNumber").setValue(phoneNumberEncrypted);
 
-            userNameAndSurname = EncryptorClass.Decrypt(nameAndSurnameEncrypted);
-            userPhoneNumber = EncryptorClass.Decrypt(phoneNumberEncrypted);
+            //userNameAndSurname = EncryptorClass.Decrypt(nameAndSurnameEncrypted);
+            //userPhoneNumber = EncryptorClass.Decrypt(phoneNumberEncrypted);
 
             Intent intent = new Intent(ProfileSettings.this, MainPage.class);
             startActivity(intent);

@@ -1,4 +1,4 @@
-package com.free;
+package com.free.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.os.CountDownTimer;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.free.login.Login;
+import com.free.R;
 
 public class ApprovalInProgress extends AppCompatActivity {
 

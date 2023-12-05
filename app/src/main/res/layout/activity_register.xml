@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context=".Register">
+    tools:context=".register.Register">
 
     <ImageView
         android:id="@+id/register_image_content"
@@ -37,7 +37,7 @@
                 android:gravity="center"
                 android:padding="@dimen/mediumDp"
                 android:text="Register to OpenPos"
-                android:textColor="@color/primaryColor"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/mediumSp" />
 
             <TextView
@@ -60,7 +60,7 @@
                 android:layout_marginRight="@dimen/largeDp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
-                app:endIconTint="@color/black"
+                app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
                 app:hintTextColor="#E64A19">
 
@@ -84,7 +84,7 @@
                 android:layout_marginRight="@dimen/largeDp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
-                app:endIconTint="@color/black"
+                app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
                 app:hintTextColor="#E64A19">
 
@@ -108,7 +108,7 @@
                 android:layout_marginRight="@dimen/largeDp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
-                app:endIconTint="@color/black"
+                app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
                 app:hintTextColor="#E64A19">
 
@@ -132,7 +132,7 @@
                 android:layout_marginRight="@dimen/largeDp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="password_toggle"
-                app:endIconTint="@color/black"
+                app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
                 app:hintTextColor="#E64A19">
 
@@ -156,7 +156,7 @@
                 android:layout_marginRight="@dimen/largeDp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="password_toggle"
-                app:endIconTint="@color/black"
+                app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
                 app:hintTextColor="#E64A19">
 
@@ -180,7 +180,7 @@
                 android:layout_marginRight="@dimen/largeDp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="dropdown_menu"
-                app:endIconTint="@color/black"
+                app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
                 app:hintTextColor="#E64A19">
 
