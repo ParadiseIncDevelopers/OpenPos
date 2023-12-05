@@ -106,9 +106,6 @@ public class Login extends AppCompatActivity
         }
         return "02:00:00:00:00:00";
     };
-    final boolean[] userApproval = {true};
-    final boolean[] accountBlocked = {true};
-    final boolean[] actionsBlocked = {true};
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
@@ -219,30 +216,6 @@ public class Login extends AppCompatActivity
                             @Override
                             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
                             {
-                                /*if(!snapshot.hasChild("isUserActionsBlocked"))
-                                {
-                                    actionsBlocked[0] = true;
-                                }
-                                else {
-                                    actionsBlocked[0] = Boolean.parseBoolean(snapshot.child("isUserActionsBlocked").getValue().toString());
-                                }
-
-                                if(!snapshot.hasChild("isUserAccountBlocked"))
-                                {
-                                    accountBlocked[0] = true;
-                                }
-                                else {
-                                    accountBlocked[0] = Boolean.parseBoolean(snapshot.child("isUserAccountBlocked").getValue().toString());
-                                }
-
-                                if(!snapshot.hasChild("isUserApprovalInProgress"))
-                                {
-                                    userApproval[0] = true;
-                                }
-                                else {
-                                    userApproval[0] = Boolean.parseBoolean(snapshot.child("isUserApprovalInProgress").getValue().toString());
-                                }*/
-
                                 if(Stream.of(Users).anyMatch(x -> x.isNull(Email)))
                                 {
                                     try
@@ -260,25 +233,6 @@ public class Login extends AppCompatActivity
                                             return false;
                                         }))
                                         {
-                                            /*LoginFactoryClass factory = new LoginFactoryClass(Email);
-                                            LoginFactoryClass.LoginType = UtilityValues.REGISTERED;
-                                            int loginId = factory.LoginUser(userApproval[0], accountBlocked[0], actionsBlocked[0]);
-                                            if (loginId == 0)
-                                            {
-                                                login_page_error_text.setText("Your account is not approved.");
-                                            }
-                                            else if (loginId == 1)
-                                            {
-                                                login_page_error_text.setText("Your account is completely blocked. Please call us to unblock your account.");
-                                            }
-                                            else if (loginId == 2)
-                                            {
-                                                login_page_error_text.setText("Your actions are blocked. You have to wait.");
-                                            }
-                                            else if (loginId == 3)
-                                            {
-
-                                            }*/
 
                                             EncryptorClass.BiometricClass.checkEncryption(Login.this, () ->
                                             {
@@ -291,7 +245,9 @@ public class Login extends AppCompatActivity
                                                 });
                                                 Intent intent = new Intent(Login.this, MainPage.class);
 
-                                                userEmail = textEmail;
+                                                /*
+                                                *
+                                                * userEmail = textEmail;
                                                 walletTaken = "MainWallet";
 
                                                 JSONObject obj = new JSONObject();
@@ -430,6 +386,7 @@ public class Login extends AppCompatActivity
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
+                                                * */
 
                                                 startActivity(intent);
                                                 finish();

@@ -77,8 +77,6 @@ import static com.utilities.classes.LoginFactoryClass.walletTaken;
 
 public class MainPage extends AppCompatActivity
 {
-    //TODO : Ziraatbank'ın UI ına benzer bir UI yapılacak tıpkı bireysel hesaplardaki gibi
-
     private TextView main_page_wallet, main_page_name_and_surname, main_page_email, main_page_transactions_text;
     private FloatingActionButton main_page_give_money_button, main_page_receive_money_button,
             main_page_withdraw_money_button, main_page_add_money_button, main_page_transactions_menu,
@@ -115,7 +113,7 @@ public class MainPage extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        NetworkCallback(this, () -> {
+        /*NetworkCallback(this, () -> {
             main_page_transactions_profile_image = findViewById(R.id.main_page_transactions_profile_image);
 
             main_page_wallet = findViewById(R.id.main_page_wallet);
@@ -212,7 +210,7 @@ public class MainPage extends AppCompatActivity
             });
 
             main_page_transactions_profile_image.setOnClickListener(view -> openUserImageAvatarList());
-        });
+        });*/
     }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
@@ -971,14 +969,5 @@ public class MainPage extends AppCompatActivity
         dialog_user_image_change_loading_container.setVisibility(View.VISIBLE);
         dialog_user_image_change_loaded_container.setVisibility(View.GONE);
         imageChange.show();
-    }
-
-    @Override
-    public void onBackPressed()
-    {
-        Logout();
-        Intent intent = new Intent(MainPage.this, Login.class);
-        startActivity(intent);
-        finish();
     }
 }

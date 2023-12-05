@@ -35,6 +35,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InternetFreePaymentGateway.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.menu.CreateAccountApproval"
+            android:exported="false" />
         <activity android:name="com.menu.Integrations" />
         <activity android:name="com.menu.profileSettingsPack.PasswordAndSecuritySettings" />
         <activity android:name="com.wallet.CreateReceiveMoney" />

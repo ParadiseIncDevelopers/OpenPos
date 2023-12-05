@@ -6,4 +6,8 @@
     <style name="textColorHintEnabledDisabled1" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColorHint">@drawable/enabled_disabled_color</item>
     </style>
+    <style name="circularImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
 </resources>

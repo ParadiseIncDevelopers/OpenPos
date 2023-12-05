@@ -13,7 +13,6 @@
         android:id="@+id/main_page_ConstraintLayout1_Exit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/main_page_ConstraintLayout2_Account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,6 +26,7 @@
             android:layout_marginBottom="12dp"
             android:clickable="true"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +40,7 @@
             android:layout_marginBottom="12dp"
             android:clickable="true"
             android:src="@drawable/ic_menu"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,38 +50,48 @@
         android:id="@+id/main_page_ConstraintLayout2_Account"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/main_page_LinearLayout_AllTxts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_page_ConstraintLayout1_Exit">
-
-        <ImageView
-            android:id="@+id/main_page_ImageView1_Acoount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@tools:sample/avatars"
-            app:layout_constraintBottom_toTopOf="@+id/main_page_FAB4_ArrowUp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_page_FAB3_ArrowDown" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_page_FAB3_ArrowDown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:src="@android:drawable/ic_input_add"
+            android:focusable="true"
+            android:src="@drawable/ic_arrow_down"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_page_ImageView1_Acoount" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/main_page_ImageView1_Acoount"
+            android:layout_width="192dp"
+            android:layout_height="192dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_wallet"
+            app:contentPadding="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/main_page_FAB3_ArrowDown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_page_FAB4_ArrowUp"
+            app:shapeAppearanceOverlay="@style/circularImageView"
+            app:strokeColor="@color/colorOnPrimary"
+            app:strokeWidth="2dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_page_FAB4_ArrowUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:src="@android:drawable/ic_input_add"
+            android:focusable="true"
+            android:src="@drawable/ic_arrow_up"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/main_page_ImageView1_Acoount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +103,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/login_page_register_account_page3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -172,6 +184,7 @@
         android:text="Register account"
         android:textAllCaps="false"
         android:textColor="#0277BD"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/login_page_register_account_page2"
         app:layout_constraintStart_toStartOf="parent"
@@ -188,10 +201,22 @@
         android:text="Register account"
         android:textAllCaps="false"
         android:textColor="#0277BD"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/login_page_register_account_page3"
         app:rippleColor="#B00277BD"
         app:strokeColor="#0277BD"
         app:strokeWidth="1dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_page_no_account_layout"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

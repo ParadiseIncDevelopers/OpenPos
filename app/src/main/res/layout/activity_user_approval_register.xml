@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     app:boxStrokeWidthFocused="2dp"
                     app:endIconMode="clear_text"
-                    app:endIconTint="@color/black"
+                    app:endIconTint="@color/colorOnPrimary"
                     app:errorEnabled="true"
                     app:hintTextColor="#E64A19">
 
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     app:boxStrokeWidthFocused="2dp"
                     app:endIconMode="clear_text"
-                    app:endIconTint="@color/black"
+                    app:endIconTint="@color/colorOnPrimary"
                     app:errorEnabled="true"
                     app:hintTextColor="#E64A19">
 

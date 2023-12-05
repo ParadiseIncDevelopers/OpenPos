@@ -106,7 +106,7 @@
                         android:layout_weight="1"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="none"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -130,7 +130,7 @@
                         android:layout_weight="3"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="none"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -164,7 +164,7 @@
                         android:layout_weight="1"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="none"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -188,7 +188,7 @@
                         android:layout_weight="3"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="none"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -248,7 +248,7 @@
                         android:layout_weight="0.85"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="dropdown_menu"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -273,7 +273,7 @@
                         android:layout_weight="0.85"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="dropdown_menu"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -299,7 +299,7 @@
                         android:layout_weight="0.75"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="dropdown_menu"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -343,7 +343,7 @@
                         android:layout_weight="0.85"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="dropdown_menu"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -368,7 +368,7 @@
                         android:layout_weight="0.85"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="dropdown_menu"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 
@@ -394,7 +394,7 @@
                         android:layout_weight="0.75"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="dropdown_menu"
-                        app:endIconTint="@color/black"
+                        app:endIconTint="@color/colorOnPrimary"
                         app:errorEnabled="true"
                         app:hintTextColor="#E64A19">
 

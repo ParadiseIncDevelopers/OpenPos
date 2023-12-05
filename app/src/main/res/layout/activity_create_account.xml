@@ -54,7 +54,7 @@
             android:layout_marginRight="@dimen/largeDp"
             app:boxStrokeWidthFocused="2dp"
             app:endIconMode="dropdown_menu"
-            app:endIconTint="@color/white"
+            app:endIconTint="@color/colorOnSecondary"
             app:errorEnabled="true"
             app:hintTextColor="#E64A19">
 
@@ -68,7 +68,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
-                android:textColor="@color/white" />
+                android:textColor="@color/colorOnSecondary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -80,7 +80,7 @@
             android:layout_marginRight="@dimen/largeDp"
             android:text="Create account"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/colorOnSecondary"
             app:rippleColor="#94FBFBFB"
             app:strokeColor="#FFF"
             app:strokeWidth="1dp" />

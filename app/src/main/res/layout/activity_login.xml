@@ -38,7 +38,7 @@
                 android:elevation="@dimen/xSmallDp"
                 android:gravity="center"
                 android:text="Login to your OpenPos"
-                android:textColor="@color/primaryColor"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/mediumSp" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_marginRight="@dimen/largeDp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
-                app:endIconTint="@color/black"
+                app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
                 app:hintTextColor="#E64A19">
 
@@ -82,7 +82,7 @@
                 android:layout_marginRight="@dimen/largeDp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="password_toggle"
-                app:endIconTint="@color/black"
+                app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
                 app:hintTextColor="#E64A19">
 
