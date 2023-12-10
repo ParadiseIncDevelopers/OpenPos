@@ -174,46 +174,155 @@ public class Wallet
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static void transactToWallet(Context context, String email, String paymentKey, String walletKey, String destinationEmail, double money, double commission, String description)
+    /* public static class WalletActions
     {
-        Map<String, Object> elements = new HashMap<>();
-        Function<String, String> descriptionText = (s) ->
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        public static void transactToWallet(Context context, String email, String paymentKey, String walletKey, String destinationEmail, double money, double commission, String description)
         {
-            if(s.isEmpty())
+            Map<String, Object> elements = new HashMap<>();
+            Function<String, String> descriptionText = (s) ->
             {
-                return "NO_DESCRIPTION";
-            }
-            else{
-                return s;
-            }
-        };
+                if(s.isEmpty())
+                {
+                    return "NO_DESCRIPTION";
+                }
+                else{
+                    return s;
+                }
+            };
 
-        double finalMoney = money + commission;
+            double finalMoney = money + commission;
 
-        FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                .getReference()
-                .child(EncryptorClass.setSecurePassword(email))
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
-                    {
-
-                        List<DataSnapshot> snap = StreamSupport.stream(snapshot.getChildren().spliterator(), true).collect(Collectors.toList());
-                        Supplier<Stream<DataSnapshot>> streamSnap = () -> snap.stream();
-
-                        if(streamSnap.get().anyMatch(x -> x.child("EncryptionKeys").child("PaymentKey").getValue().toString().equals(paymentKey) &&
-                                        x.child("EncryptionKeys").child("WalletKey").getValue().toString().equals(walletKey)))
+            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                    .getReference()
+                    .child(EncryptorClass.setSecurePassword(email))
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
                         {
-                            DataSnapshot theSnap = streamSnap.get().filter(x -> x.child("EncryptionKeys").child("PaymentKey").getValue().toString().equals(paymentKey) &&
-                                    x.child("EncryptionKeys").child("WalletKey").getValue().toString().equals(walletKey)).collect(Collectors.toList()).get(0);
-                            String theWallet = EncryptorClass.setSecurePassword(EncryptorClass.Decrypt(theSnap.child("EncryptionKeys").child("WalletKey").getValue().toString()));
 
+                            List<DataSnapshot> snap = StreamSupport.stream(snapshot.getChildren().spliterator(), true).collect(Collectors.toList());
+                            Supplier<Stream<DataSnapshot>> streamSnap = () -> snap.stream();
+
+                            if(streamSnap.get().anyMatch(x -> x.child("EncryptionKeys").child("PaymentKey").getValue().toString().equals(paymentKey) &&
+                                    x.child("EncryptionKeys").child("WalletKey").getValue().toString().equals(walletKey)))
+                            {
+                                DataSnapshot theSnap = streamSnap.get().filter(x -> x.child("EncryptionKeys").child("PaymentKey").getValue().toString().equals(paymentKey) &&
+                                        x.child("EncryptionKeys").child("WalletKey").getValue().toString().equals(walletKey)).collect(Collectors.toList()).get(0);
+                                String theWallet = EncryptorClass.setSecurePassword(EncryptorClass.Decrypt(theSnap.child("EncryptionKeys").child("WalletKey").getValue().toString()));
+
+                                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                                        .getReference()
+                                        .child(destinationEmail)
+                                        .child(walletKey)
+                                        .addListenerForSingleValueEvent(new ValueEventListener()
+                                        {
+                                            @RequiresApi(api = Build.VERSION_CODES.O)
+                                            @Override
+                                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot2)
+                                            {
+                                                elements.putAll((Map<String, Object>) snapshot2.getValue());
+                                                double changeCurrentMoney = Double.parseDouble(Objects.requireNonNull(snapshot2.child("MoneyCase").getValue()).toString().replace(",",".")) - finalMoney;
+
+                                                elements.replace("MoneyCase", new DecimalFormat("#.##").format(changeCurrentMoney));
+
+                                                List<Log> getLogs = (List<Log>) elements.get("Logs");
+                                                Log log = new Log.Builder()
+                                                        .SetEmail(destinationEmail)
+                                                        .SetContentDescription(descriptionText.apply(description))
+                                                        .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                                                        .SetRest(new DecimalFormat("#.##").format(changeCurrentMoney))
+                                                        .SetSpend(new DecimalFormat("#.##").format(money))
+                                                        .SetCommission(new DecimalFormat("#.##").format(commission))
+                                                        .Build();
+                                                getLogs.add(log);
+
+                                                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                                                        .getReference()
+                                                        .child(EncryptorClass.setSecurePassword(destinationEmail))
+                                                        .child(walletKey).setValue(elements);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull @NotNull DatabaseError error)
+                                            {
+
+                                            }
+                                        });
+
+                                elements.putAll((Map<String, Object>) snapshot.getValue());
+                                double changeCurrentMoney = Double.parseDouble(Objects.requireNonNull(snapshot.child("MoneyCase").getValue()).toString().replace(",",".")) + finalMoney;
+
+                                Money theMoney = new Money();
+                                theMoney.setMoneyCase(changeCurrentMoney);
+                                theMoney.setCurrency(snapshot.child("Currency").getValue().toString());
+
+                                Money newMoney = ConvertMoneyByAny(snapshot.child("Currency").getValue().toString(), theMoney);
+
+                                elements.replace("MoneyCase", new DecimalFormat("#.##").format(newMoney.getMoneyCase()));
+
+                                List<Log> getLogs = (List<Log>) elements.get("Logs");
+                                Log log = new Log.Builder()
+                                        .SetEmail(email)
+                                        .SetContentDescription(descriptionText.apply(description))
+                                        .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                                        .SetRest(new DecimalFormat("#.##").format(changeCurrentMoney))
+                                        .SetSpend(new DecimalFormat("#.##").format(money))
+                                        .SetCommission(new DecimalFormat("#.##").format(commission))
+                                        .Build();
+                                getLogs.add(log);
+
+                                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                                        .getReference()
+                                        .child(EncryptorClass.setSecurePassword(email))
+                                        .child(theWallet).setValue(elements);
+
+                                getCommission(newMoney.getMoneyCase(), newMoney.getCurrency());
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        public static void transactToWallet(Context context, String email, String destinationEmail, String dataWallet, double money, String description)
+        {
+            Map<String, Object> elements = new HashMap<>();
+            Function<String, String> descriptionText = (s) ->
+            {
+                if(s.isEmpty())
+                {
+                    return "NO_DESCRIPTION";
+                }
+                else{
+                    return s;
+                }
+            };
+
+            double commission = returnCommission(money);
+            double finalMoney = money + commission;
+
+            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                    .getReference()
+                    .child(EncryptorClass.setSecurePassword(email))
+                    .child(walletTaken)
+                    .addListenerForSingleValueEvent(new ValueEventListener()
+                    {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
+                        {
                             FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                                     .getReference()
-                                    .child(destinationEmail)
-                                    .child(walletKey)
+                                    .child(EncryptorClass.setSecurePassword(destinationEmail))
+                                    .child(dataWallet)
                                     .addListenerForSingleValueEvent(new ValueEventListener()
                                     {
                                         @RequiresApi(api = Build.VERSION_CODES.O)
@@ -239,7 +348,7 @@ public class Wallet
                                             FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                                                     .getReference()
                                                     .child(EncryptorClass.setSecurePassword(destinationEmail))
-                                                    .child(walletKey).setValue(elements);
+                                                    .child(dataWallet).setValue(elements);
                                         }
 
                                         @Override
@@ -274,322 +383,215 @@ public class Wallet
                             FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                                     .getReference()
                                     .child(EncryptorClass.setSecurePassword(email))
-                                    .child(theWallet).setValue(elements);
+                                    .child(dataWallet).setValue(elements);
 
                             getCommission(newMoney.getMoneyCase(), newMoney.getCurrency());
                         }
 
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                    }
-                });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static void transactToWallet(Context context, String email, String destinationEmail, String dataWallet, double money, String description)
-    {
-        Map<String, Object> elements = new HashMap<>();
-        Function<String, String> descriptionText = (s) ->
-        {
-            if(s.isEmpty())
-            {
-                return "NO_DESCRIPTION";
-            }
-            else{
-                return s;
-            }
-        };
-
-        double commission = returnCommission(money);
-        double finalMoney = money + commission;
-
-        FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                .getReference()
-                .child(EncryptorClass.setSecurePassword(email))
-                .child(walletTaken)
-                .addListenerForSingleValueEvent(new ValueEventListener()
-                {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
-                    {
-                        FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                .getReference()
-                                .child(EncryptorClass.setSecurePassword(destinationEmail))
-                                .child(dataWallet)
-                                .addListenerForSingleValueEvent(new ValueEventListener()
-                                {
-                                    @RequiresApi(api = Build.VERSION_CODES.O)
-                                    @Override
-                                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot2)
-                                    {
-                                        elements.putAll((Map<String, Object>) snapshot2.getValue());
-                                        double changeCurrentMoney = Double.parseDouble(Objects.requireNonNull(snapshot2.child("MoneyCase").getValue()).toString().replace(",",".")) - finalMoney;
-
-                                        elements.replace("MoneyCase", new DecimalFormat("#.##").format(changeCurrentMoney));
-
-                                        List<Log> getLogs = (List<Log>) elements.get("Logs");
-                                        Log log = new Log.Builder()
-                                                .SetEmail(destinationEmail)
-                                                .SetContentDescription(descriptionText.apply(description))
-                                                .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
-                                                .SetRest(new DecimalFormat("#.##").format(changeCurrentMoney))
-                                                .SetSpend(new DecimalFormat("#.##").format(money))
-                                                .SetCommission(new DecimalFormat("#.##").format(commission))
-                                                .Build();
-                                        getLogs.add(log);
-
-                                        FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                                .getReference()
-                                                .child(EncryptorClass.setSecurePassword(destinationEmail))
-                                                .child(dataWallet).setValue(elements);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull @NotNull DatabaseError error)
-                                    {
-
-                                    }
-                                });
-
-                        elements.putAll((Map<String, Object>) snapshot.getValue());
-                        double changeCurrentMoney = Double.parseDouble(Objects.requireNonNull(snapshot.child("MoneyCase").getValue()).toString().replace(",",".")) + finalMoney;
-
-                        Money theMoney = new Money();
-                        theMoney.setMoneyCase(changeCurrentMoney);
-                        theMoney.setCurrency(snapshot.child("Currency").getValue().toString());
-
-                        Money newMoney = ConvertMoneyByAny(snapshot.child("Currency").getValue().toString(), theMoney);
-
-                        elements.replace("MoneyCase", new DecimalFormat("#.##").format(newMoney.getMoneyCase()));
-
-                        List<Log> getLogs = (List<Log>) elements.get("Logs");
-                        Log log = new Log.Builder()
-                                .SetEmail(email)
-                                .SetContentDescription(descriptionText.apply(description))
-                                .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
-                                .SetRest(new DecimalFormat("#.##").format(changeCurrentMoney))
-                                .SetSpend(new DecimalFormat("#.##").format(money))
-                                .SetCommission(new DecimalFormat("#.##").format(commission))
-                                .Build();
-                        getLogs.add(log);
-
-                        FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                .getReference()
-                                .child(EncryptorClass.setSecurePassword(email))
-                                .child(dataWallet).setValue(elements);
-
-                        getCommission(newMoney.getMoneyCase(), newMoney.getCurrency());
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error)
-                    {
-
-                    }
-                });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static void addMoneyToWallet(Context context, String email, double money)
-    {
-        Map<String, Object> elements = new HashMap<>();
-
-        FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                .getReference()
-                .child(EncryptorClass.setSecurePassword(email))
-                .child(walletTaken)
-                .addListenerForSingleValueEvent(new ValueEventListener()
-                {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
-                    {
-                        elements.putAll((Map<String, Object>) snapshot.getValue());
-                        double changeCurrentMoney = Double.parseDouble(Objects.requireNonNull(snapshot.child("MoneyCase").getValue()).toString().replace(",",".")) + money;
-
-                        Money theMoney = new Money();
-                        theMoney.setMoneyCase(changeCurrentMoney);
-                        theMoney.setCurrency(snapshot.child("Currency").getValue().toString());
-
-                        Money newMoney = ConvertMoneyByDollar(theMoney);
-
-                        if(newMoney.getMoneyCase() >= 5.0)
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error)
                         {
-                            elements.replace("MoneyCase", new DecimalFormat("#.##").format(theMoney.getMoneyCase()));
-                            userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(theMoney.getMoneyCase()));
 
-                            List<Log> getLogs = Log.parseToArrayList((List<Map<String, Object>>) elements.get("Logs"));
-                            userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(changeCurrentMoney));
-
-                            Log log = new Log.Builder()
-                                    .SetEmail(email)
-                                    .SetContentDescription("ADDED MONEY")
-                                    .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
-                                    .SetRest(new DecimalFormat("#.##").format(theMoney.getMoneyCase()))
-                                    .SetSpend(new DecimalFormat("#.##").format(money))
-                                    .SetCommission(new DecimalFormat("#.##").format(0.0))
-                                    .Build();
-
-                            getLogs.add(log);
-
-                            elements.replace("Logs", getLogs);
-
-                            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                    .getReference()
-                                    .child(EncryptorClass.setSecurePassword(email))
-                                    .child(walletTaken).setValue(elements);
-
-                            userWalletLogs.replace(walletTaken, (ArrayList<Log>) getLogs);
                         }
-                        else{
-                            Toast.makeText(context, "You must add more than 5$ or the amount equivalent from your currency.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    });
+        }
 
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error)
-                    {
-
-                    }
-                });
-    }
-
-    public static double returnCommission(double money)
-    {
-        return money / 100 * 0.5;
-    }
-
-    public static void getCommission(double commission, String currency)
-    {
-        FirebaseDatabase.getInstance("https://openpos-adminsection.europe-west1.firebasedatabase.app/")
-                .getReference().addListenerForSingleValueEvent(new ValueEventListener()
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        public static void addMoneyToWallet(Context context, String email, double money)
         {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(!snapshot.hasChild("CommissionsList"))
-                {
-                    Map<String, Object> totalMoneyContent = new HashMap<>();
-                    Map<String, Object> totalMoneyDateSection = new HashMap<>();
-                    List<Object> totalMoneyDateSectionCounter = new ArrayList<>();
-                    totalMoneyDateSection.put("Date", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-                    totalMoneyDateSection.put("Sum", new DecimalFormat("#.##").format(commission));
-                    totalMoneyDateSection.put("Account", walletTaken);
-                    totalMoneyDateSection.put("Currency", currency);
-                    totalMoneyDateSectionCounter.add(totalMoneyDateSection);
-                    totalMoneyContent.put("CommissionsList", totalMoneyDateSectionCounter);
-                    totalMoneyContent.put("TotalMoney", new DecimalFormat("#.##").format(commission));
-                    totalMoneyContent.put("Currency", "USD");
-                    FirebaseDatabase.getInstance("https://openpos-adminsection.europe-west1.firebasedatabase.app/")
-                            .getReference().setValue(totalMoneyContent);
-                }
-                else{
+            Map<String, Object> elements = new HashMap<>();
 
-                    Map<String, Object> totalMoneyContent = (Map<String, Object>) snapshot.getValue();
-                    Map<String, Object> totalMoneyDateSection = new HashMap<>();
-                    totalMoneyDateSection.put("Date", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-                    totalMoneyDateSection.put("Sum", new DecimalFormat("#.##").format(commission));
-                    totalMoneyDateSection.put("Account", walletTaken);
-                    List<Object> totalMoneyDateSectionCounter = (List<Object>) snapshot.child("CommissionsList").getValue();
-                    assert totalMoneyDateSectionCounter != null;
-                    totalMoneyDateSectionCounter.add(totalMoneyDateSection);
-                    assert totalMoneyContent != null;
-                    totalMoneyContent.put("CommissionsList", totalMoneyDateSectionCounter);
-                    totalMoneyContent.put("TotalMoney", new DecimalFormat("#.##").format(Double.valueOf(snapshot.child("TotalMoney").getValue().toString().replace(",",".")) + commission));
-                    FirebaseDatabase.getInstance("https://openpos-adminsection.europe-west1.firebasedatabase.app/")
-                            .getReference().setValue(totalMoneyContent);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static void withdrawMoneyFromWallet(Context context, String email, double money)
-    {
-        Map<String, Object> elements = new HashMap<>();
-
-        double commission = returnCommission(money);
-        double finalMoney = money + commission;
-        FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                .getReference()
-                .child(EncryptorClass.setSecurePassword(email))
-                .child(walletTaken)
-                .addListenerForSingleValueEvent(new ValueEventListener()
-                {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
+            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                    .getReference()
+                    .child(EncryptorClass.setSecurePassword(email))
+                    .child(walletTaken)
+                    .addListenerForSingleValueEvent(new ValueEventListener()
                     {
-                        elements.putAll((Map<String, Object>) snapshot.getValue());
-
-                        double currentMoney = Double.parseDouble(Objects.requireNonNull(snapshot.child("MoneyCase").getValue()).toString().replace(",","."));
-
-                        if(currentMoney < finalMoney)
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
                         {
-                            Toast.makeText(context, "You can't withdraw more money", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            double changeCurrentMoney = currentMoney - finalMoney;
+                            elements.putAll((Map<String, Object>) snapshot.getValue());
+                            double changeCurrentMoney = Double.parseDouble(Objects.requireNonNull(snapshot.child("MoneyCase").getValue()).toString().replace(",",".")) + money;
 
                             Money theMoney = new Money();
-                            theMoney.setMoneyCase(commission);
+                            theMoney.setMoneyCase(changeCurrentMoney);
                             theMoney.setCurrency(snapshot.child("Currency").getValue().toString());
 
                             Money newMoney = ConvertMoneyByDollar(theMoney);
 
-                            elements.replace("MoneyCase", new DecimalFormat("#.##").format(changeCurrentMoney));
-                            userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(changeCurrentMoney));
+                            if(newMoney.getMoneyCase() >= 5.0)
+                            {
+                                elements.replace("MoneyCase", new DecimalFormat("#.##").format(theMoney.getMoneyCase()));
+                                userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(theMoney.getMoneyCase()));
 
-                            List<Log> getLogs = Log.parseToArrayList((List<Map<String, Object>>) elements.get("Logs"));
+                                List<Log> getLogs = Log.parseToArrayList((List<Map<String, Object>>) elements.get("Logs"));
+                                userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(changeCurrentMoney));
 
-                            Log log = new Log.Builder()
-                                    .SetEmail(email)
-                                    .SetContentDescription("WITHDRAW MONEY")
-                                    .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
-                                    .SetRest(new DecimalFormat("#.##").format(changeCurrentMoney))
-                                    .SetSpend(new DecimalFormat("#.##").format(finalMoney))
-                                    .SetCommission(new DecimalFormat("#.##").format(commission))
-                                    .Build();
+                                Log log = new Log.Builder()
+                                        .SetEmail(email)
+                                        .SetContentDescription("ADDED MONEY")
+                                        .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                                        .SetRest(new DecimalFormat("#.##").format(theMoney.getMoneyCase()))
+                                        .SetSpend(new DecimalFormat("#.##").format(money))
+                                        .SetCommission(new DecimalFormat("#.##").format(0.0))
+                                        .Build();
 
-                            getLogs.add(log);
+                                getLogs.add(log);
 
-                            elements.replace("Logs", getLogs);
+                                elements.replace("Logs", getLogs);
 
-                            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                    .getReference()
-                                    .child(EncryptorClass.setSecurePassword(email))
-                                    .child(walletTaken).setValue(elements);
+                                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                                        .getReference()
+                                        .child(EncryptorClass.setSecurePassword(email))
+                                        .child(walletTaken).setValue(elements);
 
-                            userWalletLogs.replace(walletTaken, (ArrayList<Log>) getLogs);
-
-                            getCommission(newMoney.getMoneyCase(), newMoney.getCurrency());
+                                userWalletLogs.replace(walletTaken, (ArrayList<Log>) getLogs);
+                            }
+                            else{
+                                Toast.makeText(context, "You must add more than 5$ or the amount equivalent from your currency.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error)
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error)
+                        {
+
+                        }
+                    });
+        }
+
+        public static double returnCommission(double money)
+        {
+            return money / 100 * 0.5;
+        }
+
+        public static void getCommission(double commission, String currency)
+        {
+            FirebaseDatabase.getInstance("https://openpos-adminsection.europe-west1.firebasedatabase.app/")
+                    .getReference().addListenerForSingleValueEvent(new ValueEventListener()
                     {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                            if(!snapshot.hasChild("CommissionsList"))
+                            {
+                                Map<String, Object> totalMoneyContent = new HashMap<>();
+                                Map<String, Object> totalMoneyDateSection = new HashMap<>();
+                                List<Object> totalMoneyDateSectionCounter = new ArrayList<>();
+                                totalMoneyDateSection.put("Date", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+                                totalMoneyDateSection.put("Sum", new DecimalFormat("#.##").format(commission));
+                                totalMoneyDateSection.put("Account", walletTaken);
+                                totalMoneyDateSection.put("Currency", currency);
+                                totalMoneyDateSectionCounter.add(totalMoneyDateSection);
+                                totalMoneyContent.put("CommissionsList", totalMoneyDateSectionCounter);
+                                totalMoneyContent.put("TotalMoney", new DecimalFormat("#.##").format(commission));
+                                totalMoneyContent.put("Currency", "USD");
+                                FirebaseDatabase.getInstance("https://openpos-adminsection.europe-west1.firebasedatabase.app/")
+                                        .getReference().setValue(totalMoneyContent);
+                            }
+                            else{
 
-                    }
-                });
-    }
+                                Map<String, Object> totalMoneyContent = (Map<String, Object>) snapshot.getValue();
+                                Map<String, Object> totalMoneyDateSection = new HashMap<>();
+                                totalMoneyDateSection.put("Date", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+                                totalMoneyDateSection.put("Sum", new DecimalFormat("#.##").format(commission));
+                                totalMoneyDateSection.put("Account", walletTaken);
+                                List<Object> totalMoneyDateSectionCounter = (List<Object>) snapshot.child("CommissionsList").getValue();
+                                assert totalMoneyDateSectionCounter != null;
+                                totalMoneyDateSectionCounter.add(totalMoneyDateSection);
+                                assert totalMoneyContent != null;
+                                totalMoneyContent.put("CommissionsList", totalMoneyDateSectionCounter);
+                                totalMoneyContent.put("TotalMoney", new DecimalFormat("#.##").format(Double.valueOf(snapshot.child("TotalMoney").getValue().toString().replace(",",".")) + commission));
+                                FirebaseDatabase.getInstance("https://openpos-adminsection.europe-west1.firebasedatabase.app/")
+                                        .getReference().setValue(totalMoneyContent);
+                            }
+                        }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public String createNormalAccount(String Currency)
-    {
-        final String[] returnString = {""};
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-        /*if(this.code.equals("CREATE_NORMAL_WALLET"))
+                        }
+                    });
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        public static void withdrawMoneyFromWallet(Context context, String email, double money)
+        {
+            Map<String, Object> elements = new HashMap<>();
+
+            double commission = returnCommission(money);
+            double finalMoney = money + commission;
+            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                    .getReference()
+                    .child(EncryptorClass.setSecurePassword(email))
+                    .child(walletTaken)
+                    .addListenerForSingleValueEvent(new ValueEventListener()
+                    {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
+                        {
+                            elements.putAll((Map<String, Object>) snapshot.getValue());
+
+                            double currentMoney = Double.parseDouble(Objects.requireNonNull(snapshot.child("MoneyCase").getValue()).toString().replace(",","."));
+
+                            if(currentMoney < finalMoney)
+                            {
+                                Toast.makeText(context, "You can't withdraw more money", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                double changeCurrentMoney = currentMoney - finalMoney;
+
+                                Money theMoney = new Money();
+                                theMoney.setMoneyCase(commission);
+                                theMoney.setCurrency(snapshot.child("Currency").getValue().toString());
+
+                                Money newMoney = ConvertMoneyByDollar(theMoney);
+
+                                elements.replace("MoneyCase", new DecimalFormat("#.##").format(changeCurrentMoney));
+                                userMoneyCase.replace(walletTaken, new DecimalFormat("#.##").format(changeCurrentMoney));
+
+                                List<Log> getLogs = Log.parseToArrayList((List<Map<String, Object>>) elements.get("Logs"));
+
+                                Log log = new Log.Builder()
+                                        .SetEmail(email)
+                                        .SetContentDescription("WITHDRAW MONEY")
+                                        .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                                        .SetRest(new DecimalFormat("#.##").format(changeCurrentMoney))
+                                        .SetSpend(new DecimalFormat("#.##").format(finalMoney))
+                                        .SetCommission(new DecimalFormat("#.##").format(commission))
+                                        .Build();
+
+                                getLogs.add(log);
+
+                                elements.replace("Logs", getLogs);
+
+                                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                                        .getReference()
+                                        .child(EncryptorClass.setSecurePassword(email))
+                                        .child(walletTaken).setValue(elements);
+
+                                userWalletLogs.replace(walletTaken, (ArrayList<Log>) getLogs);
+
+                                getCommission(newMoney.getMoneyCase(), newMoney.getCurrency());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error)
+                        {
+
+                        }
+                    });
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        public String createNormalAccount(String Currency)
+        {
+            final String[] returnString = {""};
+
+        if(this.code.equals("CREATE_NORMAL_WALLET"))
         {
             FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                     .getReference()
@@ -671,100 +673,103 @@ public class Wallet
 
                         }
                     });
-        }*/
+        }
 
-        return returnString[0];
-    }
+            return returnString[0];
+        }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void createWallet(@NonNull UserRegistrar user)
-    {
-        if(this.actionCode.equals("CREATE_WALLET"))
+
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        public void createWallet(@NonNull UserRegistrar user)
         {
-            List<Log> logs = new ArrayList<>();
-            Log zeroLog = new Log.Builder()
-                    .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
-                    .SetRest("0.00")
-                    .SetSpend("0.00")
-                    .Build();
-            logs.add(zeroLog);
+            if(this.actionCode.equals("CREATE_WALLET"))
+            {
+                List<Log> logs = new ArrayList<>();
+                Log zeroLog = new Log.Builder()
+                        .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                        .SetRest("0.00")
+                        .SetSpend("0.00")
+                        .Build();
+                logs.add(zeroLog);
 
-            String saltKey = EncryptorClass.generateSaltKey(32);
-            String secretKey = EncryptorClass.generateSecretKey(32);
+                String saltKey = EncryptorClass.generateSaltKey(32);
+                String secretKey = EncryptorClass.generateSecretKey(32);
 
-            final String[] thePaymentKey = {paymentKeyCreator.get()};
-            final String[] theWalletKey = {walletKeyCreator.get()};
+                final String[] thePaymentKey = {paymentKeyCreator.get()};
+                final String[] theWalletKey = {walletKeyCreator.get()};
 
-            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                    .getReference()
-                    .addListenerForSingleValueEvent(new ValueEventListener()
-                    {
-                        @Override
-                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
+                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                        .getReference()
+                        .addListenerForSingleValueEvent(new ValueEventListener()
                         {
-
-                            if(snapshot.hasChildren())
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
                             {
-                                for(DataSnapshot snap : snapshot.getChildren())
+
+                                if(snapshot.hasChildren())
                                 {
-
-                                    if(snap.child("EncryptionKeys").child("WalletKey").getValue().toString().equals(theWalletKey[0]))
+                                    for(DataSnapshot snap : snapshot.getChildren())
                                     {
-                                        theWalletKey[0] = walletKeyCreator.get();
+
+                                        if(snap.child("EncryptionKeys").child("WalletKey").getValue().toString().equals(theWalletKey[0]))
+                                        {
+                                            theWalletKey[0] = walletKeyCreator.get();
+                                        }
+
+                                        if(snap.child("EncryptionKeys").child("PaymentKey").getValue().toString().equals(thePaymentKey[0]))
+                                        {
+                                            thePaymentKey[0] = paymentKeyCreator.get();
+                                        }
                                     }
 
-                                    if(snap.child("EncryptionKeys").child("PaymentKey").getValue().toString().equals(thePaymentKey[0]))
-                                    {
-                                        thePaymentKey[0] = paymentKeyCreator.get();
-                                    }
+                                    WalletEncryption walletEncryption = new WalletEncryption.Builder()
+                                            .setWalletKey(EncryptorClass.Encrypt(theWalletKey[0], secretKey, saltKey))
+                                            .setPaymentKey(EncryptorClass.Encrypt(thePaymentKey[0], secretKey, saltKey))
+                                            .build();
+
+                                    container = new WalletContainer.Builder()
+                                            .setEncryption(walletEncryption)
+                                            .setLogs(logs)
+                                            .setCurrency(user.getCurrency())
+                                            .setMoneyCase(0.0)
+                                            .build();
+                                }
+                                else {
+                                    WalletEncryption walletEncryption = new WalletEncryption.Builder()
+                                            .setWalletKey(EncryptorClass.Encrypt(theWalletKey[0], secretKey, saltKey))
+                                            .setPaymentKey(EncryptorClass.Encrypt(thePaymentKey[0], secretKey, saltKey))
+                                            .build();
+
+                                    container = new WalletContainer.Builder()
+                                            .setEncryption(walletEncryption)
+                                            .setLogs(logs)
+                                            .setCurrency(user.getCurrency())
+                                            .setMoneyCase(0.0)
+                                            .build();
+                                    walletTaken = walletKey;
                                 }
 
-                                WalletEncryption walletEncryption = new WalletEncryption.Builder()
-                                        .setWalletKey(EncryptorClass.Encrypt(theWalletKey[0], secretKey, saltKey))
-                                        .setPaymentKey(EncryptorClass.Encrypt(thePaymentKey[0], secretKey, saltKey))
-                                        .build();
-
-                                container = new WalletContainer.Builder()
-                                        .setEncryption(walletEncryption)
-                                        .setLogs(logs)
-                                        .setCurrency(user.getCurrency())
-                                        .setMoneyCase(0.0)
-                                        .build();
-                            }
-                            else {
-                                WalletEncryption walletEncryption = new WalletEncryption.Builder()
-                                        .setWalletKey(EncryptorClass.Encrypt(theWalletKey[0], secretKey, saltKey))
-                                        .setPaymentKey(EncryptorClass.Encrypt(thePaymentKey[0], secretKey, saltKey))
-                                        .build();
-
-                                container = new WalletContainer.Builder()
-                                        .setEncryption(walletEncryption)
-                                        .setLogs(logs)
-                                        .setCurrency(user.getCurrency())
-                                        .setMoneyCase(0.0)
-                                        .build();
-                                walletTaken = walletKey;
+                                try
+                                {
+                                    FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                                            .getReference()
+                                            .child(user.getId())
+                                            .child(walletKey)
+                                            .setValue(container.toJsonObject());
+                                }
+                                catch (JSONException e)
+                                {
+                                    throw new RuntimeException(e);
+                                }
                             }
 
-                            try
-                            {
-                                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                        .getReference()
-                                        .child(user.getId())
-                                        .child(walletKey)
-                                        .setValue(container.toJsonObject());
-                            }
-                            catch (JSONException e)
-                            {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                        @Override
-                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                        }
-                    });
+                            }
+                        });
+            }
         }
-    }
+    }*/
 }

@@ -21,6 +21,7 @@ import com.free.R;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.utilities.classes.UtilityValues;
 import com.user.UserRegistrar;
@@ -290,10 +291,21 @@ public class Register extends AppCompatActivity {
                                 else {
                                     if(result.equals("User data added to the database. User is not in the approval process."))
                                     {
-                                        Intent intent = new Intent(Register.this, Login.class);
-                                        user.createUser();
-                                        startActivity(intent);
-                                        finish();
+                                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(Email, Password)
+                                                .addOnSuccessListener(x -> {
+                                                    Intent intent = new Intent(Register.this, Login.class);
+                                                    //user.createUser();
+                                                    startActivity(intent);
+                                                    finish();
+                                                })
+                                                .addOnCanceledListener(() -> {
+                                                    Toast.makeText(this, "Operation canceled.", Toast.LENGTH_SHORT).show();
+                                                })
+                                                .addOnFailureListener(x -> {
+                                                    Toast.makeText(this, x.getMessage(), Toast.LENGTH_SHORT).show();
+                                                });
+
+
                                     }
                                     else {
                                         Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
