@@ -107,7 +107,7 @@ public class TransferMoney extends AppCompatActivity {
                         money = q1 + q2;
                     }
 
-                    commission = Wallet.returnCommission(money);
+                    //commission = Wallet.returnCommission(money);
 
                     transfer_money_taker_resume_header.setVisibility(View.VISIBLE);
                     transfer_money_taker_resume_container.setVisibility(View.VISIBLE);
@@ -121,7 +121,7 @@ public class TransferMoney extends AppCompatActivity {
                 }
             });
 
-            transfer_money_submit_button.setOnClickListener(view ->
+            /*transfer_money_submit_button.setOnClickListener(view ->
             {
                 EncryptorClass.BiometricClass.checkEncryption(this, () -> {
                     Wallet.transactToWallet(this,
@@ -133,7 +133,7 @@ public class TransferMoney extends AppCompatActivity {
                             commission,
                             transfer_money_page_description_text_field.getText().toString());
                 });
-            });
+            });*/
         });
     }
 

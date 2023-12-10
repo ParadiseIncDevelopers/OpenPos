@@ -54,7 +54,7 @@ public class AddMoney extends AppCompatActivity
                             (Double.parseDouble(add_money_page_decimal_text_field.getText().toString()) / 100.0);
                 }
 
-                Wallet.addMoneyToWallet(AddMoney.this, userEmail, money);
+                //Wallet.addMoneyToWallet(AddMoney.this, userEmail, money);
                 Intent intent = new Intent(AddMoney.this, MainPage.class);
                 intent.putExtra("Email", userEmail);
                 startActivity(intent);

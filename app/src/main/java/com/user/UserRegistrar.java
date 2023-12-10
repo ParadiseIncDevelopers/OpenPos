@@ -13,7 +13,6 @@ import com.wallet.Wallet;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,24 +21,14 @@ import java.util.function.Supplier;
 public class UserRegistrar {
     //Kullanıcı Id
     private String id;
-    //Kullanıcı email i
-    private EncryptedEmail email;
-    //6 haneli kod
-    private EncryptedPassword code;
     //Adı soyadı
-    private EncryptedName nameSurname;
-    //Telefon numarası
-    private EncryptedPhoneNumber phoneNumber;
-    //ilk giriş parolası
-    private EncryptedPassword password;
-    //Para birimi
-    private String currency;
+    private String nameSurname;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void createUser()
     {
         Wallet wallet = new Wallet("CREATE_WALLET");
-        wallet.createWallet(UserRegistrar.this);
+        //wallet.createWallet(UserRegistrar.this);
     }
 
     public String getId()
@@ -47,28 +36,8 @@ public class UserRegistrar {
         return id;
     }
 
-    public EncryptedEmail getEmail() {
-        return email;
-    }
-
-    public EncryptedPassword getCode() {
-        return code;
-    }
-
-    public EncryptedName getNameSurname() {
+    public String getNameSurname() {
         return nameSurname;
-    }
-
-    public EncryptedPhoneNumber getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public EncryptedPassword getPassword() {
-        return password;
-    }
-
-    public String getCurrency() {
-        return currency;
     }
 
     //Verileri json object e çeviren helper method.
@@ -76,12 +45,7 @@ public class UserRegistrar {
     {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", id);
-        jsonObject.put("email", email.toJsonObject());
-        jsonObject.put("code", code.toJsonObject());
-        jsonObject.put("nameSurname", nameSurname.toJsonObject());
-        jsonObject.put("phoneNumber", phoneNumber.toJsonObject());
-        jsonObject.put("password", password.toJsonObject());
-        jsonObject.put("currency", currency);
+        jsonObject.put("nameSurname", nameSurname);
 
         return jsonObject;
     }
@@ -89,15 +53,7 @@ public class UserRegistrar {
     public static class Builder
     {
         private String id;
-        private EncryptedEmail email;
-        private EncryptedName nameSurname;
-        private EncryptedPhoneNumber phoneNumber;
-        private EncryptedPassword password;
-        private String currency;
-        private EncryptedPassword code;
-
-        private String generatedCode;
-        private List<String> keys;
+        private String nameSurname;
 
         public Builder createSaltAndSecret(int length)
         {

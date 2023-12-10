@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.free.MainPage;
 import com.free.R;
@@ -26,6 +27,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -78,6 +81,8 @@ public class Login extends AppCompatActivity
     private TextView login_page_error_text, login_page_forgot_password_text;
     private Dialog dialog;
 
+    private String theSalt, theSecret;
+
     private final Supplier<String> getMacAddress = () -> {
         try {
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
@@ -128,10 +133,10 @@ public class Login extends AppCompatActivity
             login_page_submit_button = findViewById(R.id.login_page_submit_button);
             login_page_register_account_page = findViewById(R.id.login_page_register_account_page);
 
-            int greenColor = Color.parseColor("#558B2F");
+            ColorStateList greenColor = ColorStateList.valueOf(Color.parseColor("#558B2F"));
             Supplier<Boolean> allIsTrue = () ->
-                    login_page_email_text.getBoxStrokeColor() == greenColor &&
-                            login_page_password_text.getBoxStrokeColor() == greenColor;
+                    login_page_email_text.getHintTextColor() == greenColor &&
+                            login_page_password_text.getHintTextColor() == greenColor;
 
             login_page_email_text_field.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -175,7 +180,7 @@ public class Login extends AppCompatActivity
                 @Override
                 public void afterTextChanged(Editable s)
                 {
-                    if(Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$").matcher(s.toString()).matches())
+                    if(Pattern.compile("^\\d{6}$").matcher(s.toString()).matches())
                     {
                         login_page_password_text.setHintTextColor(ColorStateList.valueOf(Color.parseColor("#558B2F")));
                         if(allIsTrue.get())
@@ -204,212 +209,20 @@ public class Login extends AppCompatActivity
                     //rememberTheUser();
                 }
 
-                LoginTokenizer tokenizer = new LoginTokenizer(Email);
-                tokenizer.createLoginToken();
-
-                FirebaseDatabase.getInstance("https://openpos-userstatus.europe-west1.firebasedatabase.app/")
-                        .getReference()
-                        .child("Users")
-                        .child(Email)
-                        .addListenerForSingleValueEvent(new ValueEventListener()
-                        {
-                            @Override
-                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
-                            {
-                                if(Stream.of(Users).anyMatch(x -> x.isNull(Email)))
-                                {
-                                    try
-                                    {
-                                        if(Stream.of(Users.getJSONObject(Email)).anyMatch(x ->
-                                        {
-                                            try
-                                            {
-                                                return x.get("EncryptedObject").toString().equals(Password);
-                                            }
-                                            catch (JSONException e)
-                                            {
-                                                e.printStackTrace();
-                                            }
-                                            return false;
-                                        }))
-                                        {
-
-                                            EncryptorClass.BiometricClass.checkEncryption(Login.this, () ->
-                                            {
-                                                runOnUiThread(() -> {
-                                                    dialog = new Dialog(Login.this);
-                                                    dialog.requestWindowFeature(FEATURE_NO_TITLE);
-                                                    dialog.setCancelable(false);
-                                                    dialog.setContentView(R.layout.dialog_main_page_loading);
-                                                    dialog.show();
-                                                });
-                                                Intent intent = new Intent(Login.this, MainPage.class);
-
-                                                /*
-                                                *
-                                                * userEmail = textEmail;
-                                                walletTaken = "MainWallet";
-
-                                                JSONObject obj = new JSONObject();
-                                                try
-                                                {
-                                                    obj = mapToJsonObject((Map<String, Object>) UsersAllWallets.get(Email));
-                                                }
-                                                catch (JSONException e)
-                                                {
-                                                    e.printStackTrace();
-                                                }
-
-                                                userWalletLogs = new HashMap<>();
-                                                JSONObject finalObj = obj;
-                                                obj.keys().forEachRemaining(x ->
-                                                {
-                                                    try
-                                                    {
-                                                        JSONObject theX = mapToJsonObject((Map<String, Object>) finalObj.get(x));
-                                                        JSONArray theLogs = mapToJsonArray((ArrayList<Object>) theX.get("Logs"));
-                                                        ArrayList<Log> logs = new ArrayList<>();
-
-                                                        int minLog = Math.min(theLogs.length(), 50);
-
-                                                        for (int i = 0; i < minLog; i++)
-                                                        {
-                                                            try
-                                                            {
-                                                                JSONObject jsonObject = mapToJsonObject((Map<String, Object>) theLogs.get(i));
-
-                                                                Log log = new Log.Builder()
-                                                                        .SetSpend(jsonObject.get("spend").toString())
-                                                                        .SetRest(jsonObject.get("rest").toString())
-                                                                        .SetEmail(jsonObject.get("email").toString())
-                                                                        .SetDate(jsonObject.get("date").toString())
-                                                                        .SetContentDescription(jsonObject.get("contentDescription").toString())
-                                                                        .SetCommission(jsonObject.get("commission").toString())
-                                                                        .Build();
-                                                                logs.add(log);
-                                                            }
-                                                            catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-                                                        }
-
-                                                        double moneyCase = Double.parseDouble(mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("MoneyCase").toString().replace(",", "."));
-                                                        String currency = mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("Currency").toString();
-                                                        String paymentKey = mapToJsonObject((Map<String, Object>) mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("EncryptionKeys")).get("PaymentKey").toString();
-                                                        String walletKey = mapToJsonObject((Map<String, Object>) mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("EncryptionKeys")).get("WalletKey").toString();
-                                                        if (Objects.requireNonNull(x).equals("MainWallet"))
-                                                        {
-                                                            Wallet theWallet = new Wallet.Builder()
-                                                                    .setPaymentKey(EncryptorClass.Decrypt(paymentKey))
-                                                                    .setWalletKey("MainWallet")
-                                                                    .setCurrency(currency)
-                                                                    .setEmail(userEmail)
-                                                                    .setMoneyCase(moneyCase)
-                                                                    .Build();
-                                                            userWallets.add(theWallet);
-                                                            userMoneyCase.put("MainWallet", mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("MoneyCase").toString());
-                                                            userCurrency.put("MainWallet", mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("Currency").toString());
-                                                            userWalletLogs.put("MainWallet", logs);
-                                                        }
-                                                        else {
-                                                            Wallet theWallet = new Wallet.Builder()
-                                                                    .setPaymentKey(EncryptorClass.Decrypt(paymentKey))
-                                                                    .setWalletKey(EncryptorClass.Decrypt(walletKey))
-                                                                    .setCurrency(currency)
-                                                                    .setEmail(userEmail)
-                                                                    .setMoneyCase(moneyCase)
-                                                                    .Build();
-                                                            userWallets.add(theWallet);
-                                                            userMoneyCase.put(EncryptorClass.setSecurePassword(EncryptorClass.Decrypt(walletKey)), mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("MoneyCase").toString());
-                                                            userCurrency.put(EncryptorClass.setSecurePassword(EncryptorClass.Decrypt(walletKey)), mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("Currency").toString());
-                                                            userWalletLogs.put(EncryptorClass.setSecurePassword(EncryptorClass.Decrypt(walletKey)), logs);
-                                                        }
-
-                                                    }
-                                                    catch (JSONException e)
-                                                    {
-                                                        e.printStackTrace();
-                                                    }
-                                                });
+                //LoginTokenizer tokenizer = new LoginTokenizer(Email);
+                //tokenizer.createLoginToken();
 
 
-                                                try
-                                                {
-                                                    userNameAndSurname = EncryptorClass.Decrypt(mapToJsonObject((Map<String, Object>) Users.get(Email)).get("NameSurname").toString());
-                                                }
-                                                catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-
-                                                userAccountImageLinksList = new ArrayList<>();
-                                                FirebaseStorage.getInstance("gs://openpos-3e0d3-accountflags")
-                                                        .getReference().listAll()
-                                                        .addOnCompleteListener(task -> {
-
-                                                        })
-                                                        .addOnFailureListener(Throwable::printStackTrace)
-                                                        .addOnCanceledListener(() -> {
-
-                                                        })
-                                                        .addOnSuccessListener(images ->
-                                                        {
-                                                            List<StorageReference> ref = images.getItems();
-                                                            Thread tr1 = new Thread(() ->
-                                                            {
-                                                                ref.forEach(x ->
-                                                                {
-                                                                    Task<Uri> loadImage = x.getDownloadUrl();
-
-                                                                    final Uri[] uri = {null};
-                                                                    try {
-                                                                        uri[0] = Tasks.await(loadImage);
-                                                                    } catch (ExecutionException | InterruptedException e) {
-                                                                        e.printStackTrace();
-                                                                    }
-
-                                                                    userAccountImageLinksList.add(uri[0].toString());
-                                                                });
-                                                            });
-
-                                                            tr1.start();
-                                                            while (tr1.isAlive()) {
-                                                                System.out.println("Waiting...");
-                                                            }
-                                                        });
-
-                                                try {
-                                                    Task<Uri> uploadedImage = FirebaseStorage.getInstance().
-                                                            getReference(Email)
-                                                            .child("ProfileImage")
-                                                            .getDownloadUrl();
-                                                    LoginFactoryClass.userImageUri = Tasks.await(uploadedImage);
-                                                } catch (Exception e) {
-                                                    e.printStackTrace();
-                                                }
-                                                * */
-
-                                                startActivity(intent);
-                                                finish();
-                                            });
-                                        }
-                                        else {
-                                            login_page_error_text.setText("You entered wrong password. Please try again.");
-                                        }
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                else {
-                                    login_page_error_text.setText("This account does not exist. Please try again.");
-                                }
-                            }
-                            @Override
-                            public void onCancelled(@NonNull @NotNull DatabaseError error)
-                            {
-
-                            }
+                FirebaseAuth.getInstance()
+                        .signInWithEmailAndPassword(textEmail, textPassword)
+                        .addOnSuccessListener(x -> {
+                            Toast.makeText(this, "Email : " + x.getUser().getEmail() + "\nId : " + x.getUser().getUid(), Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(x -> {
+                            Toast.makeText(this, x.getMessage(), Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnCanceledListener(() -> {
+                            Toast.makeText(this, "Operation canceled.", Toast.LENGTH_SHORT).show();
                         });
             });
 

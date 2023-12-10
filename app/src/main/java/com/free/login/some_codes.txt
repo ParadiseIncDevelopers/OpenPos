@@ -1,0 +1,204 @@
+FirebaseDatabase.getInstance("https://openpos-3e0d3-default-rtdb.europe-west1.firebasedatabase.app/")
+                        .getReference()
+                        .child("Users")
+                        .addListenerForSingleValueEvent(new ValueEventListener()
+                        {
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
+                            {
+
+                                if(Stream.of(Users).anyMatch(x -> x.isNull(Email)))
+                                {
+                                    try
+                                    {
+                                        if(Stream.of(Users.getJSONObject(Email)).anyMatch(x ->
+                                        {
+                                            try
+                                            {
+                                                return x.get("EncryptedObject").toString().equals(Password);
+                                            }
+                                            catch (JSONException e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                            return false;
+                                        }))
+                                        {
+
+                                            EncryptorClass.BiometricClass.checkEncryption(Login.this, () ->
+                                            {
+                                                runOnUiThread(() -> {
+                                                    dialog = new Dialog(Login.this);
+                                                    dialog.requestWindowFeature(FEATURE_NO_TITLE);
+                                                    dialog.setCancelable(false);
+                                                    dialog.setContentView(R.layout.dialog_main_page_loading);
+                                                    dialog.show();
+                                                });
+                                                Intent intent = new Intent(Login.this, MainPage.class);
+
+                                                /*
+                                                *
+                                                * userEmail = textEmail;
+                                                walletTaken = "MainWallet";
+
+                                                JSONObject obj = new JSONObject();
+                                                try
+                                                {
+                                                    obj = mapToJsonObject((Map<String, Object>) UsersAllWallets.get(Email));
+                                                }
+                                                catch (JSONException e)
+                                                {
+                                                    e.printStackTrace();
+                                                }
+
+                                                userWalletLogs = new HashMap<>();
+                                                JSONObject finalObj = obj;
+                                                obj.keys().forEachRemaining(x ->
+                                                {
+                                                    try
+                                                    {
+                                                        JSONObject theX = mapToJsonObject((Map<String, Object>) finalObj.get(x));
+                                                        JSONArray theLogs = mapToJsonArray((ArrayList<Object>) theX.get("Logs"));
+                                                        ArrayList<Log> logs = new ArrayList<>();
+
+                                                        int minLog = Math.min(theLogs.length(), 50);
+
+                                                        for (int i = 0; i < minLog; i++)
+                                                        {
+                                                            try
+                                                            {
+                                                                JSONObject jsonObject = mapToJsonObject((Map<String, Object>) theLogs.get(i));
+
+                                                                Log log = new Log.Builder()
+                                                                        .SetSpend(jsonObject.get("spend").toString())
+                                                                        .SetRest(jsonObject.get("rest").toString())
+                                                                        .SetEmail(jsonObject.get("email").toString())
+                                                                        .SetDate(jsonObject.get("date").toString())
+                                                                        .SetContentDescription(jsonObject.get("contentDescription").toString())
+                                                                        .SetCommission(jsonObject.get("commission").toString())
+                                                                        .Build();
+                                                                logs.add(log);
+                                                            }
+                                                            catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+
+                                                        double moneyCase = Double.parseDouble(mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("MoneyCase").toString().replace(",", "."));
+                                                        String currency = mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("Currency").toString();
+                                                        String paymentKey = mapToJsonObject((Map<String, Object>) mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("EncryptionKeys")).get("PaymentKey").toString();
+                                                        String walletKey = mapToJsonObject((Map<String, Object>) mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("EncryptionKeys")).get("WalletKey").toString();
+                                                        if (Objects.requireNonNull(x).equals("MainWallet"))
+                                                        {
+                                                            Wallet theWallet = new Wallet.Builder()
+                                                                    .setPaymentKey(EncryptorClass.Decrypt(paymentKey))
+                                                                    .setWalletKey("MainWallet")
+                                                                    .setCurrency(currency)
+                                                                    .setEmail(userEmail)
+                                                                    .setMoneyCase(moneyCase)
+                                                                    .Build();
+                                                            userWallets.add(theWallet);
+                                                            userMoneyCase.put("MainWallet", mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("MoneyCase").toString());
+                                                            userCurrency.put("MainWallet", mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("Currency").toString());
+                                                            userWalletLogs.put("MainWallet", logs);
+                                                        }
+                                                        else {
+                                                            Wallet theWallet = new Wallet.Builder()
+                                                                    .setPaymentKey(EncryptorClass.Decrypt(paymentKey))
+                                                                    .setWalletKey(EncryptorClass.Decrypt(walletKey))
+                                                                    .setCurrency(currency)
+                                                                    .setEmail(userEmail)
+                                                                    .setMoneyCase(moneyCase)
+                                                                    .Build();
+                                                            userWallets.add(theWallet);
+                                                            userMoneyCase.put(EncryptorClass.setSecurePassword(EncryptorClass.Decrypt(walletKey)), mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("MoneyCase").toString());
+                                                            userCurrency.put(EncryptorClass.setSecurePassword(EncryptorClass.Decrypt(walletKey)), mapToJsonObject((Map<String, Object>) finalObj.get(x)).get("Currency").toString());
+                                                            userWalletLogs.put(EncryptorClass.setSecurePassword(EncryptorClass.Decrypt(walletKey)), logs);
+                                                        }
+
+                                                    }
+                                                    catch (JSONException e)
+                                                    {
+                                                        e.printStackTrace();
+                                                    }
+                                                });
+
+
+                                                try
+                                                {
+                                                    userNameAndSurname = EncryptorClass.Decrypt(mapToJsonObject((Map<String, Object>) Users.get(Email)).get("NameSurname").toString());
+                                                }
+                                                catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                                userAccountImageLinksList = new ArrayList<>();
+                                                FirebaseStorage.getInstance("gs://openpos-3e0d3-accountflags")
+                                                        .getReference().listAll()
+                                                        .addOnCompleteListener(task -> {
+
+                                                        })
+                                                        .addOnFailureListener(Throwable::printStackTrace)
+                                                        .addOnCanceledListener(() -> {
+
+                                                        })
+                                                        .addOnSuccessListener(images ->
+                                                        {
+                                                            List<StorageReference> ref = images.getItems();
+                                                            Thread tr1 = new Thread(() ->
+                                                            {
+                                                                ref.forEach(x ->
+                                                                {
+                                                                    Task<Uri> loadImage = x.getDownloadUrl();
+
+                                                                    final Uri[] uri = {null};
+                                                                    try {
+                                                                        uri[0] = Tasks.await(loadImage);
+                                                                    } catch (ExecutionException | InterruptedException e) {
+                                                                        e.printStackTrace();
+                                                                    }
+
+                                                                    userAccountImageLinksList.add(uri[0].toString());
+                                                                });
+                                                            });
+
+                                                            tr1.start();
+                                                            while (tr1.isAlive()) {
+                                                                System.out.println("Waiting...");
+                                                            }
+                                                        });
+
+                                                try {
+                                                    Task<Uri> uploadedImage = FirebaseStorage.getInstance().
+                                                            getReference(Email)
+                                                            .child("ProfileImage")
+                                                            .getDownloadUrl();
+                                                    LoginFactoryClass.userImageUri = Tasks.await(uploadedImage);
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                                * */
+
+                                                startActivity(intent);
+                                                finish();
+                                            });
+                                        }
+                                        else {
+                                            login_page_error_text.setText("You entered wrong password. Please try again.");
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                else {
+                                    login_page_error_text.setText("This account does not exist. Please try again.");
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError error)
+                            {
+
+                            }
+                        });

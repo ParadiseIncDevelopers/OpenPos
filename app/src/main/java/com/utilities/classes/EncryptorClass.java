@@ -42,6 +42,10 @@ import javax.crypto.spec.SecretKeySpec;
 import static android.content.Context.KEYGUARD_SERVICE;
 import static androidx.biometric.BiometricPrompt.ERROR_NEGATIVE_BUTTON;
 
+import com.google.firebase.database.DataSnapshot;
+
+import org.jetbrains.annotations.Contract;
+
 public class EncryptorClass
 {
     private static final String SECRET_KEY = "0A2B24A5A9B102C500FE532DBD3F5DC8";
@@ -142,7 +146,7 @@ public class EncryptorClass
 
     @Nullable
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String Decrypt(String text)
+    public static String Decrypt(String text, String secretKey, String saltKey)
     {
         try
         {
@@ -150,11 +154,11 @@ public class EncryptorClass
             byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             IvParameterSpec ivspec = new IvParameterSpec(iv);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-            KeySpec spec = new PBEKeySpec(SECRET_KEY.toCharArray(), SALTVALUE.getBytes(), 65536, 256);
+            KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), saltKey.getBytes(), 65536, 256);
             SecretKey tmp = factory.generateSecret(spec);
-            SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+            SecretKeySpec theSecretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+            cipher.init(Cipher.DECRYPT_MODE, theSecretKey, ivspec);
 
             return new String(cipher.doFinal(Base64.getDecoder().decode(text)));
         }
@@ -166,7 +170,18 @@ public class EncryptorClass
         return null;
 
     }
-    
+
+    @Contract("_ -> !null")
+    public static String getSaltKey(@NonNull DataSnapshot x)
+    {
+        return x.child("Email").child("Salt").getValue(String.class);
+    }
+
+    public static String getSecretKey(@NonNull DataSnapshot x)
+    {
+        return x.child("Email").child("Secret").getValue(String.class);
+    }
+
     public static class BiometricClass 
     {
         private static BiometricPrompt biometricPrompt = null;

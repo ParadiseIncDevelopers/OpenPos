@@ -102,11 +102,11 @@ public class WithdrawMoney extends AppCompatActivity
                     withdraw_money_taker_resume_header.setVisibility(View.VISIBLE);
                     withdraw_money_taker_resume_container.setVisibility(View.VISIBLE);
                     withdraw_money_withdraw_text.setText(String.format("You are withdrawing : %s %s", new DecimalFormat("#.##").format(money).replace(",","."), userCurrency.get(walletTaken)));
-                    withdraw_money_commission_fee_text.setText(String.format("The commission is : %s", new DecimalFormat("#.##").format(Wallet.returnCommission(money)).replace(",",".")));
-                    withdraw_money_total_text.setText(String.format("The total is : %s",
+                    //withdraw_money_commission_fee_text.setText(String.format("The commission is : %s", new DecimalFormat("#.##").format(Wallet.returnCommission(money)).replace(",",".")));
+                    /*withdraw_money_total_text.setText(String.format("The total is : %s",
                             Double.parseDouble(new DecimalFormat("#.##").format(money).replace(",",".")) +
                             Double.parseDouble(new DecimalFormat("#.##").format(Wallet.returnCommission(money)).replace(",","."))
-                            ));
+                            ));*/
                     withdraw_money_submit_button.setEnabled(true);
                 });
             }));
@@ -117,7 +117,7 @@ public class WithdrawMoney extends AppCompatActivity
                 {
                     money = Double.parseDouble(withdraw_money_page_text_field.getText().toString());
 
-                    Wallet.withdrawMoneyFromWallet(WithdrawMoney.this, userEmail, money);
+                    //Wallet.withdrawMoneyFromWallet(WithdrawMoney.this, userEmail, money);
 
 
 
@@ -128,13 +128,5 @@ public class WithdrawMoney extends AppCompatActivity
                 });
             });
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(WithdrawMoney.this, MainPage.class);
-        intent.putExtra("Email", userEmail);
-        startActivity(intent);
-        finish();
     }
 }
