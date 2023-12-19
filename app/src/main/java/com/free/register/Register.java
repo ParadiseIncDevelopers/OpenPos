@@ -260,12 +260,9 @@ public class Register extends AppCompatActivity {
             {
                 String Email = register_page_email_text_field.getText().toString().toLowerCase();
                 String NameAndSurname = register_page_name_and_surname_text_field.getText().toString().trim();
-                String PhoneNumber = register_page_phone_number_text_field.getText().toString();
                 String Password = register_page_password_text_field.getText().toString();
-                String Currency = register_page_currency_autocomplete_field.getText().toString();
-                String Code = register_page_code_text_field.getText().toString();
 
-                UserRegistrar user = new UserRegistrar.Builder()
+                UserRegistrar user = new UserRegistrar.Builder()///
                         .createSaltAndSecret(32)
                         .createId()
                         .setEmail(Email)
