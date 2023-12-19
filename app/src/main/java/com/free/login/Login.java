@@ -1,6 +1,5 @@
 package com.free.login;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
@@ -19,45 +18,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.free.MainPage;
 import com.free.R;
 import com.free.register.Register;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.utilities.classes.EncryptorClass;
-import com.utilities.classes.LoginFactoryClass;
-import com.utilities.tokenizers.LoginTokenizer;
-import com.wallet.Wallet;
-import com.wallet.Models.Log;
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.net.NetworkInterface;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-import static android.view.Window.FEATURE_NO_TITLE;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
 import static com.utilities.classes.LoginFactoryClass.ProgramObjectsUtilityClass.Users;
 import static com.utilities.classes.LoginFactoryClass.ProgramObjectsUtilityClass.UsersAllWallets;
@@ -201,8 +171,6 @@ public class Login extends AppCompatActivity
             {
                 String textEmail = login_page_email_text_field.getText().toString();
                 String textPassword = login_page_password_text_field.getText().toString();
-                String Email = EncryptorClass.setSecurePassword(textEmail);
-                String Password = EncryptorClass.setSecurePassword(textPassword);
 
                 if(login_page_remember_box.isChecked())
                 {

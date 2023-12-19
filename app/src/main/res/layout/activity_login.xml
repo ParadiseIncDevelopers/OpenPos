@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Password"
-                    android:inputType="number|numberPassword|numberDecimal"
+                    android:inputType="text|textPassword"
                     android:maxLength="6"
                     android:singleLine="true"
                     android:textColor="#000000" />
