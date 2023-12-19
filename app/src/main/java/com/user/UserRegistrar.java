@@ -31,7 +31,6 @@ public class UserRegistrar {
         jsonObject.put("id", id);
         jsonObject.put("email", email);
         jsonObject.put("nameSurname", nameSurname);
-
         return jsonObject;
     }
 
