@@ -155,7 +155,7 @@ public class CreateAccount extends AppCompatActivity
                 dialog.setContentView(R.layout.dialog_main_page_loading);
                 dialog.show();
             });
-
+//TEST
             FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                     .getReference()
                     .addListenerForSingleValueEvent(new ValueEventListener() {
