@@ -46,6 +46,30 @@
         app:layout_constraintTop_toBottomOf="@+id/create_account_text_subtitle">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/create_account_text_account_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/largeDp"
+            android:layout_marginRight="@dimen/largeDp"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/colorOnPrimary"
+            app:errorEnabled="true"
+            app:hintTextColor="#E64A19">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_account_text_account_name_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Account name"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/create_account_text_account_type"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"

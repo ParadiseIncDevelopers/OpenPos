@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toolbar;
 import com.free.MainPage;
 import com.free.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,8 +47,9 @@ import static com.wallet.Wallet.walletKeyCreator;
 public class CreateAccount extends AppCompatActivity
 {
     private Toolbar create_account_toolbar;
-    private TextInputLayout create_account_text_account_type;
+    private TextInputLayout create_account_text_account_type, create_account_text_account_name;
     private AutoCompleteTextView create_account_text_account_type_auto;
+    private TextInputEditText create_account_text_account_name_field;
     private Button create_account_submit_button;
     private Dialog dialog;
 
@@ -65,9 +67,28 @@ public class CreateAccount extends AppCompatActivity
         create_account_toolbar = findViewById(R.id.create_account_toolbar);
         create_account_text_account_type = findViewById(R.id.create_account_text_account_type);
         create_account_text_account_type_auto = findViewById(R.id.create_account_text_account_type_auto);
+        create_account_text_account_name = findViewById(R.id.create_account_text_account_name);
+        create_account_text_account_name_field = findViewById(R.id.create_account_text_account_name_field);
         create_account_submit_button = findViewById(R.id.create_account_submit_button);
 
         create_account_submit_button.setEnabled(false);
+
+        create_account_text_account_name_field.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         ArrayAdapter<String> currency = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, UtilityValues.Currencies);
         create_account_text_account_type_auto.setAdapter(currency);
