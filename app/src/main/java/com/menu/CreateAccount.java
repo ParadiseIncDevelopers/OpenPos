@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -34,6 +36,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
+import java.util.regex.Pattern;
+
 import static android.view.Window.FEATURE_NO_TITLE;
 import static com.utilities.classes.LoginFactoryClass.userCurrency;
 import static com.utilities.classes.LoginFactoryClass.userEmail;
@@ -41,8 +46,7 @@ import static com.utilities.classes.LoginFactoryClass.userMoneyCase;
 import static com.utilities.classes.LoginFactoryClass.userWalletLogs;
 import static com.utilities.classes.LoginFactoryClass.userWallets;
 import static com.utilities.classes.LoginFactoryClass.walletTaken;
-import static com.wallet.Wallet.paymentKeyCreator;
-import static com.wallet.Wallet.walletKeyCreator;
+
 
 public class CreateAccount extends AppCompatActivity
 {
@@ -73,6 +77,12 @@ public class CreateAccount extends AppCompatActivity
 
         create_account_submit_button.setEnabled(false);
 
+        ColorStateList greenColor = ColorStateList.valueOf(Color.parseColor("#558B2F"));
+
+        Supplier<Boolean> allIsTrue = () ->
+                create_account_text_account_name.getHintTextColor() == greenColor &&
+                        create_account_text_account_type.getHintTextColor() == greenColor;
+
         create_account_text_account_name_field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -86,6 +96,18 @@ public class CreateAccount extends AppCompatActivity
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if(Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$").matcher(editable.toString()).matches())
+            {
+                create_account_text_account_name.setHintTextColor(ColorStateList.valueOf(Color.parseColor("#558B2F")));
+                if(allIsTrue.get())
+                {
+                    create_account_submit_button.setEnabled(true);
+                }
+            }
+            else{
+                    create_account_text_account_name.setHintTextColor(ColorStateList.valueOf(Color.parseColor("#E64A19")));
+                    create_account_submit_button.setEnabled(false);
+            }
 
             }
         });
@@ -108,6 +130,19 @@ public class CreateAccount extends AppCompatActivity
             public void afterTextChanged(Editable s)
             {
                 create_account_submit_button.setEnabled(UtilityValues.Currencies.stream().anyMatch(x -> x.equals(s.toString())));
+                if(UtilityValues.Currencies.stream().anyMatch(x -> x.equals(s.toString())))
+                {
+                    create_account_text_account_type.setHintTextColor(ColorStateList.valueOf(Color.parseColor("#558B2F")));
+                    if(allIsTrue.get())
+                    {
+                        create_account_submit_button.setEnabled(true);
+                    }
+                }
+                else{
+                    create_account_text_account_type.setHintTextColor(ColorStateList.valueOf(Color.parseColor("#E64A19")));
+                    create_account_submit_button.setEnabled(false);
+                }
+
             }
         });
 
@@ -128,32 +163,8 @@ public class CreateAccount extends AppCompatActivity
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
                         {
-                            String Currency = create_account_text_account_type_auto.getText().toString();
-
-                            Map<String, Object> wallet = new HashMap<>();
-                            Map<String, String> walletLogs = new HashMap<>();
-                            Map<String, Map<String, String>> logs = new HashMap<>();
-                            Map<String, Object> walletEncryption = new HashMap<>();
-
-                            Log zeroLog = new Log.Builder()
-                                    .SetEmail(userEmail)
-                                    .SetCommission("NO_COMMISSION")
-                                    .SetContentDescription("WALLET CREATED.")
-                                    .SetDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
-                                    .SetRest("0.00")
-                                    .SetSpend("0.00")
-                                    .Build();
-
-                            walletLogs.put("email", zeroLog.getEmail());
-                            walletLogs.put("commission", zeroLog.getCommission());
-                            walletLogs.put("contentDescription", zeroLog.getContentDescription());
-                            walletLogs.put("date", zeroLog.getDate());
-                            walletLogs.put("spend", zeroLog.getSpend());
-                            walletLogs.put("rest", zeroLog.getRest());
-                            logs.put("0", walletLogs);
-
-                            final String[] thePaymentKey = {paymentKeyCreator.get()};
-                            final String[] theWalletKey = {walletKeyCreator.get()};
+                            String Type = create_account_text_account_type_auto.getText().toString();
+                            String AccountName = create_account_text_account_name_field.getText().toString();
 
                             if(snapshot.hasChildren())
                             {
@@ -173,48 +184,33 @@ public class CreateAccount extends AppCompatActivity
                                 //walletEncryption.put("WalletKey", EncryptorClass.Encrypt(theWalletKey[0]));
                                 //walletEncryption.put("PaymentKey", EncryptorClass.Encrypt(thePaymentKey[0]));
 
-                                wallet.put("MoneyCase", 0.0);
-                                wallet.put("Currency", Currency);
-                                wallet.put("Logs", logs);
-
                             }
                             else{
 
                                 //walletEncryption.put("WalletKey", EncryptorClass.Encrypt(theWalletKey[0]));
                                 //walletEncryption.put("PaymentKey", EncryptorClass.Encrypt(thePaymentKey[0]));
 
-                                wallet.put("MoneyCase", 0.0);
-                                wallet.put("Currency", Currency);
-                                wallet.put("Logs", walletLogs);
 
                             }
-                            wallet.put("EncryptionKeys", walletEncryption);
 
                             Wallet newWallet = new Wallet.Builder()
                                     //.setPaymentKey(EncryptorClass.Encrypt(thePaymentKey[0]))
                                     .setMoneyCase(0.0)
                                     .setEmail(userEmail)
-                                    .setCurrency(Currency)
+                                    .setCurrency(Type)
                                     //.setWalletKey(EncryptorClass.Encrypt(theWalletKey[0]))
                                     .Build();
 
-                            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                    .getReference()
-                                    .child(EncryptorClass.setSecurePassword(userEmail))
-                                    .child(EncryptorClass.setSecurePassword(theWalletKey[0]))
-                                    .setValue(wallet);
+                            //TODO: buradan devam.
+
+                            /*FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                                    .getReference().push()
+                                    .setValue(newWallet.toJsonIObject());
 
                             walletTaken = EncryptorClass.setSecurePassword(theWalletKey[0]);
 
                             ArrayList<Log> newLog = new ArrayList<>();
-                            newLog.add(zeroLog);
-
-                            userWallets.add(newWallet);
-                            userMoneyCase.put(walletTaken, String.valueOf(newWallet.getMoneyCase()));
-                            userCurrency.put(walletTaken, newWallet.getCurrency());
-                            userWalletLogs.put(walletTaken, newLog);
-
-                            dialog.dismiss();
+                            newLog.add(zeroLog);*/
                             Intent intent = new Intent(CreateAccount.this, MainPage.class);
                             intent.putExtra("Email", userEmail);
                             startActivity(intent);
