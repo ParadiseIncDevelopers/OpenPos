@@ -13,6 +13,10 @@
         android:id="@+id/main_page_ConstraintLayout1_Exit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/wallet_logs_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,11 +25,11 @@
             android:id="@+id/main_page_FAB1_Close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:src="@drawable/ic_times"
             app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,191 +39,86 @@
             android:id="@+id/main_page_FAB2_Menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/ic_menu"
             app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/main_page_Logo1_Acoount"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_wallet"
+            app:contentPadding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/main_page_TextView1_Header"
+            app:layout_constraintStart_toEndOf="@+id/main_page_FAB2_Menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circularImageView"
+            app:strokeColor="@color/colorOnPrimary"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/main_page_TextView1_Header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:padding="@dimen/xSmallDp"
+            android:text="Your accounts lists"
+            app:layout_constraintBottom_toBottomOf="@+id/main_page_FAB1_Close"
+            app:layout_constraintEnd_toStartOf="@+id/main_page_FAB1_Close"
+            app:layout_constraintStart_toEndOf="@+id/main_page_Logo1_Acoount"
+            app:layout_constraintTop_toTopOf="@+id/main_page_FAB1_Close" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_page_ConstraintLayout2_Account"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/main_page_LinearLayout_AllTxts"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/wallet_logs_border"
+        android:padding="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_page_ConstraintLayout1_Exit">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_page_FAB3_ArrowDown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_arrow_down"
-            app:backgroundTint="@color/colorPrimary"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_page_RecyclerView_Accounts"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_page_ImageView1_Acoount" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/main_page_ImageView1_Acoount"
-            android:layout_width="192dp"
-            android:layout_height="192dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_wallet"
-            app:contentPadding="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/main_page_FAB3_ArrowDown"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_page_FAB4_ArrowUp"
-            app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_page_FAB4_ArrowUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_arrow_up"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_constraintBottom_toTopOf="@+id/main_page_ImageView1_Acoount"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/main_page_LinearLayout_AllTxts"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/login_page_register_account_page3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/main_page_TextView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="@dimen/xSmallDp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/main_page_TextView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/xSmallDp"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/main_page_TextView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="@dimen/xSmallDp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/main_page_TextView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/xSmallDp"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/main_page_TextView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="@dimen/xSmallDp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/main_page_TextView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/xSmallDp"
-                android:text="TextView" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/login_page_register_account_page3"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:text="Register account"
-        android:textAllCaps="false"
-        android:textColor="#0277BD"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/login_page_register_account_page2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="#B00277BD"
-        app:strokeColor="#0277BD"
-        app:strokeWidth="1dp" />
-
-    <Button
-        android:id="@+id/login_page_register_account_page2"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:text="Register account"
-        android:textAllCaps="false"
-        android:textColor="#0277BD"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/login_page_register_account_page3"
-        app:rippleColor="#B00277BD"
-        app:strokeColor="#0277BD"
-        app:strokeWidth="1dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_page_no_account_layout"
         android:layout_width="360dp"
         android:layout_height="360dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/main_page_ImageView_NoAccount"
             android:layout_width="134dp"
             android:layout_height="150dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -228,12 +127,13 @@
             app:srcCompat="@drawable/ic_wallet" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/main_page_TextView_NoAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Please create an account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toBottomOf="@+id/main_page_ImageView_NoAccount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
