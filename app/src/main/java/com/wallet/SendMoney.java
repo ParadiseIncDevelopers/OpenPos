@@ -19,12 +19,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.utilities.classes.EncryptorClass;
 import com.utilities.QrCodeEncoder;
-import com.utilities.interfaces.IAES256KeyMaker;
 
 import org.jetbrains.annotations.NotNull;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.walletTaken;
+import static com.utilities.classes.UserUtility.userEmail;
+import static com.utilities.classes.UserUtility.walletTaken;
 
 public class SendMoney extends AppCompatActivity {
 

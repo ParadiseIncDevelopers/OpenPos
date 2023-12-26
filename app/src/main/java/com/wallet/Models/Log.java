@@ -1,126 +1,118 @@
 package com.wallet.Models;
 
 import android.os.Build;
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class Log
-{
-    private String email;
+public class Log {
+    private String senderId;
+    private String receiverId;
+    private String senderEmail;
+    private String receiverEmail;
     private String contentDescription;
-    private String date;
-    private String spend;
-    private String rest;
-    private String commission;
+    private LocalDateTime date;
+    private double debit;
+    private double credit;
+    private double commission;
 
-    @NonNull
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static List<Log> parseToArrayList(@NonNull List<Map<String, Object>> logs)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public JSONObject toJsonObject()
     {
-        List<Log> allLogs = new ArrayList<>();
-
-        logs.forEach(x -> {
-            Log theLog = new Log.Builder()
-                    .SetCommission(x.get("commission").toString())
-                    .SetContentDescription(x.get("contentDescription").toString())
-                    .SetDate(x.get("date").toString())
-                    .SetEmail(x.get("email").toString())
-                    .SetRest(x.get("rest").toString())
-                    .SetSpend(x.get("spend").toString())
-                    .Build();
-            allLogs.add(theLog);
-        });
-
-        return allLogs;
+        JSONObject jsonObject = new JSONObject();
+        try
+        {
+            jsonObject.put("senderId", senderId);
+            jsonObject.put("receiverId", receiverId);
+            jsonObject.put("senderEmail", senderEmail);
+            jsonObject.put("receiverEmail", receiverEmail);
+            jsonObject.put("contentDescription", contentDescription);
+            jsonObject.put("date", date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)); // Format date to string
+            jsonObject.put("debit", debit);
+            jsonObject.put("credit", credit);
+            jsonObject.put("commission", commission);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getContentDescription() {
-        return contentDescription;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getSpend() {
-        return spend;
-    }
-
-    public String getRest() {
-        return rest;
-    }
-
-    public String getCommission() {
-        return commission;
-    }
-
-    public static class Builder
-    {
-        private String email;
+    public static class Builder {
+        private String senderId;
+        private String receiverId;
+        private String senderEmail;
+        private String receiverEmail;
         private String contentDescription;
-        private String date;
-        private String spend;
-        private String rest;
-        private String commission;
+        private LocalDateTime date;
+        private double debit;
+        private double credit;
+        private double commission;
 
-        public Builder SetEmail(String email)
-        {
-            this.email = email;
+        public Builder setSenderId(String senderId) {
+            this.senderId = senderId;
             return this;
         }
 
-        public Builder SetCommission(String commission)
-        {
-            this.commission = commission;
+        public Builder setReceiverId(String receiverId) {
+            this.receiverId = receiverId;
             return this;
         }
 
-        public Builder SetContentDescription(String contentDescription)
-        {
+        public Builder setSenderEmail(String senderEmail) {
+            this.senderEmail = senderEmail;
+            return this;
+        }
+
+        public Builder setReceiverEmail(String receiverEmail) {
+            this.receiverEmail = receiverEmail;
+            return this;
+        }
+
+        public Builder setContentDescription(String contentDescription) {
             this.contentDescription = contentDescription;
             return this;
         }
 
-        public Builder SetDate(String date)
-        {
+        public Builder setDate(LocalDateTime date) {
             this.date = date;
             return this;
         }
 
-        public Builder SetSpend(String spend)
-        {
-            this.spend = spend;
+        public Builder setDebit(double debit) {
+            this.debit = debit;
             return this;
         }
 
-        public Builder SetRest(String rest)
-        {
-            this.rest = rest;
+        public Builder setCredit(double credit) {
+            this.credit = credit;
             return this;
         }
 
-        public Log Build()
-        {
-            Log logs = new Log();
-            logs.contentDescription = this.contentDescription;
-            logs.date = this.date;
-            logs.email = this.email;
-            logs.rest = this.rest;
-            logs.spend = this.spend;
-            logs.commission = commission;
-            return logs;
+        public Builder setCommission(double commission) {
+            this.commission = commission;
+            return this;
+        }
+
+        public Log build() {
+            Log log = new Log();
+            log.senderId = this.senderId;
+            log.receiverId = this.receiverId;
+            log.senderEmail = this.senderEmail;
+            log.receiverEmail = this.receiverEmail;
+            log.contentDescription = this.contentDescription;
+            log.date = this.date;
+            log.debit = this.debit;
+            log.credit = this.credit;
+            log.commission = this.commission;
+            return log;
         }
     }
 
-    private Log()
-    {
-
+    private Log() {
+        // Private constructor
     }
 }

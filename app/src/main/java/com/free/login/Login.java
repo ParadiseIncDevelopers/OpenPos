@@ -2,12 +2,13 @@ package com.free.login;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -18,29 +19,24 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.free.MainPage;
 import com.free.R;
 import com.free.register.Register;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.utilities.classes.UserUtility;
+
 import java.net.NetworkInterface;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
-import static com.utilities.classes.LoginFactoryClass.ProgramObjectsUtilityClass.Users;
-import static com.utilities.classes.LoginFactoryClass.ProgramObjectsUtilityClass.UsersAllWallets;
-import static com.utilities.classes.LoginFactoryClass.ProgramObjectsUtilityClass.mapToJsonArray;
-import static com.utilities.classes.LoginFactoryClass.ProgramObjectsUtilityClass.mapToJsonObject;
-import static com.utilities.classes.LoginFactoryClass.userAccountImageLinksList;
-import static com.utilities.classes.LoginFactoryClass.userCurrency;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.userMoneyCase;
-import static com.utilities.classes.LoginFactoryClass.userNameAndSurname;
-import static com.utilities.classes.LoginFactoryClass.userWalletLogs;
-import static com.utilities.classes.LoginFactoryClass.userWallets;
-import static com.utilities.classes.LoginFactoryClass.walletTaken;
 
 public class Login extends AppCompatActivity
 {
@@ -82,6 +78,7 @@ public class Login extends AppCompatActivity
         return "02:00:00:00:00:00";
     };
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,24 +171,23 @@ public class Login extends AppCompatActivity
 
                 if(login_page_remember_box.isChecked())
                 {
-                    //rememberTheUser();
+
                 }
-
-                //LoginTokenizer tokenizer = new LoginTokenizer(Email);
-                //tokenizer.createLoginToken();
-
 
                 FirebaseAuth.getInstance()
                         .signInWithEmailAndPassword(textEmail, textPassword)
-                        .addOnSuccessListener(x -> {
-                            Toast.makeText(this, "Email : " + x.getUser().getEmail() + "\nId : " + x.getUser().getUid(), Toast.LENGTH_SHORT).show();
+                        .addOnSuccessListener(authResult -> {
+
+                            UserUtility.userEmail = Objects.requireNonNull(authResult.getUser()).getEmail();
+                            UserUtility.userLoginId = authResult.getUser().getUid();
+
+                            Intent intent = new Intent(Login.this, MainPage.class);
+                            startActivity(intent);
+                            finish();
                         })
-                        .addOnFailureListener(x -> {
-                            Toast.makeText(this, x.getMessage(), Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnCanceledListener(() -> {
-                            Toast.makeText(this, "Operation canceled.", Toast.LENGTH_SHORT).show();
-                        });
+                        .addOnFailureListener(exception -> login_page_error_text.setText(exception.getMessage()))
+                        .addOnCanceledListener(() -> login_page_error_text.setText("Operation canceled."));
+
             });
 
             login_page_forgot_password_text.setOnClickListener(view -> {
@@ -439,7 +435,7 @@ public class Login extends AppCompatActivity
                                                                     getReference(Email)
                                                                     .child("ProfileImage")
                                                                     .getDownloadUrl();
-                                                            LoginFactoryClass.userImageUri = Tasks.await(uploadedImage);
+                                                            UserUtility.userImageUri = Tasks.await(uploadedImage);
                                                         } catch (Exception e) {
                                                             e.printStackTrace();
                                                         }
@@ -450,8 +446,8 @@ public class Login extends AppCompatActivity
 
                                                     try
                                                     {
-                                                        LoginFactoryClass factory = new LoginFactoryClass(Email);
-                                                        LoginFactoryClass.LoginType = UtilityValues.REGISTERED;
+                                                        UserUtility factory = new UserUtility(Email);
+                                                        UserUtility.LoginType = UtilityValues.REGISTERED;
                                                         int loginId = factory.LoginUser(userApproval[0], accountBlocked[0], actionsBlocked[0]);
                                                         if (loginId == 0)
                                                         {

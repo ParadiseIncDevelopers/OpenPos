@@ -174,8 +174,6 @@ public class Register extends AppCompatActivity {
                 String NameAndSurname = register_page_name_and_surname_text_field.getText().toString().trim();
                 String Password = register_page_password_text_field.getText().toString();
 
-
-
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(Email, Password)
                         .addOnSuccessListener(x -> {
                             UserRegistrar user = new UserRegistrar.Builder()

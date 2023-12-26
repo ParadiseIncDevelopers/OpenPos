@@ -28,9 +28,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.userNameAndSurname;
-import static com.utilities.classes.LoginFactoryClass.userPhoneNumber;
+import static com.utilities.classes.UserUtility.userEmail;
+import static com.utilities.classes.UserUtility.userNameAndSurname;
 
 public class ProfileSettings extends AppCompatActivity
 {
