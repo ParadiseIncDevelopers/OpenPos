@@ -15,10 +15,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import static com.free.NetworkChangeReceiver.NetworkCallback;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
+import static com.utilities.classes.UserUtility.userEmail;
 
 
-public class AddMoney extends AppCompatActivity
+public class CreditAccount extends AppCompatActivity
 {
     private TextInputLayout add_money_page_text, add_money_page_decimal_text;
     private TextInputEditText add_money_page_text_field, add_money_page_decimal_text_field;
@@ -28,16 +28,10 @@ public class AddMoney extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_money);
+        setContentView(R.layout.activity_credit_account);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        add_money_page_text = findViewById(R.id.add_money_page_text);
-        add_money_page_decimal_text = findViewById(R.id.add_money_page_decimal_text);
-        add_money_page_text_field = findViewById(R.id.add_money_page_text_field);
-        add_money_page_decimal_text_field = findViewById(R.id.add_money_page_decimal_text_field);
-        add_money_page_submit_button = findViewById(R.id.add_money_page_submit_button);
 
         NetworkCallback(this, () ->
         {
@@ -54,8 +48,8 @@ public class AddMoney extends AppCompatActivity
                             (Double.parseDouble(add_money_page_decimal_text_field.getText().toString()) / 100.0);
                 }
 
-                //Wallet.addMoneyToWallet(AddMoney.this, userEmail, money);
-                Intent intent = new Intent(AddMoney.this, MainPage.class);
+                //Wallet.addMoneyToWallet(CreditAccount.this, userEmail, money);
+                Intent intent = new Intent(CreditAccount.this, MainPage.class);
                 intent.putExtra("Email", userEmail);
                 startActivity(intent);
                 finish();

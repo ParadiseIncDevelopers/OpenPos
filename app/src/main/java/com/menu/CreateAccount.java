@@ -29,23 +29,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.utilities.classes.EncryptorClass;
 import com.utilities.classes.UtilityValues;
 import com.wallet.Wallet;
-import com.wallet.Models.Log;
 import org.jetbrains.annotations.NotNull;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-
 import static android.view.Window.FEATURE_NO_TITLE;
-import static com.utilities.classes.LoginFactoryClass.userCurrency;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.userMoneyCase;
-import static com.utilities.classes.LoginFactoryClass.userWalletLogs;
-import static com.utilities.classes.LoginFactoryClass.userWallets;
-import static com.utilities.classes.LoginFactoryClass.walletTaken;
+import static com.utilities.classes.UserUtility.userEmail;
+import static com.utilities.classes.UserUtility.userLoginId;
 
 
 public class CreateAccount extends AppCompatActivity
@@ -155,7 +144,7 @@ public class CreateAccount extends AppCompatActivity
                 dialog.setContentView(R.layout.dialog_main_page_loading);
                 dialog.show();
             });
-//TEST
+
             FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                     .getReference()
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -166,51 +155,19 @@ public class CreateAccount extends AppCompatActivity
                             String Type = create_account_text_account_type_auto.getText().toString();
                             String AccountName = create_account_text_account_name_field.getText().toString();
 
-                            if(snapshot.hasChildren())
-                            {
-                                for(DataSnapshot snap : snapshot.child(EncryptorClass.setSecurePassword(userEmail)).getChildren())
-                                {
-                                    /*if(snap.child("EncryptionKeys").child("WalletKey").getValue().toString().equals(EncryptorClass.Encrypt(theWalletKey[0])))
-                                    {
-                                        theWalletKey[0] = walletKeyCreator.get();
-                                    }
-
-                                    if(snap.child("EncryptionKeys").child("PaymentKey").getValue().toString().equals(EncryptorClass.Encrypt(thePaymentKey[0])))
-                                    {
-                                        thePaymentKey[0] = paymentKeyCreator.get();
-                                    }*/
-                                }
-
-                                //walletEncryption.put("WalletKey", EncryptorClass.Encrypt(theWalletKey[0]));
-                                //walletEncryption.put("PaymentKey", EncryptorClass.Encrypt(thePaymentKey[0]));
-
-                            }
-                            else{
-
-                                //walletEncryption.put("WalletKey", EncryptorClass.Encrypt(theWalletKey[0]));
-                                //walletEncryption.put("PaymentKey", EncryptorClass.Encrypt(thePaymentKey[0]));
-
-
-                            }
-
-                            Wallet newWallet = new Wallet.Builder()
-                                    //.setPaymentKey(EncryptorClass.Encrypt(thePaymentKey[0]))
-                                    .setMoneyCase(0.0)
-                                    .setEmail(userEmail)
+                            Wallet wallet = new Wallet.Builder()
+                                    .setAccountName(AccountName)
+                                    .setId()
                                     .setCurrency(Type)
-                                    //.setWalletKey(EncryptorClass.Encrypt(theWalletKey[0]))
+                                    .setMoneyCase(0.0)
                                     .Build();
 
-                            //TODO: buradan devam.
+                            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                                    .getReference()
+                                    .child("Wallets")
+                                    .child(wallet.getId())
+                                    .setValue(wallet.toJsonObject());
 
-                            /*FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                    .getReference().push()
-                                    .setValue(newWallet.toJsonIObject());
-
-                            walletTaken = EncryptorClass.setSecurePassword(theWalletKey[0]);
-
-                            ArrayList<Log> newLog = new ArrayList<>();
-                            newLog.add(zeroLog);*/
                             Intent intent = new Intent(CreateAccount.this, MainPage.class);
                             intent.putExtra("Email", userEmail);
                             startActivity(intent);
