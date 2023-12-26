@@ -10,25 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.free.MainPage;
 import com.free.R;
 import com.utilities.classes.EncryptorClass;
 import com.wallet.Wallet;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-import static com.utilities.classes.LoginFactoryClass.userAccountImageLinksList;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.walletTaken;
 
 public class GoldAccountChooserAdapter extends RecyclerView.Adapter<GoldAccountChooserAdapter.GoldAccountChooserHolder>
 {

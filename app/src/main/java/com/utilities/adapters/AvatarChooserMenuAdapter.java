@@ -27,8 +27,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import static com.free.MainPage.main_page_transactions_profile_image;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.userImageUri;
+import static com.utilities.classes.UserUtility.userEmail;
+import static com.utilities.classes.UserUtility.userImageUri;
 
 public class AvatarChooserMenuAdapter extends RecyclerView.Adapter<AvatarChooserMenuAdapter.AvatarChooserMenuHolder>
 {

@@ -8,6 +8,6 @@
     </style>
     <style name="circularImageView">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">24dp</item>
+        <item name="cornerSize">12dp</item>
     </style>
 </resources>

@@ -47,14 +47,14 @@
         <activity android:name=".register.UserApprovalRegister" />
         <activity android:name="com.menu.Offers" />
         <activity android:name="com.menu.AutomatedPayments" />
-        <activity android:name="com.menu.ChooseAccount" />
+        <activity android:name="com.menu.WalletLogs" />
         <activity android:name="com.menu.CreateAccount" />
         <activity android:name="com.menu.ProfileSettings" />
         <activity android:name="com.menu.MainMenu" />
-        <activity android:name="com.wallet.AddMoney" />
+        <activity android:name="com.wallet.CreditAccount" />
         <activity android:name="com.wallet.WithdrawMoney" />
         <activity android:name=".register.Register" />
-        <activity android:name="com.wallet.ReceiveMoney" />
+        <activity android:name="com.wallet.DebitAccount" />
         <activity android:name="com.wallet.SendMoney" />
         <activity android:name=".MainPage" />
         <activity android:name=".login.Login" />

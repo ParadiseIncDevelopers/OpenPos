@@ -2,7 +2,7 @@ package com.utilities.interfaces;
 
 import android.os.Build;
 import androidx.annotation.RequiresApi;
-import com.utilities.classes.UtilityValues;
+
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -19,7 +19,6 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
 
 public abstract class IAES256KeyMaker
 {

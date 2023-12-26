@@ -1,15 +1,15 @@
 package com.free;
 
-import android.net.Uri;
+import java.util.List;
 
 public class AccountImages
 {
-    private Uri imagePath;
+    private static List<String> accountImagesPath;
 
-    public Uri getImagePath() {
-        return imagePath;
+    public List<String> getImagePath() {
+        return accountImagesPath;
     }
-    public void setImagePath(Uri imagePath) {
-        this.imagePath = imagePath;
+    public void setImagePath(List<String> imagePath) {
+        AccountImages.accountImagesPath = imagePath;
     }
 }

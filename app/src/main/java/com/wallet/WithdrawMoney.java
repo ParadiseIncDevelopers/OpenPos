@@ -28,9 +28,9 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DecimalFormat;
 
 import static com.free.NetworkChangeReceiver.NetworkCallback;
-import static com.utilities.classes.LoginFactoryClass.userCurrency;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.walletTaken;
+import static com.utilities.classes.UserUtility.userCurrency;
+import static com.utilities.classes.UserUtility.userEmail;
+import static com.utilities.classes.UserUtility.walletTaken;
 
 public class WithdrawMoney extends AppCompatActivity
 {

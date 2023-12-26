@@ -15,10 +15,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.utilities.classes.EncryptorClass;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
+import static com.utilities.classes.UserUtility.userEmail;
 
 
-public class ReceiveMoney extends AppCompatActivity {
+public class DebitAccount extends AppCompatActivity {
 
     private FloatingActionButton receive_money_page_submit_button;
     private TextInputLayout receive_money_page_text, receive_money_page_decimal_text, receive_money_page_description_text;
@@ -32,7 +32,7 @@ public class ReceiveMoney extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receive_money);
+        setContentView(R.layout.activity_debit_account);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -47,7 +47,7 @@ public class ReceiveMoney extends AppCompatActivity {
             receive_money_page_description_text_field = findViewById(R.id.password_and_security_settings_password_1_text_field);
             receive_money_page_submit_button = findViewById(R.id.receive_money_page_submit_button);
 
-            receive_money_page_submit_button.setOnClickListener(view -> EncryptorClass.BiometricClass.checkEncryption(ReceiveMoney.this, () -> {
+            receive_money_page_submit_button.setOnClickListener(view -> EncryptorClass.BiometricClass.checkEncryption(DebitAccount.this, () -> {
                         try {
                             if (receive_money_page_decimal_text_field.getText().toString().isEmpty()) {
                                 theMoney = Double.parseDouble(receive_money_page_text_field.getText().toString().replace(".", ""));
@@ -75,7 +75,7 @@ public class ReceiveMoney extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(ReceiveMoney.this, MainPage.class);
+        Intent intent = new Intent(DebitAccount.this, MainPage.class);
         intent.putExtra("Email", userEmail);
         startActivity(intent);
         finish();
@@ -103,13 +103,13 @@ public class ReceiveMoney extends AppCompatActivity {
                                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                                     if(snapshot.hasChild(EncryptorClass.setSecurePassword(result.getContents())))
                                     {
-                                        Wallet.transactToWallet(ReceiveMoney.this,
+                                        Wallet.transactToWallet(DebitAccount.this,
                                                 userEmail,
                                                 destinationEmail,
                                                 dataWallet,
                                                 theMoney,
                                                 description);
-                                        Intent intent = new Intent(ReceiveMoney.this, MainPage.class);
+                                        Intent intent = new Intent(DebitAccount.this, MainPage.class);
                                         intent.putExtra("Email", userEmail);
                                         startActivity(intent);
                                         finish();
