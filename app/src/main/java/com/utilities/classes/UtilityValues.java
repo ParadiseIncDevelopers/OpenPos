@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.userEncryptorKeyContainer;
+import static com.utilities.classes.UserUtility.userEmail;
+import static com.utilities.classes.UserUtility.userEncryptorKeyContainer;
 
 public class UtilityValues
 {
