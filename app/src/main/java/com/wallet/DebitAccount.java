@@ -38,20 +38,17 @@ public class DebitAccount extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         NetworkCallback(this, () -> {
-            receive_money_page_error_text = findViewById(R.id.receive_money_page_error_text);
-            receive_money_page_text = findViewById(R.id.receive_money_page_text);
-            receive_money_page_decimal_text = findViewById(R.id.receive_money_page_decimal_text);
             receive_money_page_description_text = findViewById(R.id.password_and_security_settings_password_1_text);
-            receive_money_page_text_field = findViewById(R.id.receive_money_page_text_field);
-            receive_money_page_decimal_text_field = findViewById(R.id.receive_money_page_decimal_text_field);
             receive_money_page_description_text_field = findViewById(R.id.password_and_security_settings_password_1_text_field);
-            receive_money_page_submit_button = findViewById(R.id.receive_money_page_submit_button);
 
-            receive_money_page_submit_button.setOnClickListener(view -> EncryptorClass.BiometricClass.checkEncryption(DebitAccount.this, () -> {
+            receive_money_page_submit_button.setOnClickListener(view ->
+                    EncryptorClass.BiometricClass.checkEncryption(DebitAccount.this, () -> {
                         try {
-                            if (receive_money_page_decimal_text_field.getText().toString().isEmpty()) {
+                            if (receive_money_page_decimal_text_field.getText().toString().isEmpty())
+                            {
                                 theMoney = Double.parseDouble(receive_money_page_text_field.getText().toString().replace(".", ""));
-                            } else {
+                            }
+                            else {
                                 theMoney = Double.parseDouble(receive_money_page_text_field.getText().toString().replace(".", "")) +
                                         (Double.parseDouble(receive_money_page_decimal_text_field.getText().toString()) / 100.0);
                             }

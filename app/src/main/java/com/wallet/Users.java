@@ -3,7 +3,6 @@ package com.wallet;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.free.MainPage;
 import com.free.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -25,9 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
 import static com.utilities.classes.UserUtility.userCurrency;
 import static com.utilities.classes.UserUtility.userEmail;
-import static com.utilities.classes.UserUtility.walletTaken;
 
-public class TransferMoney extends AppCompatActivity {
+//TODO : Kullanıcı kaydetmek için.
+public class Users extends AppCompatActivity {
 
     private TextInputLayout transfer_money_page_text, transfer_money_decimal_text,
             transfer_money_page_payment_key_text, transfer_money_page_wallet_key_text,
@@ -48,7 +46,7 @@ public class TransferMoney extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transfer_money);
+        setContentView(R.layout.activity_loan_account);
 
         transfer_money_page_text = findViewById(R.id.transfer_money_page_text);
         transfer_money_decimal_text = findViewById(R.id.transfer_money_decimal_text);
@@ -135,13 +133,5 @@ public class TransferMoney extends AppCompatActivity {
                 });
             });*/
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(TransferMoney.this, MainPage.class);
-        intent.putExtra("Email", userEmail);
-        startActivity(intent);
-        finish();
     }
 }
