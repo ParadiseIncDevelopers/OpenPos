@@ -41,6 +41,42 @@ public class Log {
         return jsonObject;
     }
 
+    public double getCommission() {
+        return commission;
+    }
+
+    public double getCredit() {
+        return credit;
+    }
+
+    public double getDebit() {
+        return debit;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public String getContentDescription() {
+        return contentDescription;
+    }
+
+    public String getReceiverEmail() {
+        return receiverEmail;
+    }
+
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
     public static class Builder {
         private String senderId;
         private String receiverId;

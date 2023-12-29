@@ -1,48 +1,18 @@
 package com.utilities.adapters;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 import com.free.R;
-import com.google.firebase.storage.FirebaseStorage;
-import com.utilities.classes.EncryptorClass;
 import com.wallet.Models.Log;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import java.util.Properties;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.mail.Authenticator;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
-
-import static android.view.Window.FEATURE_NO_TITLE;
-import static com.utilities.classes.LoginFactoryClass.userCurrency;
-import static com.utilities.classes.LoginFactoryClass.userEmail;
-import static com.utilities.classes.LoginFactoryClass.walletTaken;
 
 public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.WalletLogsHolder>
 {
@@ -66,13 +36,13 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
     @Override
     public void onBindViewHolder(@NonNull @NotNull WalletLogsAdapter.WalletLogsHolder holder, int position)
     {
-        Log thePositionElement = logs.get(position);
+        Log index = logs.get(position);
+        holder.wallet_logs_recycler_text_1.setText(String.valueOf(index.getDebit()));
+        holder.wallet_logs_recycler_text_2.setText(String.valueOf(index.getCredit()));
+        holder.wallet_logs_recycler_text_3.setText(String.format("From : %s", index.getSenderEmail()));
+        holder.wallet_logs_recycler_component.setOnClickListener(view -> {
 
-        holder.wallet_logs_email.setText(String.format("%s", thePositionElement.getEmail()));
-        holder.wallet_logs_spend.setText(String.format("%s", thePositionElement.getSpend()));
-        holder.wallet_logs_rest.setText(String.format("%s", thePositionElement.getRest()));
-        holder.wallet_logs_description.setText(String.format("%s", thePositionElement.getContentDescription()));
-        holder.wallet_logs_date.setText(String.format("%s", thePositionElement.getDate().replace("T", " ")));
+        });
     }
 
     @Override
@@ -80,29 +50,23 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
         return logs.size();
     }
 
-    public static class WalletLogsHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener
+    public static class WalletLogsHolder extends RecyclerView.ViewHolder
     {
-        private final TextView wallet_logs_email;
-        private final TextView wallet_logs_rest;
-        private final TextView wallet_logs_date;
-        private final TextView wallet_logs_spend;
-        private final TextView wallet_logs_description;
-        private final LinearLayout wallet_logs_main;
+        private final TextView wallet_logs_recycler_text_1;
+        private final TextView wallet_logs_recycler_text_2;
+        private final TextView wallet_logs_recycler_text_3;
+        private final LinearLayout wallet_logs_recycler_component;
 
         public WalletLogsHolder(@NonNull @NotNull View itemView)
         {
             super(itemView);
-            wallet_logs_email = itemView.findViewById(R.id.wallet_logs_email);
-            wallet_logs_rest = itemView.findViewById(R.id.wallet_logs_rest);
-            wallet_logs_spend = itemView.findViewById(R.id.wallet_logs_spend);
-            wallet_logs_date = itemView.findViewById(R.id.wallet_logs_date);
-            wallet_logs_description = itemView.findViewById(R.id.wallet_logs_description);
-            wallet_logs_main = itemView.findViewById(R.id.wallet_logs_main);
-
-            wallet_logs_main.setOnLongClickListener(this);
+            wallet_logs_recycler_component = itemView.findViewById(R.id.wallet_logs_recycler_component);
+            wallet_logs_recycler_text_1 = itemView.findViewById(R.id.wallet_logs_recycler_text_1);
+            wallet_logs_recycler_text_2 = itemView.findViewById(R.id.wallet_logs_recycler_text_2);
+            wallet_logs_recycler_text_3 = itemView.findViewById(R.id.wallet_logs_recycler_text_3);
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
+        /*@RequiresApi(api = Build.VERSION_CODES.N)
         @SuppressLint("SetJavaScriptEnabled")
         @Override
         public boolean onLongClick(View view)
@@ -259,12 +223,9 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
             });
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
             dialog_wallet_webview_container.addView(dialog_wallet_logs_webpage, params);
-
             dialog.show();
-
             return false;
-        }
+        }*/
     }
 }

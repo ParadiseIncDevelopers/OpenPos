@@ -3,7 +3,6 @@ package com.wallet;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -11,21 +10,19 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.free.MainPage;
 import com.free.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.WriterException;
 import com.utilities.classes.EncryptorClass;
 import com.utilities.QrCodeEncoder;
-
 import org.jetbrains.annotations.NotNull;
 import static com.free.NetworkChangeReceiver.NetworkCallback;
 import static com.utilities.classes.UserUtility.userEmail;
-import static com.utilities.classes.UserUtility.walletTaken;
 
-public class SendMoney extends AppCompatActivity {
+public class WalletStatsPrediction extends AppCompatActivity {
 
     private ImageView send_page_qr_code;
     private TextView send_money_credentials_id, send_money_wallet_case;
@@ -36,7 +33,7 @@ public class SendMoney extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_money);
+        setContentView(R.layout.activity_wallet_stats_prediction);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -50,11 +47,14 @@ public class SendMoney extends AppCompatActivity {
             runOnUiThread(() -> {
                 QrCodeEncoder encoder = new QrCodeEncoder.Builder()
                         .setTheBitmap(bitmap)
-                        .setContext(SendMoney.this)
+                        .setContext(WalletStatsPrediction.this)
                         .setEncoderString("wallet_key:" + walletTaken + "<->" + "user_email:" + userEmail)
                         .Build();
-                WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
-                encoder.SetQrCode(send_page_qr_code, manager);
+                try {
+                    encoder.SetQrCode(send_page_qr_code);
+                } catch (WriterException e) {
+                    throw new RuntimeException(e);
+                }
 
                 FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                         .getReference(EncryptorClass.setSecurePassword(userEmail))
@@ -74,13 +74,5 @@ public class SendMoney extends AppCompatActivity {
             });
             send_money_credentials_id.setText("Please send money from this qr code...");
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(SendMoney.this, MainPage.class);
-        intent.putExtra("Email", userEmail);
-        startActivity(intent);
-        finish();
     }
 }

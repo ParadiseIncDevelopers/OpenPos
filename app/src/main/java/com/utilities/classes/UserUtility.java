@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-public class LoginFactoryClass
+public class UserUtility
 {
+    public static String userLoginId;
+
     public static Uri userImageUri;
     private final String email;
     public static String LoginType = "";
@@ -25,13 +27,12 @@ public class LoginFactoryClass
     public static Map<String, String> userMoneyCase = new HashMap<>();
     public static String userNameAndSurname;
     public static String userPhoneNumber;
-    public static ArrayList<Wallet> userWallets = new ArrayList<>();
+    public static List<Wallet> userWallets = new ArrayList<>();
     public static String userEmail;
     public static List<String> userAccountImageLinksList;
-    public static String walletTaken = "MainWallet";
     public static EncryptorKeyContainer userEncryptorKeyContainer;
 
-    public LoginFactoryClass(String Email)
+    public UserUtility(String Email)
     {
         this.email = Email;
     }
@@ -136,6 +137,5 @@ public class LoginFactoryClass
         userNameAndSurname = "";
         userPhoneNumber = "";
         userEmail = "";
-        walletTaken = "MainWallet";
     }
 }

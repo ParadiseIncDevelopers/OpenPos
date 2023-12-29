@@ -1,8 +1,9 @@
 package com.utilities.interfaces;
 
 import android.os.Build;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -25,7 +26,7 @@ public abstract class IAES256KeyMaker
     private static final String saltKey = "";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public String encrypt(String secretKeyForUser, String stringToEncrypt)
+    public String encrypt(@NonNull String secretKeyForUser, @NonNull String stringToEncrypt)
     {
         try
         {
@@ -48,8 +49,9 @@ public abstract class IAES256KeyMaker
         return null;
     }
 
+    @Nullable
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String decrypt(String secretKeyForUser, String strToDecrypt)
+    public static String decrypt(@NonNull String secretKeyForUser, String strToDecrypt)
     {
         try
         {

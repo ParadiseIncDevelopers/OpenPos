@@ -1,151 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/wallet_logs_main"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wallet_logs_recycler_component"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/mediumDp"
     android:background="@drawable/wallet_logs_border"
-    android:gravity="center"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="horizontal"
-    android:padding="@dimen/smallDp">
+    android:padding="@dimen/xSmallDp">
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:padding="@dimen/xSmallDp"
-        app:srcCompat="@drawable/ic_withdraw" />
+    <TextView
+        android:id="@+id/wallet_logs_recycler_text_1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/wallet_logs_recycler_text_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/wallet_logs_recycler_text_3"
+        app:layout_constraintTop_toTopOf="@+id/wallet_logs_recycler_text_3" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shapeableImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_add"
+        app:contentPadding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circularImageView2"
+        app:strokeColor="@color/colorOnPrimary"
+        app:strokeWidth="1dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+    <TextView
+        android:id="@+id/wallet_logs_recycler_text_2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/wallet_logs_recycler_text_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wallet_logs_recycler_text_1" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="E-mail :"
-                android:textSize="@dimen/smallSp" />
+    <TextView
+        android:id="@+id/wallet_logs_recycler_text_3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical"
+        android:padding="4dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
+        app:layout_constraintEnd_toStartOf="@+id/wallet_logs_recycler_text_1"
+        app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
+        app:layout_constraintTop_toTopOf="@+id/shapeableImageView" />
 
-            <TextView
-                android:id="@+id/wallet_logs_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="TextView"
-                android:textSize="@dimen/smallSp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="Rest :"
-                android:textSize="@dimen/xSmallSp" />
-
-            <TextView
-                android:id="@+id/wallet_logs_rest"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="TextView"
-                android:textSize="@dimen/xSmallSp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="Spend :"
-                android:textSize="@dimen/xSmallSp" />
-
-            <TextView
-                android:id="@+id/wallet_logs_spend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="TextView"
-                android:textSize="@dimen/xSmallSp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="Description :"
-                android:textSize="@dimen/xSmallSp" />
-
-            <TextView
-                android:id="@+id/wallet_logs_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="TextView"
-                android:textSize="@dimen/xSmallSp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="Date :"
-                android:textSize="@dimen/xSmallSp" />
-
-            <TextView
-                android:id="@+id/wallet_logs_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/wallet_logs_border_container"
-                android:padding="4dp"
-                android:text="TextView"
-                android:textSize="@dimen/xSmallSp" />
-        </LinearLayout>
-
-    </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

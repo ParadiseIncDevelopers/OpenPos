@@ -8,12 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,7 +44,8 @@ public class MainPage extends AppCompatActivity
     private FloatingActionButton main_page_FAB2_Menu;
     private ShapeableImageView main_page_Logo1_Acoount;
     private TextView main_page_TextView1_Header;
-    private ConstraintLayout main_page_ConstraintLayout2_Account;
+    private ConstraintLayout main_page_ConstraintLayout2_Account, main_page_menu_button_1,
+            main_page_menu_button_2, main_page_menu_button_3, main_page_menu_button_4;
     private RecyclerView main_page_RecyclerView_Accounts;
     private ConstraintLayout main_page_no_account_layout;
     private ImageView main_page_ImageView_NoAccount;
@@ -121,6 +125,34 @@ public class MainPage extends AppCompatActivity
             }
         });
 
+        main_page_FAB2_Menu.setOnClickListener(view -> {
+            final Dialog dialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.dialog_wallet_logs_printer_screen);
+            dialog.setCanceledOnTouchOutside(false);
+
+            main_page_menu_button_1 = dialog.findViewById(R.id.main_page_menu_button_1);
+            main_page_menu_button_2 = dialog.findViewById(R.id.main_page_menu_button_2);
+            main_page_menu_button_3 = dialog.findViewById(R.id.main_page_menu_button_3);
+            main_page_menu_button_4 = dialog.findViewById(R.id.main_page_menu_button_4);
+
+            main_page_menu_button_1.setOnClickListener(view1 -> {
+
+            });
+
+            main_page_menu_button_2.setOnClickListener(view1 -> {
+
+            });
+
+            main_page_menu_button_3.setOnClickListener(view1 -> {
+
+            });
+
+            main_page_menu_button_4.setOnClickListener(view1 -> {
+
+            });
+        });
+
         /*NetworkCallback(this, () -> {
             main_page_transactions_profile_image = findViewById(R.id.main_page_transactions_profile_image);
 
@@ -197,7 +229,7 @@ public class MainPage extends AppCompatActivity
             });
             main_page_withdraw_money_button.setOnClickListener(view ->
             {
-                Intent intent = new Intent(MainPage.this, WithdrawMoney.class);
+                Intent intent = new Intent(MainPage.this, TransferAccount.class);
                 startActivity(intent);
             });
 
@@ -208,7 +240,7 @@ public class MainPage extends AppCompatActivity
             });
 
             main_page_transfer_money_button.setOnClickListener(view -> {
-                Intent intent = new Intent(MainPage.this, TransferMoney.class);
+                Intent intent = new Intent(MainPage.this, Users.class);
                 startActivity(intent);
             });
 

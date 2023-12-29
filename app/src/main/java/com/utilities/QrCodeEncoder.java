@@ -2,12 +2,13 @@ package com.utilities;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Point;
-import android.view.Display;
-import android.view.WindowManager;
+import android.graphics.Color;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 public class QrCodeEncoder
 {
@@ -70,26 +71,20 @@ public class QrCodeEncoder
         }
     }
 
-    public void SetQrCode(@NonNull ImageView imageView, @NonNull WindowManager manager)
+    public void SetQrCode(@NonNull ImageView imageView) throws WriterException
     {
-        Display display = manager.getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        int width = point.x;
-        int height = point.y;
-        int dimen = Math.min(width, height);
-        dimen = dimen * 3 / 4;
+        MultiFormatWriter writer = new MultiFormatWriter();
 
-        /*QRGEncoder qrgEncoder = new QRGEncoder(getEncoderString(), null, QRGContents.Type.TEXT, dimen);
-        try
-        {
-            setTheBitmap(qrgEncoder.encodeAsBitmap());
-            imageView.setImageBitmap(getTheBitmap());
+        BitMatrix bm = writer.encode(encoderString, BarcodeFormat.CODE_128,150, 150);
+        Bitmap ImageBitmap = Bitmap.createBitmap(180, 40, Bitmap.Config.ARGB_8888);
+
+        for (int i = 0; i < 180; i++) {//width
+            for (int j = 0; j < 40; j++) {//height
+                ImageBitmap.setPixel(i, j, bm.get(i, j) ? Color.BLACK: Color.WHITE);
+            }
         }
-        catch (WriterException e)
-        {
-            e.printStackTrace();
-        }*/
+
+        imageView.setImageBitmap(ImageBitmap);
     }
 
     private QrCodeEncoder()
