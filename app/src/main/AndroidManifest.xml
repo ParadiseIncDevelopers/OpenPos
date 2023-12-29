@@ -40,8 +40,8 @@
             android:exported="false" />
         <activity android:name="com.menu.Integrations" />
         <activity android:name="com.menu.profileSettingsPack.PasswordAndSecuritySettings" />
-        <activity android:name="com.wallet.CreateReceiveMoney" />
-        <activity android:name="com.wallet.TransferMoney" />
+        <activity android:name="com.wallet.WalletStats" />
+        <activity android:name="com.wallet.Users" />
         <activity android:name=".NetworkErrorActivity" />
         <activity android:name=".register.ApprovalInProgress" />
         <activity android:name=".register.UserApprovalRegister" />
@@ -52,10 +52,10 @@
         <activity android:name="com.menu.ProfileSettings" />
         <activity android:name="com.menu.MainMenu" />
         <activity android:name="com.wallet.CreditAccount" />
-        <activity android:name="com.wallet.WithdrawMoney" />
+        <activity android:name="com.wallet.TransferAccount" />
         <activity android:name=".register.Register" />
         <activity android:name="com.wallet.DebitAccount" />
-        <activity android:name="com.wallet.SendMoney" />
+        <activity android:name="com.wallet.WalletStatsPrediction" />
         <activity android:name=".MainPage" />
         <activity android:name=".login.Login" />
         <activity
