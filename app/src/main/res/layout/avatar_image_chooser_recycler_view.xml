@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="8dp"
+    android:background="@drawable/any_view_container"
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/avatar_image_chooser_image"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:padding="@dimen/smallDp"
-        android:src="@drawable/ic_wallet" />
+    <TextView
+        android:id="@+id/credit_account_TextView1_Header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/xSmallDp"
+        android:text="Credit an account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/credit_account_Logo1_Acoount"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/credit_account_Logo1_Acoount"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_cash"
+        app:contentPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/credit_account_TextView1_Header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circularImageView"
+        app:strokeColor="@color/colorOnPrimary"
+        app:strokeWidth="2dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

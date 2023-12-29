@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wallet.CreateReceiveMoney">
+    android:background="@drawable/ic_backgr"
+    tools:context="com.wallet.WalletStats">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
