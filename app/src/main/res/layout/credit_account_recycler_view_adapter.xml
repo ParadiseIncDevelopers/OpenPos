@@ -7,29 +7,41 @@
     android:layout_margin="8dp"
     android:background="@drawable/any_view_container"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:id="@+id/credit_account_RecyclerView_button_1">
+
 
     <TextView
-        android:id="@+id/credit_account_TextView1_Header"
+        android:id="@+id/credit_account_RecyclerView_text_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="@dimen/xSmallDp"
+        android:layout_marginStart="8dp"
         android:text="Credit an account"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/credit_account_RecyclerView_text_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/credit_account_Logo1_Acoount"
+        app:layout_constraintStart_toEndOf="@+id/credit_account_RecyclerView_logo_1"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/credit_account_RecyclerView_text_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
+        android:text="E-mail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/credit_account_RecyclerView_logo_1" />
+
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/credit_account_Logo1_Acoount"
+        android:id="@+id/credit_account_RecyclerView_logo_1"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:padding="4dp"
         android:src="@drawable/ic_cash"
         app:contentPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/credit_account_TextView1_Header"
+        app:layout_constraintEnd_toStartOf="@+id/credit_account_RecyclerView_text_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/circularImageView"

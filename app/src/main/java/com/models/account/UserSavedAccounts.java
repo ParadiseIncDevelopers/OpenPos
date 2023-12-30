@@ -1,16 +1,17 @@
-package com.models.user;
+package com.models.account;
 
 import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-
 import com.abstr.interfaces.IUserContainer;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Base64;
 
-public class UserRegistrar implements IUserContainer {
+public class UserSavedAccounts implements IUserContainer {
+    private boolean isBlocked;
+    private boolean isUserOnTheList;
+    private double creditLimit;
     private String id;
     private String email;
     private String nameSurname;
@@ -34,7 +35,23 @@ public class UserRegistrar implements IUserContainer {
         jsonObject.put("id", id);
         jsonObject.put("email", email);
         jsonObject.put("nameSurname", nameSurname);
+        jsonObject.put("isBlocked", isBlocked);
+        jsonObject.put("isUserOnTheList", isUserOnTheList);
+        jsonObject.put("creditLimit", creditLimit);
+
         return jsonObject;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public boolean isUserOnTheList() {
+        return isUserOnTheList;
+    }
+
+    public double getCreditLimit() {
+        return creditLimit;
     }
 
     public static class Builder
@@ -42,6 +59,10 @@ public class UserRegistrar implements IUserContainer {
         private String id;
         private String email;
         private String nameSurname;
+        private boolean isUserOnTheList;
+        private boolean isBlocked;
+        private double creditLimit;
+
 
         public Builder setId(String id)
         {
@@ -66,18 +87,36 @@ public class UserRegistrar implements IUserContainer {
             return this;
         }
 
-        public UserRegistrar Build()
+        public UserSavedAccounts Build()
         {
-            UserRegistrar credentials = new UserRegistrar();
+            UserSavedAccounts credentials = new UserSavedAccounts();
             credentials.id = this.id;
             credentials.email = this.email;
             credentials.nameSurname = this.nameSurname;
+            credentials.isBlocked = this.isBlocked;
+            credentials.isUserOnTheList = this.isUserOnTheList;
+            credentials.creditLimit = this.creditLimit;
+
             return credentials;
+        }
+
+        public Builder setIsUserOnTheList(boolean isUserOnTheList) {
+            this.isUserOnTheList = isUserOnTheList;
+            return this;
+        }
+
+        public Builder setIsBlocked(boolean isBlocked) {
+            this.isBlocked = isBlocked;
+            return this;
+        }
+
+        public Builder setCreditLimit(double creditLimit) {
+            this.creditLimit = creditLimit;
+            return this;
         }
     }
 
-    private UserRegistrar()
+    private UserSavedAccounts()
     {
-
     }
 }

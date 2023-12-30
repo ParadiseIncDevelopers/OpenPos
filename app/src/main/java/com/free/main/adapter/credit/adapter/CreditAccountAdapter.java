@@ -1,16 +1,18 @@
 package com.free.main.adapter.credit.adapter;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.imageview.ShapeableImageView;
+import com.models.account.UserSavedAccounts;
 import com.models.user.AccountImages;
 import com.free.R;
 
@@ -20,17 +22,19 @@ import java.util.ArrayList;
 
 public class CreditAccountAdapter extends RecyclerView.Adapter<CreditAccountAdapter.CreditAccountHolder>
 {
-    ArrayList<AccountImages> images;
+    private final ArrayList<UserSavedAccounts> users;
 
-    public CreditAccountAdapter(Activity context, ArrayList<AccountImages> images, Dialog dialog, ImageView profileImage)
+    public CreditAccountAdapter(ArrayList<UserSavedAccounts> users)
     {
+        this.users = users;
+
     }
 
     @NonNull
     @NotNull
     @Override
     public CreditAccountAdapter.CreditAccountHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.avatar_image_chooser_recycler_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.credit_account_recycler_view_adapter, parent, false);
         return new CreditAccountAdapter.CreditAccountHolder(view);
     }
 
@@ -38,19 +42,33 @@ public class CreditAccountAdapter extends RecyclerView.Adapter<CreditAccountAdap
     @Override
     public void onBindViewHolder(@NonNull @NotNull CreditAccountAdapter.CreditAccountHolder holder, int position)
     {
+        holder.credit_account_RecyclerView_text_1.setText(users.get(position).getEmail());
+        holder.credit_account_RecyclerView_text_2.setText(users.get(position).getNameSurname());
 
     }
 
     @Override
     public int getItemCount() {
-        return images.size();
+        return users.size();
     }
 
-    public static class CreditAccountHolder extends RecyclerView.ViewHolder
+    public static class CreditAccountHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
+        private final ConstraintLayout credit_account_RecyclerView_button_1;
+        private final TextView credit_account_RecyclerView_text_1,credit_account_RecyclerView_text_2;
+        private final ShapeableImageView credit_account_RecyclerView_logo_1;
         public CreditAccountHolder(@NonNull @NotNull View itemView)
         {
             super(itemView);
+            credit_account_RecyclerView_button_1 = itemView.findViewById(R.id.credit_account_RecyclerView_button_1) ;
+            credit_account_RecyclerView_text_1 = itemView.findViewById(R.id.credit_account_RecyclerView_text_1);
+            credit_account_RecyclerView_logo_1 = itemView.findViewById(R.id.credit_account_RecyclerView_logo_1);
+            credit_account_RecyclerView_text_2 = itemView.findViewById(R.id.credit_account_RecyclerView_text_2);
+        }
+
+        @Override
+        public void onClick(View view) {
+
         }
 
         /*@RequiresApi(api = Build.VERSION_CODES.N)
