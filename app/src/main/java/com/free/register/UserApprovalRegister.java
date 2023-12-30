@@ -1,6 +1,5 @@
 package com.free.register;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.pm.ActivityInfo;
@@ -17,7 +16,7 @@ import android.widget.LinearLayout;
 import com.free.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import static com.free.NetworkChangeReceiver.NetworkCallback;
+import static com.utilities.NetworkChangeReceiver.NetworkCallback;
 
 import java.util.regex.Pattern;
 
@@ -189,7 +188,7 @@ public class UserApprovalRegister extends AppCompatActivity
 
                         FirebaseDatabase.getInstance("https://openpos-userstatus.europe-west1.firebasedatabase.app/")
                                 .getReference()
-                                .child("Users")
+                                .child("FindOrSaveUser")
                                 .setValue(AccountApproved);
 
                         Intent intent = new Intent(UserApprovalRegister.this, ApprovalInProgress.class);

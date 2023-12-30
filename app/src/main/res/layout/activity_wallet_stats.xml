@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context="com.wallet.WalletStats">
+    tools:context=".main.adapter.stats.WalletStats">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

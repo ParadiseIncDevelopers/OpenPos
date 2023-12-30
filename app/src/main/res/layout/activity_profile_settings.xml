@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context="com.menu.ProfileSettings">
+    tools:context=".main.menu.settings.ProfileSettings">
 
     <ImageView
         android:id="@+id/profile_settings_image_content"

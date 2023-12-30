@@ -18,25 +18,22 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.free.MainPage;
+import com.free.main.MainPage;
 import com.free.R;
 import com.free.register.Register;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.utilities.classes.UserUtility;
+import com.utilities.UserUtility;
 
 import java.net.NetworkInterface;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import static com.free.NetworkChangeReceiver.NetworkCallback;
+import static com.utilities.NetworkChangeReceiver.NetworkCallback;
 
 public class Login extends AppCompatActivity
 {
@@ -219,7 +216,7 @@ public class Login extends AppCompatActivity
         userRememberContainer.put("Email", EmailNotEncrypted);
 
         FirebaseDatabase.getInstance()
-                .getReference("Users")
+                .getReference("FindOrSaveUser")
                 .addListenerForSingleValueEvent(new ValueEventListener()
                 {
                     @Override
@@ -230,7 +227,7 @@ public class Login extends AppCompatActivity
                         userRememberContainer.put("NameSurname", EncryptorClass.Decrypt(snapshot.child("NameSurname").getValue().toString()));
 
                         FirebaseDatabase.getInstance()
-                                .getReference("Users")
+                                .getReference("FindOrSaveUser")
                                 .child("RememberUser")
                                 .child(email)
                                 .setValue(userRememberContainer);
@@ -244,7 +241,7 @@ public class Login extends AppCompatActivity
     }*/
 
     /*FirebaseDatabase.getInstance()
-                    .getReference("Users")
+                    .getReference("FindOrSaveUser")
                     .child("RememberUser")
                     .addListenerForSingleValueEvent(new ValueEventListener()
                     {
@@ -265,7 +262,7 @@ public class Login extends AppCompatActivity
 
                                 FirebaseDatabase.getInstance("https://openpos-userstatus.europe-west1.firebasedatabase.app/")
                                         .getReference()
-                                        .child("Users")
+                                        .child("FindOrSaveUser")
                                         .child(Email)
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -290,7 +287,7 @@ public class Login extends AppCompatActivity
                                                     userApproval[0] = Boolean.parseBoolean(snapshot.child("isUserApprovalInProgress").getValue().toString());
                                                 }
 
-                                                if(Stream.of(Users).anyMatch(x -> !x.isNull(Email)))
+                                                if(Stream.of(FindOrSaveUser).anyMatch(x -> !x.isNull(Email)))
                                                 {
                                                     EncryptorClass.BiometricClass.checkEncryption(Login.this, () ->
                                                     {
@@ -388,7 +385,7 @@ public class Login extends AppCompatActivity
 
                                                         try
                                                         {
-                                                            userNameAndSurname = EncryptorClass.Decrypt(mapToJsonObject((Map<String, Object>) Users.get(Email)).get("NameSurname").toString());
+                                                            userNameAndSurname = EncryptorClass.Decrypt(mapToJsonObject((Map<String, Object>) FindOrSaveUser.get(Email)).get("NameSurname").toString());
                                                         }
                                                         catch (JSONException e) {
                                                             e.printStackTrace();

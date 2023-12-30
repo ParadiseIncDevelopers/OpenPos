@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context="com.menu.WalletLogs">
+    tools:context=".main.adapter.WalletLogs">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/wallet_logs_ConstraintLayout2_Account"

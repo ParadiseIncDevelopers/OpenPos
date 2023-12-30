@@ -1,6 +1,6 @@
 package com.free;
 
-import static com.utilities.classes.UserUtility.userAccountImageLinksList;
+import static com.utilities.UserUtility.userAccountImageLinksList;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

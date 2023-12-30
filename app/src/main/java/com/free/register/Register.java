@@ -11,25 +11,22 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.free.login.Login;
 import com.free.R;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.functions.FirebaseFunctions;
-import com.utilities.classes.UtilityValues;
-import com.user.UserRegistrar;
+import com.models.user.UserRegistrar;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import static com.free.NetworkChangeReceiver.NetworkCallback;
+import static com.utilities.NetworkChangeReceiver.NetworkCallback;
 
 import org.json.JSONException;
 

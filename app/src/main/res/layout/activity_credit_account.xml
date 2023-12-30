@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context="com.wallet.CreditAccount">
+    tools:context=".main.adapter.credit.CreditAccount">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/credit_account_ConstraintLayout1_Exit"

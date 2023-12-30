@@ -7,7 +7,7 @@
     android:background="@drawable/ic_backgr"
     android:clipChildren="false"
     android:clipToPadding="false"
-    tools:context=".MainPage" >
+    tools:context=".main.MainPage" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_page_ConstraintLayout1_Exit"

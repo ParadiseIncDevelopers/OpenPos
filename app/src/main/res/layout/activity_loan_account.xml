@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context="com.wallet.Users">
+    tools:context=".main.menu.findSaveUser.FindOrSaveUser">
 
     <ImageView
         android:id="@+id/transfer_money_image_content"
