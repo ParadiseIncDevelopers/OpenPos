@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
-    tools:context=".main.adapter.credit.CreditAccount">
+    tools:context=".main.menu.findSaveUser.FindOrSaveUser">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/credit_account_ConstraintLayout1_Exit"
+        android:id="@+id/find_or_save_ConstraintLayout1_Exit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -20,22 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/credit_account_FAB2_add_anonymous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:src="@drawable/ic_add_button"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/credit_account_FAB2_Menu"
+            android:id="@+id/find_or_save_FAB2_Menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -49,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/credit_account_Logo1_Acoount"
+            android:id="@+id/find_or_save_Logo1_Acoount"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
@@ -58,30 +43,70 @@
             android:src="@drawable/ic_cash"
             app:contentPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/credit_account_TextView1_Header"
-            app:layout_constraintStart_toEndOf="@+id/credit_account_FAB2_Menu"
+            app:layout_constraintEnd_toStartOf="@+id/find_or_save_TextView1_Header"
+            app:layout_constraintStart_toEndOf="@+id/find_or_save_FAB2_Menu"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
             app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
-            android:id="@+id/credit_account_TextView1_Header"
+            android:id="@+id/find_or_save_TextView1_Header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="3"
             android:gravity="center_vertical"
             android:padding="@dimen/xSmallDp"
-            android:text="Credit an account"
-            app:layout_constraintBottom_toBottomOf="@+id/credit_account_Logo1_Acoount"
-            app:layout_constraintEnd_toStartOf="@+id/credit_account_FAB2_add_anonymous"
-            app:layout_constraintStart_toEndOf="@+id/credit_account_Logo1_Acoount"
-            app:layout_constraintTop_toTopOf="@+id/credit_account_Logo1_Acoount" />
+            android:text="Find or/and Save user"
+            app:layout_constraintBottom_toBottomOf="@+id/find_or_save_Logo1_Acoount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/find_or_save_Logo1_Acoount"
+            app:layout_constraintTop_toTopOf="@+id/find_or_save_Logo1_Acoount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/credit_account_ConstraintLayout2_Account"
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/any_view_container"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/find_or_save_ConstraintLayout1_Exit">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/find_or_save_find_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/colorOnPrimary"
+            app:errorEnabled="false"
+            app:hintTextColor="#E64A19"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/find_or_save_email_find_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="User name and surname or email "
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/find_or_save_ConstraintLayout2_Account"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -94,10 +119,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/credit_account_ConstraintLayout1_Exit">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/credit_account_RecyclerView_Accounts"
+            android:id="@+id/find_or_save_RecyclerView_Accounts"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -106,5 +131,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

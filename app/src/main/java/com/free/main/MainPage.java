@@ -3,7 +3,6 @@ package com.free.main;
 import static com.utilities.UserUtility.userAccountImageLinksList;
 import static com.utilities.UserUtility.userLoginId;
 import static com.utilities.UserUtility.userWallets;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.free.R;
+import com.free.main.adapter.credit.CreditAccount;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.models.logs.Log;
 import com.models.wallet.Wallet;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -139,7 +138,8 @@ public class MainPage extends AppCompatActivity
             });
 
             main_page_menu_button_2.setOnClickListener(view1 -> {
-
+                Intent intent = new Intent(MainPage.this, CreditAccount.class);
+                startActivity(intent);
             });
 
             main_page_menu_button_3.setOnClickListener(view1 -> {

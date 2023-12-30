@@ -1,0 +1,43 @@
+transfer_money_page_resume_button.setOnClickListener(view ->
+            {
+                String decimal = transfer_money_decimal_text_field.getText().toString();
+                String text = transfer_money_page_text_field.getText().toString();
+                if(!text.isEmpty())
+                {
+                    if(decimal.isEmpty())
+                    {
+                        money = Double.parseDouble(text);
+                    }
+                    else {
+                        double q1 = Double.parseDouble(text);
+                        double q2 = Double.parseDouble(decimal) / 100.0;
+                        money = q1 + q2;
+                    }
+
+                    //commission = Wallet.returnCommission(money);
+
+                    transfer_money_taker_resume_header.setVisibility(View.VISIBLE);
+                    transfer_money_taker_resume_container.setVisibility(View.VISIBLE);
+                    transfer_money_transfer_text.setText(String.format("You are withdrawing : %s %s", money, userCurrency.get(walletTaken)));
+                    transfer_money_commission_fee_text.setText(String.format("The commission is : %s", commission));
+                    transfer_money_total_text.setText(String.format("The total is : %s", (money + commission)));
+                    transfer_money_submit_button.setEnabled(true);
+                }
+                else{
+                    Toast.makeText(this, "Please write the amount the money you want to transfer.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            transfer_money_submit_button.setOnClickListener(view ->
+            {
+                EncryptorClass.BiometricClass.checkEncryption(this, () -> {
+                    Wallet.transactToWallet(this,
+                            walletTaken,
+                            transfer_money_page_payment_key_text_field.getText().toString(),
+                            transfer_money_page_wallet_key_text_field.getText().toString(),
+                            transfer_money_page_destination_email_text_field.getText().toString(),
+                            money,
+                            commission,
+                            transfer_money_page_description_text_field.getText().toString());
+                });
+            });
