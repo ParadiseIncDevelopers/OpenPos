@@ -15,24 +15,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.free.R;
 import com.free.main.adapter.WalletLogs;
+import com.free.main.adapter.credit.CreditAccountEditor;
 import com.models.wallet.Wallet;
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import static com.utilities.UserUtility.userAccountImageLinksList;
+
+import static com.utilities.UserUtility.userLogs;
+import static com.utilities.UserUtility.userWalletKeyIds;
 
 public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.AccountLogsAdapterHolder>
 {
-    private final List<Wallet> wallets;
+    private static List<Wallet> wallets;
     @SuppressLint("StaticFieldLeak")
     private static Context context;
+    private static String pageName = null;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public AccountLogsAdapter(@NonNull List<Wallet> wallets, Context context)
+    public AccountLogsAdapter(@NonNull List<Wallet> wallets, Context context, String pageName)
     {
-        this.wallets = wallets;
+        AccountLogsAdapter.wallets = wallets;
+        AccountLogsAdapter.pageName = pageName;
         AccountLogsAdapter.context = context;
     }
     
@@ -50,64 +54,10 @@ public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.
     @Override
     public void onBindViewHolder(@NonNull @NotNull AccountLogsAdapter.AccountLogsAdapterHolder holder, int position)
     {
-        Consumer<String> setImage = (s) -> {
-            String link;
-            switch (Objects.requireNonNull(s))
-            {
-                case "TRY":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("turkey.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "USD":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("united-states.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "EUR":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("european.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "CNY":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("china.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "JPY":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("japan.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "CHF":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("switzerland.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "CAD":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("canada.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "MAD":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("morocco.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "GBP":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("united-kingdom.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "RUB":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("russia.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "AUD":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("australia.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-                case "QAR":
-                    link = userAccountImageLinksList.stream().filter(x -> x.contains("qatar.png")).collect(Collectors.joining());
-                    Glide.with(context).load(link).into(holder.account_logs_currency_image);
-                    break;
-            }
-        };
+        //Glide.with(context).load(link).into(holder.account_logs_currency_image);
         Wallet index = wallets.get(position);
         holder.account_logs_id_key.setText("Key: " + index.getId());
         holder.account_logs_name.setText("Account Name: " + index.getAccountName());
-        setImage.accept(index.getCurrency());
     }
 
     @Override
@@ -121,6 +71,7 @@ public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.
         private TextView account_logs_name;
         private Context context;
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         public AccountLogsAdapterHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -129,6 +80,7 @@ public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.
             account_logs_currency_image = itemView.findViewById(R.id.account_logs_currency_image);
             account_logs_id_key = itemView.findViewById(R.id.account_logs_id_key);
             account_logs_name = itemView.findViewById(R.id.account_logs_name);
+
 
             itemView.setOnClickListener(this);
         }
@@ -139,11 +91,26 @@ public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION)
             {
-                Intent intent = new Intent(context, WalletLogs.class);
-                intent.putExtra("ID", account_logs_id_key.getText().toString());
-                intent.putExtra("AccountName", account_logs_name.getText().toString());
-                context.startActivity(intent);
+                if(AccountLogsAdapter.pageName.equals("MainPage"))
+                {
+                    Intent intent = new Intent(context, WalletLogs.class);
+                    userLogs = AccountLogsAdapter.wallets.get(position).getWalletLogs();
+                    intent.putExtra("id", account_logs_id_key.getText().toString().replace("Key: ",""));
+                    intent.putExtra("wallet_id", AccountLogsAdapter.wallets.get(position).getId());
+                    intent.putExtra("moneyCase", AccountLogsAdapter.wallets.get(position).getMoneyCase());
+                    context.startActivity(intent);
+
+                }
+                else if(AccountLogsAdapter.pageName.equals("CreditAccount"))
+                {
+                    Intent intent = new Intent(context, CreditAccountEditor.class);
+                    intent.putExtra("id", account_logs_id_key.getText().toString().replace("Key: ",""));
+                    context.startActivity(intent);
+                }
+
             }
+
+
         }
     }
 }

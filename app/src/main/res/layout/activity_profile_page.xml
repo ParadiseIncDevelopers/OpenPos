@@ -20,6 +20,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/credit_account_FAB2_add_anonymous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:src="@drawable/ic_add_button"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/find_or_save_FAB2_Menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,13 +69,13 @@
             android:id="@+id/find_or_save_TextView1_Header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:layout_weight="3"
             android:gravity="center_vertical"
             android:padding="@dimen/xSmallDp"
-            android:text="Find or/and Save user"
+            android:text="Find or/and Save account"
             app:layout_constraintBottom_toBottomOf="@+id/find_or_save_Logo1_Acoount"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/credit_account_FAB2_add_anonymous"
             app:layout_constraintStart_toEndOf="@+id/find_or_save_Logo1_Acoount"
             app:layout_constraintTop_toTopOf="@+id/find_or_save_Logo1_Acoount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -98,7 +113,7 @@
                 android:id="@+id/find_or_save_email_find_field"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="User name and surname or email "
+                android:hint="Account name"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColor="#000000" />

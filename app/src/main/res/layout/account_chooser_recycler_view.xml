@@ -4,29 +4,35 @@
     android:id="@+id/account_logs_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
     android:background="@drawable/wallet_logs_border"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal"
     android:padding="@dimen/xSmallDp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/account_logs_currency_image"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:padding="4dp"
         android:src="@drawable/ic_withdraw"
+        app:contentPadding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circularImageView2"
+        app:strokeColor="@color/colorOnPrimary"
+        app:strokeWidth="1dp" />
 
     <TextView
         android:id="@+id/account_logs_id_key"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="4dp"
         android:gravity="center_vertical"
-        android:text="Key :"
-        android:textSize="@dimen/xSmallSp"
+        android:text="Id :"
+        android:textSize="@dimen/smallSp"
         app:layout_constraintBottom_toTopOf="@+id/account_logs_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/account_logs_currency_image"
@@ -36,9 +42,10 @@
         android:id="@+id/account_logs_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="4dp"
         android:gravity="center_vertical"
         android:text="Account Name :"
-        android:textSize="@dimen/xSmallSp"
+        android:textSize="@dimen/smallSp"
         app:layout_constraintBottom_toBottomOf="@+id/account_logs_currency_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/account_logs_currency_image"

@@ -21,8 +21,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public abstract class IAES256KeyMaker
-{
+public abstract class IAES256KeyMaker {
     private static final String saltKey = "";
 
     @RequiresApi(api = Build.VERSION_CODES.O)

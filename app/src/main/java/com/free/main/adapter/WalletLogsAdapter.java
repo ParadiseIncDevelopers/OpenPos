@@ -1,24 +1,25 @@
 package com.free.main.adapter;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.free.R;
 import com.models.logs.Log;
 import org.jetbrains.annotations.NotNull;
-import java.util.ArrayList;
+import java.util.List;
 
 public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.WalletLogsHolder>
 {
-    private final ArrayList<Log> logs;
+    private final List<Log> logs;
 
-    public WalletLogsAdapter(ArrayList<Log> logs)
+    public WalletLogsAdapter(List<Log> logs)
     {
         this.logs = logs;
     }
@@ -32,14 +33,23 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
         return new WalletLogsHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull @NotNull WalletLogsAdapter.WalletLogsHolder holder, int position)
     {
         Log index = logs.get(position);
-        holder.wallet_logs_recycler_text_1.setText(String.valueOf(index.getDebit()));
-        holder.wallet_logs_recycler_text_2.setText(String.valueOf(index.getCredit()));
-        holder.wallet_logs_recycler_text_3.setText(String.format("From : %s", index.getSenderEmail()));
+
+        if(index.getDebit() == 0)
+        {
+            holder.wallet_logs_recycler_text_1.setText("Credit");
+            holder.wallet_logs_recycler_text_2.setText(String.valueOf(index.getCredit()));
+        }
+        else{
+            holder.wallet_logs_recycler_text_1.setText("Debit");
+            holder.wallet_logs_recycler_text_2.setText(String.valueOf(index.getDebit()));
+        }
+        holder.wallet_logs_recycler_text_3.setText(String.format(index.getId()));
         holder.wallet_logs_recycler_component.setOnClickListener(view -> {
 
         });
@@ -55,7 +65,7 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
         private final TextView wallet_logs_recycler_text_1;
         private final TextView wallet_logs_recycler_text_2;
         private final TextView wallet_logs_recycler_text_3;
-        private final LinearLayout wallet_logs_recycler_component;
+        private final ConstraintLayout wallet_logs_recycler_component;
 
         public WalletLogsHolder(@NonNull @NotNull View itemView)
         {

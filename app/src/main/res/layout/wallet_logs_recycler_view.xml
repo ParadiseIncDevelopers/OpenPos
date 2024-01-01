@@ -5,6 +5,7 @@
     android:id="@+id/wallet_logs_recycler_component"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
     android:background="@drawable/wallet_logs_border"
     android:clickable="true"
     android:focusable="true"

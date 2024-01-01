@@ -21,18 +21,15 @@ public class UserUtility
 {
     public static String userLoginId;
 
-    public static Uri userImageUri;
     private final String email;
     public static String LoginType = "";
-    public static Map<String, ArrayList<Log>> userWalletLogs = new HashMap<>();
-    public static Map<String, String> userCurrency = new HashMap<>();
-    public static Map<String, String> userMoneyCase = new HashMap<>();
     public static String userNameAndSurname;
-    public static String userPhoneNumber;
+    public static List<Log> userLogs = new ArrayList<>();
+    public static String walletLogId = "";
+    public static double walletMoneyCase = 0.0;
     public static List<Wallet> userWallets = new ArrayList<>();
     public static String userEmail;
-    public static List<String> userAccountImageLinksList;
-    public static EncryptorKeyContainer userEncryptorKeyContainer;
+    public static List<String> userWalletKeyIds;
 
     public UserUtility(String Email)
     {
@@ -130,14 +127,6 @@ public class UserUtility
 
     public static void Logout()
     {
-        userWalletLogs = new HashMap<>();
-        userImageUri = null;
-        userAccountImageLinksList = new ArrayList<>();
-        LoginType = "";
-        userCurrency = new HashMap<>();
-        userMoneyCase = new HashMap<>();
-        userNameAndSurname = "";
-        userPhoneNumber = "";
-        userEmail = "";
+
     }
 }

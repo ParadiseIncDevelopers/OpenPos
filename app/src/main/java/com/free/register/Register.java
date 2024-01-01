@@ -26,7 +26,7 @@ import com.models.user.UserRegistrar;
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import static com.utilities.NetworkChangeReceiver.NetworkCallback;
+import static com.utilities.classes.NetworkChangeReceiver.NetworkCallback;
 
 import org.json.JSONException;
 

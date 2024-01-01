@@ -1,12 +1,13 @@
 package com.free.main;
 
-import static com.utilities.UserUtility.userAccountImageLinksList;
+import static com.utilities.UserUtility.userWalletKeyIds;
 import static com.utilities.UserUtility.userLoginId;
 import static com.utilities.UserUtility.userWallets;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -18,8 +19,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.abstr.concrete.retrievers.DataSnapshotFactory;
+import com.abstr.interfaces.retrievers.IRetrieverFactory;
 import com.free.R;
+import com.free.main.adapter.account.AccountLogsAdapter;
 import com.free.main.adapter.credit.CreditAccount;
+import com.free.main.adapter.debit.DebitAccount;
+import com.free.main.menu.createAccount.CreateAccount;
+import com.free.main.menu.language.UserLanguage;
+import com.free.main.menu.profile.ProfilePage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +36,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.models.logs.Log;
-import com.models.wallet.Wallet;
-import java.util.ArrayList;
-import java.util.List;
+import com.utilities.RetrieverFactoryEnums;
+import com.utilities.classes.ContainerConverter;
+
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -42,11 +50,13 @@ public class MainPage extends AppCompatActivity
     private ShapeableImageView main_page_Logo1_Acoount;
     private TextView main_page_TextView1_Header;
     private ConstraintLayout main_page_ConstraintLayout2_Account, main_page_menu_button_1,
-            main_page_menu_button_2, main_page_menu_button_3, main_page_menu_button_4;
+            main_page_menu_button_2, main_page_menu_button_3, main_page_menu_button_4, main_page_menu_button_5;
     private RecyclerView main_page_RecyclerView_Accounts;
     private ConstraintLayout main_page_no_account_layout;
     private ImageView main_page_ImageView_NoAccount;
     private TextView main_page_TextView_NoAccount;
+
+    private AccountLogsAdapter adapter;
 
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -78,43 +88,22 @@ public class MainPage extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
-                userAccountImageLinksList = StreamSupport.stream(iterable.spliterator(), false)
+                userWalletKeyIds = StreamSupport.stream(iterable.spliterator(), false)
                         .filter(keySnapshot -> keySnapshot.getValue(String.class).equals(userLoginId))
                         .map(DataSnapshot::getKey)
                         .collect(Collectors.toList());
 
-                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                        .getReference()
-                        .child("Wallets")
-                        .get()
-                        .addOnCanceledListener(() -> {
+                DataSnapshotFactory snap = new DataSnapshotFactory();
 
-                        })
-                        .addOnFailureListener(x -> {
+                IRetrieverFactory factory = snap.getRetriever(RetrieverFactoryEnums.WALLET);
 
-                        })
-                        .addOnSuccessListener(task -> {
-                            Iterable<DataSnapshot> iterable2 = dataSnapshot.getChildren();
-                            userWallets = StreamSupport.stream(iterable2.spliterator(), false)
-                                    .filter(keySnapshot -> keySnapshot.getValue(String.class).equals(userLoginId))
-                                    .map((q) ->
-                                    {
-                                        Wallet.Builder walletBuilder = new Wallet.Builder()
-                                                .setEmail(q.child("email").getValue().toString())
-                                                .setCurrency(q.child("currency").toString())
-                                                .setMoneyCase(Double.parseDouble(q.child("moneyCase").toString()));
-                                        if(q.child("walletLogs").exists())
-                                        {
-                                            walletBuilder.setWalletLogs((List<Log>)q.child("walletLogs").getValue());
-                                        }
-                                        else{
-                                            walletBuilder.setWalletLogs(new ArrayList<>());
-                                        }
-                                        Wallet theWallet = walletBuilder.Build();
-                                        return theWallet;
-                                    })
-                                    .collect(Collectors.toList());
-                        });
+                factory.returnData("https://openpos-wallets.europe-west1.firebasedatabase.app/", "Wallets").thenAccept(then -> {
+                    userWallets = ContainerConverter.toWalletList(then);
+                    adapter = new AccountLogsAdapter(userWallets, MainPage.this, "MainPage");
+                    main_page_RecyclerView_Accounts.setLayoutManager(new LinearLayoutManager(MainPage.this));
+                    main_page_RecyclerView_Accounts.setAdapter(adapter);
+                }).exceptionally((ex) -> null);
+
             }
 
             @Override
@@ -125,32 +114,42 @@ public class MainPage extends AppCompatActivity
         main_page_FAB2_Menu.setOnClickListener(view -> {
             final Dialog dialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.dialog_wallet_logs_printer_screen);
+            dialog.setContentView(R.layout.dialog_main_page_menu);
             dialog.setCanceledOnTouchOutside(false);
 
             main_page_menu_button_1 = dialog.findViewById(R.id.main_page_menu_button_1);
             main_page_menu_button_2 = dialog.findViewById(R.id.main_page_menu_button_2);
             main_page_menu_button_3 = dialog.findViewById(R.id.main_page_menu_button_3);
             main_page_menu_button_4 = dialog.findViewById(R.id.main_page_menu_button_4);
+            main_page_menu_button_5 = dialog.findViewById(R.id.main_page_menu_button_5);
 
             main_page_menu_button_1.setOnClickListener(view1 -> {
-
+                Intent intent = new Intent(MainPage.this, ProfilePage.class);
+                startActivity(intent);
             });
 
             main_page_menu_button_2.setOnClickListener(view1 -> {
-                Intent intent = new Intent(MainPage.this, CreditAccount.class);
+                Intent intent = new Intent(MainPage.this, CreateAccount.class);
                 startActivity(intent);
             });
 
             main_page_menu_button_3.setOnClickListener(view1 -> {
-
+                Intent intent = new Intent(MainPage.this, DebitAccount.class);
+                startActivity(intent);
             });
 
             main_page_menu_button_4.setOnClickListener(view1 -> {
-
+                Intent intent = new Intent(MainPage.this, CreditAccount.class);
+                startActivity(intent);
             });
-        });
 
+            main_page_menu_button_5.setOnClickListener(view1 -> {
+                Intent intent = new Intent(MainPage.this, UserLanguage.class);
+                startActivity(intent);
+            });
+
+            dialog.show();
+        });
         /*NetworkCallback(this, () -> {
             main_page_transactions_profile_image = findViewById(R.id.main_page_transactions_profile_image);
 

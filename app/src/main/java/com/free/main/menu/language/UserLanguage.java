@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import com.free.R;
-import static com.utilities.NetworkChangeReceiver.NetworkCallback;
+import static com.utilities.classes.NetworkChangeReceiver.NetworkCallback;
 
 public class UserLanguage extends AppCompatActivity
 {

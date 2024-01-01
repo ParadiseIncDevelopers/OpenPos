@@ -1,4 +1,4 @@
-package com.utilities;
+package com.utilities.classes;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,6 +1,5 @@
 package com.free.main.menu.createAccount;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
@@ -17,33 +16,27 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Toolbar;
+
 import com.free.main.MainPage;
 import com.free.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.utilities.UtilityValues;
 import com.models.wallet.Wallet;
-import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDateTime;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import static android.view.Window.FEATURE_NO_TITLE;
 import static com.utilities.UserUtility.userEmail;
-
 
 public class CreateAccount extends AppCompatActivity
 {
-    private Toolbar create_account_toolbar;
     private TextInputLayout create_account_text_account_type, create_account_text_account_name;
     private AutoCompleteTextView create_account_text_account_type_auto;
     private TextInputEditText create_account_text_account_name_field;
     private Button create_account_submit_button;
     private Dialog dialog;
-
 
     @SuppressLint("MissingInflatedId")
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -55,7 +48,6 @@ public class CreateAccount extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        create_account_toolbar = findViewById(R.id.create_account_toolbar);
         create_account_text_account_type = findViewById(R.id.create_account_text_account_type);
         create_account_text_account_type_auto = findViewById(R.id.create_account_text_account_type_auto);
         create_account_text_account_name = findViewById(R.id.create_account_text_account_name);
@@ -63,9 +55,7 @@ public class CreateAccount extends AppCompatActivity
         create_account_submit_button = findViewById(R.id.create_account_submit_button);
 
         create_account_submit_button.setEnabled(false);
-
         ColorStateList greenColor = ColorStateList.valueOf(Color.parseColor("#558B2F"));
-
         Supplier<Boolean> allIsTrue = () ->
                 create_account_text_account_name.getHintTextColor() == greenColor &&
                         create_account_text_account_type.getHintTextColor() == greenColor;
@@ -83,7 +73,7 @@ public class CreateAccount extends AppCompatActivity
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$").matcher(editable.toString()).matches())
+                if(Pattern.compile("^.{4,40}$").matcher(editable.toString()).matches())
             {
                 create_account_text_account_name.setHintTextColor(ColorStateList.valueOf(Color.parseColor("#558B2F")));
                 if(allIsTrue.get())
@@ -135,47 +125,33 @@ public class CreateAccount extends AppCompatActivity
 
         create_account_submit_button.setOnClickListener(view ->
         {
-            runOnUiThread(() -> {
-                dialog = new Dialog(CreateAccount.this);
-                dialog.requestWindowFeature(FEATURE_NO_TITLE);
-                dialog.setCancelable(false);
-                dialog.setContentView(R.layout.dialog_main_page_loading);
-                dialog.show();
+            String Type = create_account_text_account_type_auto.getText().toString();
+            String AccountName = create_account_text_account_name_field.getText().toString();
+
+            Wallet.Builder wallet = new Wallet.Builder()
+                    .setAccountName(AccountName)
+                    .setCreationDate(LocalDateTime.now())
+                    .setEmail(userEmail)
+                    .setCurrency(Type)
+                    .setMoneyCase(0.0);
+
+            wallet.setId(this).thenAccept(task -> {
+                Wallet BuildedWallet = task.Build();
+                FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
+                        .getReference()
+                        .child("Wallets")
+                        .child(BuildedWallet.getId())
+                        .setValue(BuildedWallet.toJsonObject());
+
+                Intent intent = new Intent(CreateAccount.this, MainPage.class);
+                startActivity(intent);
+            }).exceptionally(x -> {
+                x.printStackTrace();
+                return null;
             });
 
-            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                    .getReference()
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
-                        @Override
-                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot)
-                        {
-                            String Type = create_account_text_account_type_auto.getText().toString();
-                            String AccountName = create_account_text_account_name_field.getText().toString();
 
-                            Wallet wallet = new Wallet.Builder()
-                                    .setAccountName(AccountName)
-                                    .setId()
-                                    .setCurrency(Type)
-                                    .setMoneyCase(0.0)
-                                    .Build();
 
-                            FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                                    .getReference()
-                                    .child("Wallets")
-                                    .child(wallet.getId())
-                                    .setValue(wallet.toJsonObject());
-
-                            Intent intent = new Intent(CreateAccount.this, MainPage.class);
-                            intent.putExtra("Email", userEmail);
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                        }
-                    });
         });
     }
 }

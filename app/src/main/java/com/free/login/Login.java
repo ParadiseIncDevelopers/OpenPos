@@ -1,5 +1,7 @@
 package com.free.login;
 
+import static android.view.Window.FEATURE_NO_TITLE;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,7 +35,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import static com.utilities.NetworkChangeReceiver.NetworkCallback;
+import static com.utilities.classes.NetworkChangeReceiver.NetworkCallback;
 
 public class Login extends AppCompatActivity
 {
@@ -144,7 +146,7 @@ public class Login extends AppCompatActivity
                 @Override
                 public void afterTextChanged(Editable s)
                 {
-                    if(Pattern.compile("^\\d{6}$").matcher(s.toString()).matches())
+                    if(Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$").matcher(s.toString()).matches())
                     {
                         login_page_password_text.setHintTextColor(ColorStateList.valueOf(Color.parseColor("#558B2F")));
                         if(allIsTrue.get())
@@ -163,6 +165,14 @@ public class Login extends AppCompatActivity
 
             login_page_submit_button.setOnClickListener(view ->
             {
+                runOnUiThread(() -> {
+                    dialog = new Dialog(Login.this);
+                    dialog.requestWindowFeature(FEATURE_NO_TITLE);
+                    dialog.setCancelable(false);
+                    dialog.setContentView(R.layout.dialog_main_page_loading);
+                    dialog.show();
+                });
+
                 String textEmail = login_page_email_text_field.getText().toString();
                 String textPassword = login_page_password_text_field.getText().toString();
 

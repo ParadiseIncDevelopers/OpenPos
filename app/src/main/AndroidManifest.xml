@@ -36,6 +36,12 @@
         android:theme="@style/Theme.InternetFreePaymentGateway.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity
+            android:name=".main.adapter.credit.CreditAccountEditor"
+            android:exported="false" />
+        <activity
+            android:name=".main.adapter.credit.CreditAccount"
+            android:exported="false" />
         <activity android:name=".main.adapter.stats.WalletStats" />
         <activity android:name=".main.menu.findSaveUser.FindOrSaveUser" />
         <activity android:name=".error.NetworkErrorActivity" />
@@ -45,7 +51,6 @@
         <activity android:name=".main.adapter.WalletLogs" />
         <activity android:name=".main.menu.createAccount.CreateAccount" />
         <activity android:name=".main.menu.settings.ProfileSettings" />
-        <activity android:name=".main.adapter.credit.CreditAccount" />
         <activity android:name=".register.Register" />
         <activity android:name=".main.adapter.debit.DebitAccount" />
         <activity android:name=".main.menu.limit.CreditLimit" />

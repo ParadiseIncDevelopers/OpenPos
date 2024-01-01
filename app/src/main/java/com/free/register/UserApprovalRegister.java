@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import com.free.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import static com.utilities.NetworkChangeReceiver.NetworkCallback;
+import static com.utilities.classes.NetworkChangeReceiver.NetworkCallback;
 
 import java.util.regex.Pattern;
 

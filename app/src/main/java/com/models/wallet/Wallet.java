@@ -1,34 +1,39 @@
 package com.models.wallet;
 
 import static com.utilities.UserUtility.userLoginId;
-
+import android.content.Context;
 import android.os.Build;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-
+import com.abstr.interfaces.retrievers.IContainer;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.models.logs.Log;
-
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class Wallet
+public class Wallet implements IContainer
 {
     private String accountName;
     private String email;
     private String currency;
     private double moneyCase;
     private String id;
+    private LocalDateTime creationDate;
     private List<Log> walletLogs;
 
     private Wallet() {
@@ -59,6 +64,10 @@ public class Wallet
         return id;
     }
 
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
     public static class Builder {
         private String accountName;
         private String email;
@@ -66,6 +75,7 @@ public class Wallet
         private double moneyCase;
         private String id;
         private List<Log> walletLogs;
+        private LocalDateTime creationDate;
 
         public Builder setAccountName(String accountName) {
             this.accountName = accountName;
@@ -87,9 +97,14 @@ public class Wallet
             return this;
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        public Builder setId()
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public CompletableFuture<Builder> setId(Context context)
         {
+            CompletableFuture<Builder> future = new CompletableFuture<>();
 
             Function<String, String> hexCharRandom = (s) -> {
                 int randomIndex = (int) (Math.random() * s.length());
@@ -105,45 +120,79 @@ public class Wallet
             };
             DatabaseReference databaseReference =
                     FirebaseDatabase.getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
-                    .getReference("UniqueKeys");
+                    .getReference();
 
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    boolean keyExists = false;
-
-                    do
+            databaseReference.get()
+                    .addOnCompleteListener(task ->
                     {
-                        String hexChars = "0123456789ABCDEF";
-                        StringBuilder keyBuilder = new StringBuilder();
-                        keyBuilder.append(hexCharRandom.apply(hexChars)).append("-");
+                        boolean keyExists = false;
 
-                        for (int i = 0; i < 3; i++) {
-                            keyBuilder.append(generateRandomHexString.apply(hexChars, 5)).append("-");
-                        }
-
-                        keyBuilder.append(generateRandomHexString.apply(hexChars, 5));
-                        id = keyBuilder.toString();
-
-                        if (dataSnapshot.child(id).exists())
+                        if(task.isSuccessful())
                         {
-                            keyExists = true;
-                        }else{
-                            databaseReference.child(id).setValue(userLoginId);
+                            DataSnapshot snap = task.getResult();
+                            if(snap.child("UniqueKeys").exists())
+                            {
+                                do
+                                {
+                                    String hexChars = "0123456789ABCDEF";
+                                    StringBuilder keyBuilder = new StringBuilder();
+                                    keyBuilder.append(hexCharRandom.apply(hexChars)).append("-");
+
+                                    for (int i = 0; i < 3; i++) {
+                                        keyBuilder.append(generateRandomHexString.apply(hexChars, 5)).append("-");
+                                    }
+
+                                    keyBuilder.append(generateRandomHexString.apply(hexChars, 5));
+                                    id = keyBuilder.toString();
+
+                                    if (snap.child(id).exists())
+                                    {
+                                        keyExists = true;
+                                    }else{
+                                        databaseReference.child("UniqueKeys").child(id).setValue(userLoginId);
+                                    }
+                                } while (keyExists);
+                            }
+                            else{
+                                String hexChars = "0123456789ABCDEF";
+                                StringBuilder keyBuilder = new StringBuilder();
+                                keyBuilder.append(hexCharRandom.apply(hexChars)).append("-");
+
+                                for (int i = 0; i < 3; i++) {
+                                    keyBuilder.append(generateRandomHexString.apply(hexChars, 5)).append("-");
+                                }
+
+                                keyBuilder.append(generateRandomHexString.apply(hexChars, 5));
+                                id = keyBuilder.toString();
+                                databaseReference.child("UniqueKeys").child(id).setValue(userLoginId);
+                            }
+                            future.complete(this);
                         }
-                    } while (keyExists);
+                        else{
+                            Toast.makeText(context, "Task is not successful.", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(ex -> {
+                        Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                        future.completeExceptionally(ex);
+                    }).addOnCanceledListener(() -> {
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
-            return this;
+                    });
+            return future;
         }
 
-        public Builder setWalletLogs(List<Log> walletLogs) {
-            this.walletLogs = walletLogs;
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        public Builder setWalletLogs(@NonNull Map<String, Map<String, Object>> walletLogs) {
+            List<Map<String,Object>> elements = new ArrayList<>(walletLogs.values());
+            List<Log> logs = new ArrayList<>();
+            elements.forEach(x -> logs.add(new Log.Builder()
+                    .setDate(LocalDateTime.parse(x.get("date").toString()))
+                    .setContentDescription(x.get("contentDescription").toString())
+                    .setId(x.get("id").toString())
+                    .setDebit(Double.parseDouble(x.get("debit").toString()))
+                    .setCredit(Double.parseDouble(x.get("credit").toString()))
+                    .setEmail(x.get("email").toString())
+                    .build()));
+            this.walletLogs = logs;
             return this;
         }
 
@@ -152,39 +201,38 @@ public class Wallet
             wallet.accountName = this.accountName;
             wallet.email = this.email;
             wallet.id = this.id;
+            wallet.creationDate = this.creationDate;
             wallet.moneyCase = this.moneyCase;
             wallet.currency = this.currency;
             wallet.walletLogs = this.walletLogs;
             return wallet;
         }
+
+        public Builder setCreationDate(LocalDateTime creationDate)
+        {
+            this.creationDate = creationDate;
+            return this;
+        }
     }
 
+    @Override
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public JSONObject toJsonObject() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("accountName", accountName);
-            jsonObject.put("email", email);
-            jsonObject.put("currency", currency);
-            jsonObject.put("moneyCase", moneyCase);
+    public Map<String, Object> toJsonObject() {
+        Map<String, Object> jsonObject = new HashMap<>();
+        jsonObject.put("accountName", accountName);
+        jsonObject.put("email", email);
+        jsonObject.put("currency", currency);
+        jsonObject.put("moneyCase", moneyCase);
+        jsonObject.put("creationDate", creationDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 
-            if (walletLogs != null && !walletLogs.isEmpty())
-            {
-                JSONArray logsArray = new JSONArray();
-                for (Log log : walletLogs)
-                {
-                    logsArray.put(log.toJsonObject());
-                }
-                jsonObject.put("walletLogs", logsArray);
-            }
-            else
-            {
-                jsonObject.put("walletLogs", new JSONArray());
-            }
-        }
-        catch (JSONException e)
+        if (walletLogs != null && !walletLogs.isEmpty())
         {
-            e.printStackTrace();
+            JSONArray logsArray = new JSONArray();
+            for (Log log : walletLogs)
+            {
+                logsArray.put(log.toJsonObject());
+            }
+            jsonObject.put("walletLogs", logsArray);
         }
         return jsonObject;
     }

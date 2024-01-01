@@ -1,6 +1,6 @@
 package com.free;
 
-import static com.utilities.UserUtility.userAccountImageLinksList;
+import static com.utilities.UserUtility.userWalletKeyIds;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -35,13 +35,13 @@ public class MainActivity extends AppCompatActivity
 
         storageRef.listAll()
                 .addOnSuccessListener(listResult -> {
-                    userAccountImageLinksList = new ArrayList<>();
+                    userWalletKeyIds = new ArrayList<>();
                     List<StorageReference> items = listResult.getItems();
 
                     for (StorageReference item : items) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             String downloadUrl = uri.toString();
-                            userAccountImageLinksList.add(downloadUrl);
+                            userWalletKeyIds.add(downloadUrl);
                         });
                     }
                 })

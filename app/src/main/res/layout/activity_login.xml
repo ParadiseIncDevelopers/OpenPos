@@ -92,7 +92,6 @@
                     android:layout_height="match_parent"
                     android:hint="Password"
                     android:inputType="text|textPassword"
-                    android:maxLength="6"
                     android:singleLine="true"
                     android:textColor="#000000" />
             </com.google.android.material.textfield.TextInputLayout>

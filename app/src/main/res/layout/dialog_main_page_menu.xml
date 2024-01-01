@@ -7,51 +7,7 @@
     android:background="@drawable/ic_backgr">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_page_menu_button_5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/any_view_container"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_menu_button_1">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/main_page_menu_logo_5"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:padding="4dp"
-            android:src="@drawable/ic_id_card"
-            app:contentPadding="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/main_page_menu_button_text_1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
-
-        <TextView
-            android:id="@+id/main_page_menu_button_text_5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:text="Find or/and Save user"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/main_page_menu_logo_5"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_page_ConstraintLayout1_Exit"
+        android:id="@+id/main_page_menu_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -63,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_page_FAB2_Menu"
+            android:id="@+id/main_page_menu_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -77,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/main_page_Logo1_Acoount"
+            android:id="@+id/main_page_menu_logo"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
@@ -86,15 +42,15 @@
             android:src="@drawable/ic_menu"
             app:contentPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/main_page_TextView1_Header"
-            app:layout_constraintStart_toEndOf="@+id/main_page_FAB2_Menu"
+            app:layout_constraintEnd_toStartOf="@+id/main_page_menu_header"
+            app:layout_constraintStart_toEndOf="@+id/main_page_menu_back"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
             app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
-            android:id="@+id/main_page_TextView1_Header"
+            android:id="@+id/main_page_menu_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -104,7 +60,7 @@
             android:text="Menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/main_page_Logo1_Acoount"
+            app:layout_constraintStart_toEndOf="@+id/main_page_menu_logo"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -121,7 +77,7 @@
         android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_ConstraintLayout1_Exit">
+        app:layout_constraintTop_toBottomOf="@+id/main_page_menu_toolbar">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/main_page_menu_logo_1"
@@ -131,7 +87,6 @@
             android:src="@drawable/ic_user"
             app:contentPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/main_page_menu_button_text_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
@@ -153,7 +108,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_page_menu_button_2"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -164,14 +119,14 @@
         android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_menu_button_5">
+        app:layout_constraintTop_toBottomOf="@+id/main_page_menu_button_1">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/main_page_menu_logo_2"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
-            android:src="@drawable/ic_cash"
+            android:src="@drawable/ic_id_card"
             app:contentPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:text="Credit an Account"
+            android:text="Create/Delete Account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_page_menu_logo_2"
@@ -213,7 +168,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
-            android:src="@drawable/ic_translate"
+            android:src="@drawable/ic_givemoney"
             app:contentPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -256,7 +211,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
-            android:src="@drawable/ic_translate"
+            android:src="@drawable/ic_cash"
             app:contentPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -271,10 +226,52 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:text="Language"
+            android:text="Credit an Account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_page_menu_logo_4"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_page_menu_button_5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/any_view_container"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_page_menu_button_4">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/main_page_menu_logo_5"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_translate"
+            app:contentPadding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circularImageView"
+            app:strokeColor="@color/colorOnPrimary"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/main_page_menu_button_text_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:text="Language"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/main_page_menu_logo_5"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,4 +1,6 @@
 package com.abstr.interfaces;
 
-public interface IUserContainer {
+public interface IUserContainer
+{
+
 }
