@@ -5,11 +5,13 @@ import static com.utilities.UserUtility.userWalletKeyIds;
 import static com.utilities.UserUtility.userWallets;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -56,6 +58,7 @@ public class CreditAccount extends AppCompatActivity {
                 .getReference("UniqueKeys");
 
         uniqueKeysRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 

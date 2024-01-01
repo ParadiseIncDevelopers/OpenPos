@@ -66,6 +66,7 @@ public class CreditAccountEditor extends AppCompatActivity {
 
         credit_account_id.setText(String.format("%s : %s", credit_account_id.getText().toString().trim(), walletId));
         credit_account_submit_button.setEnabled(false);
+        credit_account_menu_button.setOnClickListener(view -> finish());
         credit_account_credit_amount_field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

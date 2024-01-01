@@ -19,6 +19,7 @@ import android.widget.Button;
 
 import com.free.main.MainPage;
 import com.free.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,6 +38,7 @@ public class CreateAccount extends AppCompatActivity
     private TextInputEditText create_account_text_account_name_field;
     private Button create_account_submit_button;
     private Dialog dialog;
+    private FloatingActionButton create_account_menu_button;
 
     @SuppressLint("MissingInflatedId")
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -48,6 +50,7 @@ public class CreateAccount extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        create_account_menu_button = findViewById(R.id.create_account_menu_button);
         create_account_text_account_type = findViewById(R.id.create_account_text_account_type);
         create_account_text_account_type_auto = findViewById(R.id.create_account_text_account_type_auto);
         create_account_text_account_name = findViewById(R.id.create_account_text_account_name);
@@ -59,7 +62,7 @@ public class CreateAccount extends AppCompatActivity
         Supplier<Boolean> allIsTrue = () ->
                 create_account_text_account_name.getHintTextColor() == greenColor &&
                         create_account_text_account_type.getHintTextColor() == greenColor;
-
+        create_account_menu_button.setOnClickListener(view -> finish());
         create_account_text_account_name_field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

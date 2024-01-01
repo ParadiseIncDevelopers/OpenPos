@@ -38,6 +38,7 @@ public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.
         AccountLogsAdapter.wallets = wallets;
         AccountLogsAdapter.pageName = pageName;
         AccountLogsAdapter.context = context;
+        //QUEUE YAPILACAK
     }
     
     @NonNull

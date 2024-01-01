@@ -12,16 +12,33 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.free.R;
 import com.models.logs.Log;
+import com.models.structs.Stack;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.WalletLogsHolder>
 {
     private final List<Log> logs;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public WalletLogsAdapter(List<Log> logs)
     {
         this.logs = logs;
+        Stack <Log> a = new Stack<>();
+        this.logs.stream().map(x ->{
+            Log log = new Log.Builder()
+                    .setEmail(x.getEmail())
+                    .setContentDescription(x.getContentDescription())
+                    .setCredit(x.getCredit())
+                    .setDate(x.getDate())
+                    .setDebit(x.getDebit())
+                    .setId(x.getId())
+                    .Build();
+            return log;
+        }).collect(Collectors.toList()) ;
+
     }
     
     @NonNull

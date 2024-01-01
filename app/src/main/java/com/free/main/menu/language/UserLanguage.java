@@ -9,12 +9,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import com.free.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import static com.utilities.classes.NetworkChangeReceiver.NetworkCallback;
 
 public class UserLanguage extends AppCompatActivity
 {
     private ConstraintLayout user_languages_button_1, user_languages_button_2, user_languages_button_3,
             user_languages_button_4, user_languages_button_5, user_languages_button_6;
+
+    private FloatingActionButton user_languages_FAB1_back;
+
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +31,15 @@ public class UserLanguage extends AppCompatActivity
 
         NetworkCallback(this, () ->
         {
+            user_languages_FAB1_back= findViewById(R.id.user_languages_FAB1_back);
             user_languages_button_1 = findViewById(R.id.user_languages_button_1);
             user_languages_button_2 = findViewById(R.id.user_languages_button_2);
             user_languages_button_3 = findViewById(R.id.user_languages_button_3);
             user_languages_button_4 = findViewById(R.id.user_languages_button_4);
             user_languages_button_5 = findViewById(R.id.user_languages_button_5);
             user_languages_button_6 = findViewById(R.id.user_languages_button_6);
+
+            user_languages_FAB1_back.setOnClickListener(view -> finish());
 
             user_languages_button_1.setOnClickListener(view -> {
 
