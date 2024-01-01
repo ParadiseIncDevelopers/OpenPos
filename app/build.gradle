@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.free"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.google.zxing:core:3.4.1'
     implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
     implementation 'com.sun.mail:android-mail:1.6.2'
