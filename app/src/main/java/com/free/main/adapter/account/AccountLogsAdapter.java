@@ -12,11 +12,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.abstr.concrete.retrievers.DataSnapshotFactory;
+import com.abstr.interfaces.retrievers.IRetrieverFactory;
 import com.bumptech.glide.Glide;
 import com.free.R;
 import com.free.main.adapter.WalletLogs;
 import com.free.main.adapter.credit.CreditAccountEditor;
+import com.free.main.adapter.debit.DebitAccountEditor;
 import com.models.wallet.Wallet;
+import com.utilities.RetrieverFactoryEnums;
+import com.utilities.classes.ContainerConverter;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +32,7 @@ import java.util.stream.Collectors;
 
 import static com.utilities.UserUtility.userLogs;
 import static com.utilities.UserUtility.userWalletKeyIds;
+import static com.utilities.UserUtility.userWallets;
 
 public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.AccountLogsAdapterHolder>
 {
@@ -38,7 +46,6 @@ public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.
         AccountLogsAdapter.wallets = wallets;
         AccountLogsAdapter.pageName = pageName;
         AccountLogsAdapter.context = context;
-        //QUEUE YAPILACAK
     }
     
     @NonNull
@@ -67,22 +74,20 @@ public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.
     }
 
     public static class AccountLogsAdapterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView account_logs_currency_image;
-        private TextView account_logs_id_key;
-        private TextView account_logs_name;
-        private Context context;
+        private final ImageView account_logs_currency_image;
+        private final TextView account_logs_id_key;
+        private final TextView account_logs_name;
+        private final Context context;
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        public AccountLogsAdapterHolder(@NonNull View itemView) {
+        public AccountLogsAdapterHolder(@NonNull View itemView)
+        {
             super(itemView);
-
-            context = itemView.getContext();
-
             account_logs_currency_image = itemView.findViewById(R.id.account_logs_currency_image);
             account_logs_id_key = itemView.findViewById(R.id.account_logs_id_key);
             account_logs_name = itemView.findViewById(R.id.account_logs_name);
 
-
+            context = itemView.getContext();
             itemView.setOnClickListener(this);
         }
 
@@ -92,23 +97,43 @@ public class AccountLogsAdapter extends RecyclerView.Adapter<AccountLogsAdapter.
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION)
             {
-                if(AccountLogsAdapter.pageName.equals("MainPage"))
-                {
-                    Intent intent = new Intent(context, WalletLogs.class);
-                    userLogs = AccountLogsAdapter.wallets.get(position).getWalletLogs();
-                    intent.putExtra("id", account_logs_id_key.getText().toString().replace("Key: ",""));
-                    intent.putExtra("wallet_id", AccountLogsAdapter.wallets.get(position).getId());
-                    intent.putExtra("moneyCase", AccountLogsAdapter.wallets.get(position).getMoneyCase());
-                    context.startActivity(intent);
+                String pageName = AccountLogsAdapter.pageName;
+                switch (pageName) {
+                    case "MainPage": {
+                        Intent intent = new Intent(context, WalletLogs.class);
 
-                }
-                else if(AccountLogsAdapter.pageName.equals("CreditAccount"))
-                {
-                    Intent intent = new Intent(context, CreditAccountEditor.class);
-                    intent.putExtra("id", account_logs_id_key.getText().toString().replace("Key: ",""));
-                    context.startActivity(intent);
-                }
+                        Wallet wallet = AccountLogsAdapter.wallets.get(position);
 
+                        userLogs = wallet.getWalletLogs();
+
+                        DataSnapshotFactory snap = new DataSnapshotFactory();
+                        IRetrieverFactory factory = snap.getRetriever(RetrieverFactoryEnums.LOGS);
+                        factory.returnData().thenAccept(then -> {
+                            userLogs = ContainerConverter.toLogList(then);
+                            intent.putExtra("id", account_logs_id_key.getText().toString().replace("Key: ", ""));
+                            intent.putExtra("currency", wallet.getCurrency());
+                            intent.putExtra("wallet_id", wallet.getId());
+                            intent.putExtra("moneyCase", wallet.getMoneyCase());
+                            context.startActivity(intent);
+                        }).exceptionally(ex -> null);
+                        break;
+                    }
+                    case "CreditAccount": {
+                        Intent intent = new Intent(context, CreditAccountEditor.class);
+                        intent.putExtra("id", account_logs_id_key.getText().toString().replace("Key: ", ""));
+                        context.startActivity(intent);
+                        break;
+                    }
+                    case "DebitAccount": {
+                        Intent intent = new Intent(context, DebitAccountEditor.class);
+                        intent.putExtra("id", account_logs_id_key.getText().toString().replace("Key: ", ""));
+                        context.startActivity(intent);
+                        break;
+                    }
+                    default:
+
+                        break;
+                }
             }
 
 

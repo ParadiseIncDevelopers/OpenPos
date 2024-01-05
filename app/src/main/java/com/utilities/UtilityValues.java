@@ -8,4 +8,6 @@ public class UtilityValues
     public final static String REGISTERED = "REGISTERED";
     public final static List<String> Currencies = Arrays.asList("TRY", "USD", "EUR", "CAD", "AUD", "JPY", "CNY",
             "CHF", "MAD", "QAR", "RUB");
+
+    public final static int MAX_WALLET_SIZE = 10000;
 }

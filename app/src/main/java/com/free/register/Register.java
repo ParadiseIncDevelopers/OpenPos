@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.functions.FirebaseFunctions;
-import com.models.user.UserRegistrar;
+import com.models.user.UserProfile;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -78,7 +78,6 @@ public class Register extends AppCompatActivity {
 
                 }
 
-                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void afterTextChanged(Editable s)
                 {
@@ -173,8 +172,9 @@ public class Register extends AppCompatActivity {
 
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(Email, Password)
                         .addOnSuccessListener(x -> {
-                            UserRegistrar user = new UserRegistrar.Builder()
+                            UserProfile user = new UserProfile.Builder()
                                     .setEmail(Email)
+                                    .setApiCounting(200000)
                                     .setId(Objects.requireNonNull(x.getUser()).getUid())
                                     .setNameSurname(NameAndSurname)
                                     .Build();

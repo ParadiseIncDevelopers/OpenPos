@@ -1,24 +1,34 @@
 package com.models.structs;
 
+import static com.utilities.UtilityValues.MAX_WALLET_SIZE;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EmptyStackException;
+import java.util.List;
 
 public class Stack<T> {
-    private int maxSize;
-    private T[] stackArray;
+    private int maxSize = -1;
+    private final List<T> stackArray;
     private int top;
 
     public Stack(int size) {
         this.maxSize = size;
-        this.stackArray = (T[]) (new Object[maxSize]);
+        this.stackArray = new ArrayList<>(maxSize);
         this.top = -1;
     }
     public Stack () {
-        this.maxSize = Integer.MAX_VALUE;
-        this.stackArray = (T[]) (new Object[maxSize]);
-        this.top = -1;
+        this.stackArray = new ArrayList<>();
+        this.top = 0;
     }
+
+    public int size()
+    {
+        return stackArray.size();
+    }
+
     public boolean isEmpty() {
-        return (top == -1);
+        return (top == stackArray.size());
     }
 
     public boolean isFull() {
@@ -27,39 +37,41 @@ public class Stack<T> {
 
     public void push(T value) {
         if (isFull()) {
-            // System.out.println("Stack is full. Cannot push element.");
+            throw new StackOverflowError();
         } else {
-            stackArray[++top] = value;
-            //System.out.println(value + " pushed to stack");
+            stackArray.add(value);
         }
     }
 
-    public T pop() {
-        if (isEmpty()) {
+    public void fullyPush(List<T> values)
+    {
+        if(isFull())
+        {
+            throw new StackOverflowError();
+        }
+        else{
+            stackArray.addAll(values);
+        }
+    }
+
+    public T pop()
+    {
+        if (isEmpty())
+        {
             throw new EmptyStackException();
-        } else {
-            T value = (T) stackArray[top--];
-            //  System.out.println(value + " popped from stack");
-            return value;
+        }
+        else {
+            return stackArray.remove(stackArray.size() - 1);
         }
     }
 
     public T peek() {
-        if (isEmpty()) {
+        if (isEmpty())
+        {
             throw new EmptyStackException();
-        } else {
-            return (T) stackArray[top];
         }
-    }
-
-    public void displayStack() {
-        if (isEmpty()) {
-            //System.out.println("Stack is empty.");
-        } else {
-            //System.out.println("Stack elements:");
-            for (int i = top; i >= 0; i--) {
-                //   System.out.println(stackArray[i]);
-            }
+        else {
+            return stackArray.get(stackArray.size() - 1);
         }
     }
 

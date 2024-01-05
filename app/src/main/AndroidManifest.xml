@@ -37,17 +37,23 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".forgotpassword.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".main.adapter.debit.DebitAccountEditor"
+            android:exported="false" />
+        <activity
             android:name=".main.adapter.credit.CreditAccountEditor"
             android:exported="false" />
         <activity
             android:name=".main.adapter.credit.CreditAccount"
             android:exported="false" />
         <activity android:name=".main.adapter.stats.WalletStats" />
-        <activity android:name=".main.menu.findSaveUser.FindOrSaveUser" />
+        <activity android:name=".main.menu.profile.ProfilePage" />
         <activity android:name=".error.NetworkErrorActivity" />
         <activity android:name=".register.ApprovalInProgress" />
         <activity android:name=".register.UserApprovalRegister" />
-        <activity android:name="com.models.Offers" />
+        <activity android:name=".main.menu.language.UserLanguage"/>
         <activity android:name=".main.adapter.WalletLogs" />
         <activity android:name=".main.menu.createAccount.CreateAccount" />
         <activity android:name=".main.menu.settings.ProfileSettings" />

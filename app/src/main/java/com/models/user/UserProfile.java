@@ -10,10 +10,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Base64;
 
-public class UserRegistrar implements IUserContainer {
+public class UserProfile implements IUserContainer {
     private String id;
     private String email;
     private String nameSurname;
+    private int apiCounting;
 
     public String getId()
     {
@@ -23,9 +24,11 @@ public class UserRegistrar implements IUserContainer {
     {
         return email;
     }
-
     public String getNameSurname() {
         return nameSurname;
+    }
+    public int getApiCounting() {
+        return apiCounting;
     }
 
     public JSONObject toJsonObject() throws JSONException
@@ -34,6 +37,7 @@ public class UserRegistrar implements IUserContainer {
         jsonObject.put("id", id);
         jsonObject.put("email", email);
         jsonObject.put("nameSurname", nameSurname);
+        jsonObject.put("apiCounting", apiCounting);
         return jsonObject;
     }
 
@@ -42,6 +46,7 @@ public class UserRegistrar implements IUserContainer {
         private String id;
         private String email;
         private String nameSurname;
+        private int apiCounting;
 
         public Builder setId(String id)
         {
@@ -66,17 +71,25 @@ public class UserRegistrar implements IUserContainer {
             return this;
         }
 
-        public UserRegistrar Build()
+        public Builder setApiCounting(int apiCounting) {
+            this.apiCounting = apiCounting;
+            return this;
+        }
+
+        public UserProfile Build()
         {
-            UserRegistrar credentials = new UserRegistrar();
+            UserProfile credentials = new UserProfile();
             credentials.id = this.id;
             credentials.email = this.email;
             credentials.nameSurname = this.nameSurname;
+            credentials.apiCounting = this.apiCounting;
             return credentials;
         }
+
+
     }
 
-    private UserRegistrar()
+    private UserProfile()
     {
 
     }

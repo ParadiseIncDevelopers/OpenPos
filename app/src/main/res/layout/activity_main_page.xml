@@ -10,7 +10,7 @@
     tools:context=".main.MainPage" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_page_ConstraintLayout1_Exit"
+        android:id="@+id/main_page_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_page_FAB1_Close"
+            android:id="@+id/main_page_logout_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_page_FAB2_Menu"
+            android:id="@+id/main_page_menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/main_page_Logo1_Acoount"
+            android:id="@+id/main_page_logo"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
@@ -59,29 +59,29 @@
             android:src="@drawable/ic_wallet"
             app:contentPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/main_page_TextView1_Header"
-            app:layout_constraintStart_toEndOf="@+id/main_page_FAB2_Menu"
+            app:layout_constraintEnd_toStartOf="@+id/main_page_header_text"
+            app:layout_constraintStart_toEndOf="@+id/main_page_menu_button"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
             app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
-            android:id="@+id/main_page_TextView1_Header"
+            android:id="@+id/main_page_header_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center_vertical"
             android:padding="@dimen/xSmallDp"
             android:text="Your accounts lists"
-            app:layout_constraintBottom_toBottomOf="@+id/main_page_FAB1_Close"
-            app:layout_constraintEnd_toStartOf="@+id/main_page_FAB1_Close"
-            app:layout_constraintStart_toEndOf="@+id/main_page_Logo1_Acoount"
-            app:layout_constraintTop_toTopOf="@+id/main_page_FAB1_Close" />
+            app:layout_constraintBottom_toBottomOf="@+id/main_page_logout_button"
+            app:layout_constraintEnd_toStartOf="@+id/main_page_logout_button"
+            app:layout_constraintStart_toEndOf="@+id/main_page_logo"
+            app:layout_constraintTop_toTopOf="@+id/main_page_logout_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_page_ConstraintLayout2_Account"
+        android:id="@+id/main_page_recyclerView_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -90,11 +90,11 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/wallet_logs_border"
         android:padding="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_ConstraintLayout1_Exit">
+        app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_page_RecyclerView_Accounts"
@@ -111,6 +111,9 @@
         android:id="@+id/main_page_no_account_layout"
         android:layout_width="360dp"
         android:layout_height="360dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/any_view_container"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,6 +124,7 @@
             android:id="@+id/main_page_ImageView_NoAccount"
             android:layout_width="134dp"
             android:layout_height="150dp"
+            app:layout_constraintBottom_toTopOf="@+id/main_page_TextView_NoAccount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -128,9 +132,14 @@
 
         <TextView
             android:id="@+id/main_page_TextView_NoAccount"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Please create an account"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="To start this application please create an account from the menu on the top-left side."
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_page_ImageView_NoAccount" />

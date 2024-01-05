@@ -21,10 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class Wallet implements IContainer
 {
@@ -191,7 +189,7 @@ public class Wallet implements IContainer
                     .setDebit(Double.parseDouble(x.get("debit").toString()))
                     .setCredit(Double.parseDouble(x.get("credit").toString()))
                     .setEmail(x.get("email").toString())
-                    .build()));
+                    .Build()));
             this.walletLogs = logs;
             return this;
         }

@@ -20,25 +20,13 @@ import java.util.stream.Collectors;
 
 public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.WalletLogsHolder>
 {
-    private final List<Log> logs;
+    private static Stack<Log> stack = new Stack<>();
+    private static int mainSize;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public WalletLogsAdapter(List<Log> logs)
     {
-        this.logs = logs;
-        Stack <Log> a = new Stack<>();
-        this.logs.stream().map(x ->{
-            Log log = new Log.Builder()
-                    .setEmail(x.getEmail())
-                    .setContentDescription(x.getContentDescription())
-                    .setCredit(x.getCredit())
-                    .setDate(x.getDate())
-                    .setDebit(x.getDebit())
-                    .setId(x.getId())
-                    .Build();
-            return log;
-        }).collect(Collectors.toList()) ;
-
+        stack.fullyPush(logs);
+        mainSize = stack.size();
     }
     
     @NonNull
@@ -55,7 +43,7 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
     @Override
     public void onBindViewHolder(@NonNull @NotNull WalletLogsAdapter.WalletLogsHolder holder, int position)
     {
-        Log index = logs.get(position);
+        Log index = stack.pop();
 
         if(index.getDebit() == 0)
         {
@@ -74,7 +62,7 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
 
     @Override
     public int getItemCount() {
-        return logs.size();
+        return mainSize;
     }
 
     public static class WalletLogsHolder extends RecyclerView.ViewHolder

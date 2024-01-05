@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/wallet_logs_error_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backgr"
@@ -86,7 +85,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/any_view_container"
             android:padding="16dp"
-            android:text="Account Id : "
+            android:text="Account Id"
             app:layout_constraintBottom_toTopOf="@+id/credit_account_credit_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +155,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/credit_account_credit_amount_description"
-            app:rippleColor="#B00277BD"
+            app:rippleColor="#740277BD"
             app:strokeColor="#0277BD"
             app:strokeWidth="1dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>

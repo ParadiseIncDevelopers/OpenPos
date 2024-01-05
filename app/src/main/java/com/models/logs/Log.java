@@ -1,7 +1,5 @@
 package com.models.logs;
 
-import static com.utilities.UserUtility.userLoginId;
-
 import android.content.Context;
 import android.os.Build;
 import android.widget.Toast;
@@ -12,7 +10,6 @@ import com.abstr.interfaces.retrievers.IContainer;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.models.wallet.Wallet;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -180,7 +177,7 @@ public class Log implements IContainer {
             return this;
         }
 
-        public Log build() {
+        public Log Build() {
             Log log = new Log();
             log.id = this.id;
             log.email = this.email;

@@ -46,7 +46,7 @@ public class WalletLogs extends AppCompatActivity
             Bundle extras = getIntent().getExtras();
 
             wallet_logs_id_text.setText(extras.getString("wallet_id"));
-            wallet_logs_money_case_text.setText(String.valueOf(extras.getDouble("moneyCase")));
+            wallet_logs_money_case_text.setText(String.format("%s %s", extras.getDouble("moneyCase"), extras.getString("currency")));
             adapter = new WalletLogsAdapter(userLogs);
             wallet_logs_RecyclerView_Accounts.setLayoutManager(new LinearLayoutManager(WalletLogs.this));
             wallet_logs_RecyclerView_Accounts.setAdapter(adapter);

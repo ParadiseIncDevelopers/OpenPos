@@ -75,7 +75,7 @@
                     android:text="Send code"
                     android:textAllCaps="false"
                     android:textColor="#0277BD"
-                    app:rippleColor="#B00277BD"
+                    app:rippleColor="#740277BD"
                     app:strokeColor="#0277BD"
                     app:strokeWidth="1dp" />
 
@@ -118,7 +118,7 @@
                     android:text="Create account"
                     android:textAllCaps="false"
                     android:textColor="#0277BD"
-                    app:rippleColor="#B00277BD"
+                    app:rippleColor="#740277BD"
                     app:strokeColor="#0277BD"
                     app:strokeWidth="1dp" />
             </LinearLayout>

@@ -159,6 +159,7 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="4dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_page_menu_button_2">
@@ -202,6 +203,7 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="4dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_page_menu_button_3">

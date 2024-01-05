@@ -24,7 +24,7 @@ public class ByDateOperator implements IOrderOperator
         {
             return elements.sorted(Comparator.comparing(s ->
             {
-                if(s.getClass().toString().equals("Wallet"))
+                if(s instanceof Wallet)
                 {
                     return ((Wallet) s).getCreationDate();
                 }
@@ -36,7 +36,7 @@ public class ByDateOperator implements IOrderOperator
         else{
             return elements.sorted(Comparator.comparing(s ->
             {
-                if(s.getClass().toString().equals("Wallet"))
+                if(s instanceof Wallet)
                 {
                     return ((Wallet) s).getCreationDate();
                 }

@@ -53,6 +53,8 @@ public class CreditAccount extends AppCompatActivity {
         credit_account_header = findViewById(R.id.credit_account_header);
         credit_account_RecyclerView_Accounts = findViewById(R.id.credit_account_RecyclerView_Accounts);
 
+        credit_account_back_menu.setOnClickListener(view -> finish());
+
         DatabaseReference uniqueKeysRef = FirebaseDatabase
                 .getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
                 .getReference("UniqueKeys");

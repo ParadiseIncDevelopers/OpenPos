@@ -82,7 +82,7 @@ public class WalletDataSnapshot implements IRetrieverFactory
                     });
 
                     IOrderOperator operator = new ByDateOperator(theWallet);
-                    List<IContainer> collectedWallet = operator.executeOrder(OrderTypeEnums.ASC).collect(Collectors.toList());
+                    List<IContainer> collectedWallet = operator.executeOrder(OrderTypeEnums.DESC).collect(Collectors.toList());
 
                     future.complete(collectedWallet);
                 });
