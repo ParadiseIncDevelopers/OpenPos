@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.models.logs.Log;
 import org.json.JSONArray;
 
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class Wallet implements IContainer
     private String currency;
     private double moneyCase;
     private String id;
+    private double creditLimit;
     private LocalDateTime creationDate;
     private List<Log> walletLogs;
 
@@ -66,6 +68,10 @@ public class Wallet implements IContainer
         return creationDate;
     }
 
+    public double getCreditLimit() {
+        return creditLimit;
+    }
+
     public static class Builder {
         private String accountName;
         private String email;
@@ -74,6 +80,7 @@ public class Wallet implements IContainer
         private String id;
         private List<Log> walletLogs;
         private LocalDateTime creationDate;
+        private double creditLimit;
 
         public Builder setAccountName(String accountName) {
             this.accountName = accountName;
@@ -199,6 +206,7 @@ public class Wallet implements IContainer
             wallet.accountName = this.accountName;
             wallet.email = this.email;
             wallet.id = this.id;
+            wallet.creditLimit = this.creditLimit;
             wallet.creationDate = this.creationDate;
             wallet.moneyCase = this.moneyCase;
             wallet.currency = this.currency;
@@ -211,6 +219,11 @@ public class Wallet implements IContainer
             this.creationDate = creationDate;
             return this;
         }
+
+        public Builder setCreditLimit(double creditLimit) {
+            this.creditLimit = creditLimit;
+            return this;
+        }
     }
 
     @Override
@@ -220,6 +233,7 @@ public class Wallet implements IContainer
         jsonObject.put("accountName", accountName);
         jsonObject.put("email", email);
         jsonObject.put("currency", currency);
+        jsonObject.put("creditLimit", creditLimit);
         jsonObject.put("moneyCase", moneyCase);
         jsonObject.put("creationDate", creationDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 

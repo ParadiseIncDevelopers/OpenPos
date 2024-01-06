@@ -111,36 +111,6 @@ public class Login extends AppCompatActivity
             Supplier<Boolean> allIsTrue = () ->
                     login_page_email_text.getHintTextColor() == greenColor &&
                             login_page_password_text.getHintTextColor() == greenColor;
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            FirebaseUser user = auth.getCurrentUser();
-            if (user != null)
-            {
-                UserUtility.userEmail = Objects.requireNonNull(user).getEmail();
-                UserUtility.userLoginId = user.getUid();
-
-                FirebaseDatabase.getInstance()
-                        .getReference()
-                        .child("Users")
-                        .child(UserUtility.userLoginId)
-                        .addListenerForSingleValueEvent(new ValueEventListener()
-                        {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot)
-                            {
-                                UserUtility.userNameAndSurname = snapshot.child("nameSurname")
-                                        .getValue().toString();
-
-                                Intent intent = new Intent(Login.this, MainPage.class);
-                                startActivity(intent);
-                                finish();
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-            }
 
             login_page_email_text_field.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -216,11 +186,22 @@ public class Login extends AppCompatActivity
                 String textEmail = login_page_email_text_field.getText().toString();
                 String textPassword = login_page_password_text_field.getText().toString();
 
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+
                 auth.signInWithEmailAndPassword(textEmail, textPassword)
                         .addOnSuccessListener(authResult ->
                         {
                             UserUtility.userEmail = Objects.requireNonNull(authResult.getUser()).getEmail();
                             UserUtility.userLoginId = authResult.getUser().getUid();
+
+                            if(login_page_remember_box.isChecked())
+                            {
+                                FirebaseDatabase.getInstance()
+                                        .getReference()
+                                        .child("Users")
+                                        .child(UserUtility.userLoginId).child("rememberUser")
+                                        .setValue(true);
+                            }
 
                             FirebaseDatabase.getInstance()
                                     .getReference()

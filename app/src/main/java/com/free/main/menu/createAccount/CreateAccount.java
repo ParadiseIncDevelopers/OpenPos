@@ -27,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.utilities.UserUtility;
 import com.utilities.UtilityValues;
 import com.models.wallet.Wallet;
 import java.time.LocalDateTime;
@@ -168,11 +169,21 @@ public class CreateAccount extends AppCompatActivity
         {
             String Type = create_account_text_account_type_auto.getText().toString();
             String AccountName = create_account_text_account_name_field.getText().toString();
+            double creditLimit;
+            try
+            {
+                creditLimit = UserUtility.DoubleFormatter(Double.parseDouble(create_account_credit_limit_field.getText().toString()));
+            }
+            catch (Exception e)
+            {
+                creditLimit = 150000.0;
+            }
 
             Wallet.Builder wallet = new Wallet.Builder()
                     .setAccountName(AccountName)
                     .setCreationDate(LocalDateTime.now())
                     .setEmail(userEmail)
+                    .setCreditLimit(creditLimit)
                     .setCurrency(Type)
                     .setMoneyCase(0.0);
 

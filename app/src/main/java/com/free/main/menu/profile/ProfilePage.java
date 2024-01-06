@@ -1,23 +1,24 @@
 package com.free.main.menu.profile;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
 import com.abstr.concrete.singletons.ApiUsageSingleton;
 import com.free.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.utilities.UserUtility;
-
-import static com.utilities.UserUtility.userApiCounts;
 import static com.utilities.UserUtility.userLoginId;
 import static com.utilities.classes.NetworkChangeReceiver.NetworkCallback;
 
@@ -54,6 +55,28 @@ public class ProfilePage extends AppCompatActivity
             ApiUsageSingleton.GetInstance().getApiCount(profile_page_api_counting_text);
             profile_page_name_surname_text_field.setText(UserUtility.userNameAndSurname);
             profile_page_email_text.setText(UserUtility.userEmail);
+
+            FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child("Users")
+                    .child(userLoginId)
+                    .addListenerForSingleValueEvent(new ValueEventListener()
+                    {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.child("rememberUser").exists())
+                            {
+                                profile_page_remember_box.setChecked(Boolean.parseBoolean(snapshot.child("rememberUser").getValue().toString()));
+                            }
+                            else{
+                                profile_page_remember_box.setChecked(false);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
             login_page_submit_button.setOnClickListener(view ->
             {

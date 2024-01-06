@@ -40,7 +40,8 @@ public class ByDateOperator implements IOrderOperator
                 {
                     return ((Wallet) s).getCreationDate();
                 }
-                else {
+                else
+                {
                     return ((Log) s).getDate();
                 }
             }).reversed());

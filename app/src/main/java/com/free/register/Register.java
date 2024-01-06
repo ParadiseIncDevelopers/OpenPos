@@ -174,7 +174,7 @@ public class Register extends AppCompatActivity {
                         .addOnSuccessListener(x -> {
                             UserProfile user = new UserProfile.Builder()
                                     .setEmail(Email)
-                                    .setApiCounting(200000)
+                                    .setApiCounting(100000)
                                     .setId(Objects.requireNonNull(x.getUser()).getUid())
                                     .setNameSurname(NameAndSurname)
                                     .Build();

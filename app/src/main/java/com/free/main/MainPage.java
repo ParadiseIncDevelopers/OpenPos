@@ -2,6 +2,7 @@ package com.free.main;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.utilities.UserUtility.LoginType;
 import static com.utilities.UserUtility.userWalletKeyIds;
 import static com.utilities.UserUtility.userLoginId;
 import static com.utilities.UserUtility.userWallets;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import com.abstr.concrete.retrievers.DataSnapshotFactory;
 import com.abstr.interfaces.retrievers.IRetrieverFactory;
 import com.free.R;
+import com.free.login.Login;
 import com.free.main.adapter.account.AccountLogsAdapter;
 import com.free.main.adapter.credit.CreditAccount;
 import com.free.main.adapter.debit.DebitAccount;
@@ -39,11 +41,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.models.logs.Log;
+import com.models.wallet.Wallet;
 import com.utilities.RetrieverFactoryEnums;
 import com.utilities.UserUtility;
 import com.utilities.classes.ContainerConverter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -127,8 +132,17 @@ public class MainPage extends AppCompatActivity
                 }
             });
 
-            main_page_logout_button.setOnClickListener(view -> {
+            main_page_logout_button.setOnClickListener(view ->
+            {
+                FirebaseDatabase.getInstance()
+                        .getReference()
+                        .child("Users")
+                        .child(userLoginId)
+                        .child("rememberUser")
+                        .setValue(false);
+
                 UserUtility.userLoginId = "";
+                UserUtility.userApiCounts = -1;
                 UserUtility.LoginType = "";
                 UserUtility.userNameAndSurname = "";
                 UserUtility.userLogs = new ArrayList<>();
@@ -138,6 +152,9 @@ public class MainPage extends AppCompatActivity
                 UserUtility.userEmail = "";
                 UserUtility.userWalletKeyIds = new ArrayList<>();
                 FirebaseAuth.getInstance().signOut();
+
+                Intent intent = new Intent(MainPage.this, Login.class);
+                startActivity(intent);
                 finish();
             });
             main_page_menu_button.setOnClickListener(view -> {

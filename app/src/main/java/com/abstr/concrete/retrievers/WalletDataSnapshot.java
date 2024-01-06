@@ -14,9 +14,11 @@ import com.models.wallet.Wallet;
 import com.utilities.OrderTypeEnums;
 import org.jetbrains.annotations.Contract;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,6 +26,8 @@ import java.util.stream.StreamSupport;
 
 public class WalletDataSnapshot implements IRetrieverFactory
 {
+    private static int index = 0;
+
     private WalletDataSnapshot()
     {
 
@@ -54,31 +58,23 @@ public class WalletDataSnapshot implements IRetrieverFactory
 
                 })
                 .addOnSuccessListener(task -> {
-                    Iterable<DataSnapshot> iterable = task.getChildren();
-                    Stream<DataSnapshot> stream = StreamSupport.stream(iterable.spliterator(), false);
-                    Stream<IContainer> theWallet = stream.map(x ->
-                    {
-                        if(userWalletKeyIds.contains(x.getKey()))
+                    Stream<IContainer> theWallet = userWalletKeyIds.stream().map(y -> {
+                        Wallet.Builder walletBuilder = new Wallet.Builder()
+                                .setAccountName(task.child(y).child("accountName").getValue().toString())
+                                .setCreationDate(LocalDateTime.parse(task.child(y).child("creationDate").getValue().toString()))
+                                .setId(task.child(y).getKey())
+                                .setEmail(task.child(y).child("email").getValue().toString())
+                                .setCurrency(task.child(y).child("currency").getValue().toString())
+                                .setMoneyCase(Double.parseDouble(task.child(y).child("moneyCase").getValue().toString()));
+                        if(task.child(y).child("walletLogs").exists())
                         {
-                            Wallet.Builder walletBuilder = new Wallet.Builder()
-                                    .setAccountName(x.child("accountName").getValue().toString())
-                                    .setCreationDate(LocalDateTime.parse(x.child("creationDate").getValue().toString()))
-                                    .setId(x.getKey())
-                                    .setEmail(x.child("email").getValue().toString())
-                                    .setCurrency(x.child("currency").getValue().toString())
-                                    .setMoneyCase(Double.parseDouble(x.child("moneyCase").getValue().toString()));
-                            if(x.child("walletLogs").exists())
-                            {
-                                walletBuilder.setWalletLogs((Map<String, Map<String, Object>>) x.child("walletLogs").getValue());
-                            }
-                            else{
-                                walletBuilder.setWalletLogs(new HashMap<>());
-                            }
-                            return walletBuilder.Build();
+                            walletBuilder.setWalletLogs((Map<String, Map<String, Object>>) task.child(y).child("walletLogs").getValue());
                         }
                         else{
-                            return null;
+                            walletBuilder.setWalletLogs(new HashMap<>());
                         }
+
+                        return walletBuilder.Build();
                     });
 
                     IOrderOperator operator = new ByDateOperator(theWallet);

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.abstr.concrete.singletons.ApiUsageSingleton;
 import com.free.R;
 import com.free.main.MainPage;
+import com.free.main.adapter.debit.DebitAccountEditor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -69,7 +70,11 @@ public class CreditAccountEditor extends AppCompatActivity {
 
         credit_account_id.setText(String.format("%s : %s", credit_account_id.getText().toString().trim(), walletId));
         credit_account_submit_button.setEnabled(false);
-        credit_account_menu_button.setOnClickListener(view -> finish());
+        credit_account_menu_button.setOnClickListener(view -> {
+            Intent intent = new Intent(CreditAccountEditor.this, MainPage.class);
+            startActivity(intent);
+            finish();
+        });
         credit_account_credit_amount_field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -164,8 +169,9 @@ public class CreditAccountEditor extends AppCompatActivity {
                                                     moneyCase = UserUtility.DoubleFormatter(moneyCase - buildedLog.getCredit());
 
                                                     creditAccountAction.accept(moneyCase);
+                                                    ApiUsageSingleton.GetInstance(1).consumeApi();
                                                 }
-                                                else{
+                                                else {
                                                     double creditLimit =
                                                             Double.parseDouble(Objects.requireNonNull(snapshot.child("creditLimit")
                                                                     .getValue().toString()));
@@ -174,7 +180,7 @@ public class CreditAccountEditor extends AppCompatActivity {
                                                                     .getValue().toString()));
                                                     moneyCase = UserUtility.DoubleFormatter(moneyCase - buildedLog.getCredit());
 
-                                                    if(moneyCase > creditLimit)
+                                                    if(moneyCase < creditLimit)
                                                     {
                                                         creditAccountAction.accept(moneyCase);
                                                     }
@@ -185,6 +191,7 @@ public class CreditAccountEditor extends AppCompatActivity {
                                                                         Toast.LENGTH_SHORT)
                                                                 .show();
                                                     }
+                                                    ApiUsageSingleton.GetInstance(1).consumeApi();
                                                 }
                                             }
 
@@ -193,8 +200,6 @@ public class CreditAccountEditor extends AppCompatActivity {
 
                                             }
                                         });
-
-                                ApiUsageSingleton.GetInstance(1).consumeApi();
 
                                 Intent intent = new Intent(CreditAccountEditor.this, MainPage.class);
                                 startActivity(intent);

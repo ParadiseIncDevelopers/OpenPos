@@ -22,7 +22,7 @@ import java.util.function.BiConsumer;
 
 public class UserUtility
 {
-    public static String userLoginId;
+    public static String userLoginId = "";
     public static int userApiCounts = -1;
     public static String LoginType = "";
     public static String userNameAndSurname;
@@ -30,13 +30,21 @@ public class UserUtility
     public static String walletLogId = "";
     public static double walletMoneyCase = 0.0;
     public static List<Wallet> userWallets = new ArrayList<>();
+
     public static String userEmail;
     public static List<String> userWalletKeyIds;
 
     public static double DoubleFormatter(double theDouble)
     {
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String roundedNumber = df.format(theDouble).replace(",", ".");
-        return Double.parseDouble(roundedNumber);
+        if(theDouble == 0)
+        {
+            return 0.0;
+        }
+
+        if (theDouble == (long) theDouble) {
+            DecimalFormat df = new DecimalFormat("#.0");
+            return Double.parseDouble(df.format(theDouble).replace(",","."));
+        }
+        return theDouble;
     }
 }

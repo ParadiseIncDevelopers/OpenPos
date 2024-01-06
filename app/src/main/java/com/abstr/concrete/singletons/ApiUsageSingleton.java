@@ -43,7 +43,7 @@ public class ApiUsageSingleton
                 .addOnFailureListener(Throwable::printStackTrace)
                 .addOnSuccessListener(task -> {
                     UserUtility.userApiCounts = Integer.parseInt(task.child("apiCounting").getValue().toString());
-                    textView.setText(String.format("Tickets : %d", UserUtility.userApiCounts));
+                    textView.setText(String.valueOf(UserUtility.userApiCounts));
                 });
     }
 

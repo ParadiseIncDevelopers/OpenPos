@@ -67,7 +67,11 @@ public class DebitAccountEditor extends AppCompatActivity {
 
         debit_account_id.setText(String.format("%s : %s", debit_account_id.getText().toString().trim(), walletId));
         debit_account_submit_button.setEnabled(false);
-        debit_account_menu_button.setOnClickListener(view -> finish());
+        debit_account_menu_button.setOnClickListener(view -> {
+            Intent intent = new Intent(DebitAccountEditor.this, MainPage.class);
+            startActivity(intent);
+            finish();
+        });
         debit_account_credit_amount_field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -135,7 +139,7 @@ public class DebitAccountEditor extends AppCompatActivity {
                                                                 .getValue().toString()));
                                                 moneyCase = UserUtility.DoubleFormatter(moneyCase + buildedLog.getDebit());
 
-                                                if(moneyCase < 0)
+                                                if(moneyCase <= 0)
                                                 {
                                                     FirebaseDatabase
                                                             .getInstance("https://openpos-wallets.europe-west1.firebasedatabase.app/")
