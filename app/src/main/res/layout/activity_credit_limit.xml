@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_backgr"
+    android:background="@drawable/ic_backgr_2"
     tools:context=".main.menu.limit.CreditLimit">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,12 +23,13 @@
             android:id="@+id/credit_limit_menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:tint="#FFFFFF"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/ic_back"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

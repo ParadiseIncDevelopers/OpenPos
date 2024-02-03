@@ -43,6 +43,8 @@ public class WalletLogsAdapter extends RecyclerView.Adapter<WalletLogsAdapter.Wa
     @Override
     public void onBindViewHolder(@NonNull @NotNull WalletLogsAdapter.WalletLogsHolder holder, int position)
     {
+        //TODO : 1-stacks to be controlled by checking sizes.
+
         Log index = stack.pop();
 
         if(index.getDebit() == 0)

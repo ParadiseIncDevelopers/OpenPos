@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_backgr">
+    android:background="@drawable/ic_backgr_2">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/user_languages_button_6"
@@ -23,6 +23,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_languages_logo_6"
+            style="@style/circularImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
@@ -32,7 +33,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
@@ -65,6 +65,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_languages_logo_5"
+            style="@style/circularImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
@@ -74,7 +75,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
@@ -107,6 +107,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_languages_logo_4"
+            style="@style/circularImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
@@ -116,7 +117,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
@@ -149,6 +149,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_languages_logo_3"
+            style="@style/circularImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
@@ -158,7 +159,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
@@ -193,6 +193,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_languages_logo_2"
+            style="@style/circularImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
@@ -202,7 +203,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
@@ -236,6 +236,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_languages_logo_1"
+            style="@style/circularImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"
@@ -246,7 +247,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
@@ -265,29 +265,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/user_languages_ConstraintLayout1_back"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/any_view_container"
+        android:background="@drawable/toolbar_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_languages_logo_"
+            style="@style/circularImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="4dp"
             android:padding="4dp"
             android:src="@drawable/ic_translate"
-            app:contentPadding="8dp"
+            app:contentPadding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/user_languages_text_1"
             app:layout_constraintStart_toEndOf="@+id/user_languages_FAB1_back"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
@@ -304,17 +304,19 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/user_languages_FAB1_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/ic_back"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorAccent"
+            app:fabCustomSize="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

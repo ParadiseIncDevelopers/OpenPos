@@ -4,37 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_backgr"
+    android:background="@drawable/ic_backgr_2"
     tools:context=".main.adapter.debit.DebitAccount" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/debit_account_toolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/wallet_logs_border"
+        android:background="@drawable/toolbar_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/debit_account_back_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/ic_back"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorAccent"
+            app:fabCustomSize="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/debit_account_logo"
+            style="@style/circularImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
@@ -47,7 +50,6 @@
             app:layout_constraintStart_toEndOf="@+id/debit_account_back_menu"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
             app:strokeWidth="2dp" />
 
         <TextView
@@ -73,7 +75,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/wallet_logs_border"
+        android:background="@drawable/wallet_logs_border_container"
         android:padding="8dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"

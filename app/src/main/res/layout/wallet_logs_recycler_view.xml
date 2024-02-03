@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/wallet_logs_border"
+    android:background="@drawable/toolbar_border"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal"
@@ -34,8 +34,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/circularImageView2"
-        app:strokeColor="@color/colorOnPrimary"
-        app:strokeWidth="1dp" />
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="1dp"
+        app:tint="#FFFFFF" />
 
     <TextView
         android:id="@+id/wallet_logs_recycler_text_2"

@@ -1,9 +1,6 @@
 package com.models.structs;
 
-import static com.utilities.UtilityValues.MAX_WALLET_SIZE;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.List;
 

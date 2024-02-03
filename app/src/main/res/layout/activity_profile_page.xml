@@ -4,34 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_backgr"
+    android:background="@drawable/ic_backgr_2"
     tools:context=".main.menu.profile.ProfilePage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profile_page_back"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/wallet_logs_border"
+        android:background="@drawable/toolbar_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#FFFFFF">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/profile_page_back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/ic_back"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorAccent"
+            app:fabCustomSize="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_page_logo"
@@ -47,8 +50,9 @@
             app:layout_constraintStart_toEndOf="@+id/profile_page_back_button"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeColor="#FFFFFF"
+            app:strokeWidth="2dp"
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/profile_page_text"
@@ -94,7 +98,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/any_view_container"
+            android:background="@drawable/profile_page_content"
             android:padding="16dp"
             android:text="Id"
             android:textSize="12sp"
@@ -121,7 +125,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/any_view_container"
+            android:background="@drawable/profile_page_content"
             android:padding="16dp"
             android:text="Api counts"
             android:textSize="12sp"
@@ -150,7 +154,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/any_view_container"
+            android:background="@drawable/profile_page_content"
             android:padding="16dp"
             android:text="Email"
             android:textSize="12sp"
@@ -165,7 +169,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/any_view_container"
+            android:background="@drawable/profile_page_content"
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -187,11 +191,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="#FFFFFF"
+                app:boxStrokeColor="#FFFFFF"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorOnPrimary"
                 app:errorEnabled="true"
-                app:hintTextColor="#E64A19"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -218,6 +223,7 @@
             android:layout_weight="1"
             android:background="@drawable/any_view_container"
             android:text="Remember me"
+            android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_page_name_surname_container" />
@@ -233,12 +239,12 @@
             android:enabled="false"
             android:text="Save changes"
             android:textAllCaps="false"
-            android:textColor="#0277BD"
+            android:textColor="#FFFFFF"
+            app:iconTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_page_remember_box"
-            app:rippleColor="#740277BD"
-            app:strokeColor="#0277BD"
+            app:strokeColor="#FFFFFF"
             app:strokeWidth="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

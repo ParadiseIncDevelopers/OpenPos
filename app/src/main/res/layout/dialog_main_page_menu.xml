@@ -4,33 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_backgr">
+    android:background="@drawable/ic_backgr_2">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_page_menu_toolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/any_view_container"
+        android:background="@drawable/toolbar_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_page_menu_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/ic_back"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorAccent"
+            app:fabCustomSize="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/main_page_menu_logo"
@@ -46,8 +48,9 @@
             app:layout_constraintStart_toEndOf="@+id/main_page_menu_back"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeColor="#FFFFFF"
+            app:strokeWidth="2dp"
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/main_page_menu_header"
@@ -90,8 +93,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeColor="#FFFFFF"
+            app:strokeWidth="2dp"
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/main_page_menu_button_text_1"
@@ -132,8 +136,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeColor="#FFFFFF"
+            app:strokeWidth="2dp"
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/main_page_menu_button_text_2"
@@ -175,8 +180,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeColor="#FFFFFF"
+            app:strokeWidth="2dp"
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/main_page_menu_button_text_3"
@@ -219,8 +225,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeColor="#FFFFFF"
+            app:strokeWidth="2dp"
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/main_page_menu_button_text_4"
@@ -261,8 +268,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeColor="#FFFFFF"
+            app:strokeWidth="2dp"
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/main_page_menu_button_text_5"

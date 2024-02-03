@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="textColorHintEnabledDisabled" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-        <item name="android:textColorHint">@drawable/enabled_disabled_color</item>
+        <item name="android:textColorHint">#FFFFFF</item>
     </style>
     <style name="textColorHintEnabledDisabled1" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:textColorHint">@drawable/enabled_disabled_color</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
     </style>
     <style name="circularImageView">
+        <item name="tint">#FFFFFF</item>
+        <item name="strokeColor">#FFFFFF</item>
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12dp</item>
     </style>

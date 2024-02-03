@@ -4,34 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_backgr"
+    android:background="@drawable/ic_backgr_2"
     tools:context=".main.adapter.credit.CreditAccountEditor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/credit_account_toolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/any_view_container"
+        android:background="@drawable/toolbar_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/credit_account_menu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/ic_back"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorAccent"
+            app:fabCustomSize="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/credit_account_logo"
@@ -47,8 +49,9 @@
             app:layout_constraintStart_toEndOf="@+id/credit_account_menu_button"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circularImageView"
-            app:strokeColor="@color/colorOnPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeColor="#FFFFFF"
+            app:strokeWidth="2dp"
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/credit_account_header"
@@ -93,7 +96,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/credit_account_credit_amount"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/AnyInputLayoutColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -120,7 +123,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/credit_account_credit_amount_description"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/AnyInputLayoutColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxStrokeWidthFocused="2dp"
@@ -151,12 +154,11 @@
             android:enabled="false"
             android:text="Credit the account"
             android:textAllCaps="false"
-            android:textColor="#0277BD"
+            android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/credit_account_credit_amount_description"
-            app:rippleColor="#740277BD"
-            app:strokeColor="#0277BD"
+            app:strokeColor="#FFFFFF"
             app:strokeWidth="1dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

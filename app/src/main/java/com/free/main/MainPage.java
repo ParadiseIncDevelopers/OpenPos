@@ -97,10 +97,11 @@ public class MainPage extends AppCompatActivity
                     .getReference()
                     .child("UniqueKeys");
 
-            uniqueKeysRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            uniqueKeysRef.addListenerForSingleValueEvent(new ValueEventListener()
+            {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
                     Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
                     userWalletKeyIds = StreamSupport.stream(iterable.spliterator(), false)
                             .filter(keySnapshot -> keySnapshot.getValue(String.class).equals(userLoginId))
@@ -129,6 +130,7 @@ public class MainPage extends AppCompatActivity
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError)
                 {
+
                 }
             });
 

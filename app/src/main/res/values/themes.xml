@@ -10,10 +10,35 @@
         <item name="colorSecondaryVariant">@color/colorAccent</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="fontFamily">sans-serif-light</item>
-        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="LoginInputLayoutColor" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="endIconTint">#FFFFFF</item>
+        <item name="boxStrokeColor">#FFFFFF</item>
+    </style>
+    <style name="AnyInputLayoutColor" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="endIconTint">#FFFFFF</item>
+        <item name="boxStrokeColor">#FFFFFF</item>
+    </style>
+    <style name="AnyAutoCompleteLayoutColor" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="endIconTint">#FFFFFF</item>
+        <item name="boxStrokeColor">#FFFFFF</item>
+    </style>
+    <style name="IconStyleShapeOverLay" parent="circularImageView">
+
+    </style>
+    <style name="CheckBoxLayout" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="ButtonStyle1" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="Theme.InternetFreePaymentGateway.NoActionBar">
         <item name="windowActionBar">false</item>

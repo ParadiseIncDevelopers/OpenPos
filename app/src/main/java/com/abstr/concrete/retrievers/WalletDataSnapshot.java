@@ -8,26 +8,20 @@ import com.abstr.concrete.operators.ByDateOperator;
 import com.abstr.interfaces.operators.IOrderOperator;
 import com.abstr.interfaces.retrievers.IContainer;
 import com.abstr.interfaces.retrievers.IRetrieverFactory;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.models.wallet.Wallet;
 import com.utilities.OrderTypeEnums;
 import org.jetbrains.annotations.Contract;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class WalletDataSnapshot implements IRetrieverFactory
 {
-    private static int index = 0;
-
     private WalletDataSnapshot()
     {
 
